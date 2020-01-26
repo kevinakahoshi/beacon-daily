@@ -15,3 +15,7 @@ Beacon Daily is a CRUD app that allows users to:
 - Node.js
 - Express
 - Material Design
+
+### DB Schema
+
+- DB Designer: https://dbdesigner.page.link/ZpSZ8qJPSAWUum9z8
