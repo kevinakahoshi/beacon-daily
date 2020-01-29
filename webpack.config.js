@@ -1,7 +1,8 @@
+require('dotenv/config');
 const path = require('path');
 
-const clientPath = path.resolve(__dirname, 'client');
-const publicPath = path.resolve(__dirname, 'server/public');
+const clientPath = path.join(__dirname, 'client/');
+const publicPath = path.join(__dirname, 'server/public/');
 
 module.exports = {
   resolve: {
@@ -13,8 +14,7 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.jsx?$/,
-      include: clientPath,
+      test: /\.jsx/,
       use: {
         loader: 'babel-loader',
         options: {
