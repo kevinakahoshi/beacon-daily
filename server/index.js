@@ -31,6 +31,18 @@ app.get('/api/get-checklist', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/create-an-account', (req, res, next) => {
+  const sqlQuery = `
+    INSERT INTO users (firstname, lastname, email, password)
+         VALUES ($1, $2, $3, $4)
+  `;
+  const params = [
+
+  ];
+  db.query(sqlQuery, params)
+    .then(result => res.status(201).json({ message: 'User created successfully' }));
+});
+
 app.post('/api/create-checklist-item', (req, res, next) => {
   const userId = req.body.userId;
   const checklistItem = req.body.checklistItem;
