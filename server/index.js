@@ -51,6 +51,23 @@ app.post('/api/create-an-account', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('api/login', (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const sqlQuery = `
+    SELECT *
+      FROM users
+     WHERE email = $1
+       AND password = $2
+  `;
+  const params = [
+    email,
+    password
+  ];
+  db.query(sqlQuery, params)
+    .then(result => res.status(200).json({}));
+});
+
 app.post('/api/create-checklist-item', (req, res, next) => {
   const userId = req.body.userId;
   const checklistItem = req.body.checklistItem;
@@ -116,7 +133,6 @@ app.put('/api/toggle-complete', (req, res, next) => {
         .catch(err => next(err));
     })
     .catch(err => next(err));
-
 });
 
 app.delete('/api/delete-checklist-item', (req, res, next) => {
