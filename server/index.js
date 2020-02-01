@@ -19,7 +19,7 @@ app.get('/api/health-check', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/checklist', (req, res, next) => {
+app.get('/api/get-checklist', (req, res, next) => {
   const sqlQuery = `
          SELECT *
            FROM users
@@ -32,7 +32,7 @@ app.get('/api/checklist', (req, res, next) => {
 });
 
 app.post('/api/create-checklist-item', (req, res, next) => {
-  const userId = parseInt(req.body.userId);
+  const userId = req.body.userId;
   const checklistItem = req.body.checklistItem;
   const isCompleted = false;
   const sqlQuery = `
@@ -63,6 +63,53 @@ app.put('/api/update-checklist-item', (req, res, next) => {
   ];
   db.query(sqlQuery, params)
     .then(result => res.status(202).json({ message: 'Checklist item updated successfully' }))
+    .catch(err => next(err));
+});
+
+app.put('/api/toggle-complete', (req, res, next) => {
+  const checklistItemId = req.body.checklistItemId;
+
+  const getQuery = `
+    SELECT *
+      FROM checklist
+     WHERE checklistItemId = $1
+  `;
+
+  const getParams = [
+    checklistItemId
+  ];
+
+  db.query(getQuery, getParams)
+    .then(result => {
+      const isCompleted = !result.rows[0].iscompleted;
+      const updateQuery = `
+        UPDATE checklist
+           SET isCompleted = $1
+         WHERE checklistItemId = $2
+      `;
+      const updateParams = [
+        isCompleted,
+        checklistItemId
+      ];
+      db.query(updateQuery, updateParams)
+        .then(result => res.json({ message: 'Checklist item updated successfully' }))
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
+
+});
+
+app.delete('/api/delete-checklist-item', (req, res, next) => {
+  const checklistItemId = req.body.checklistItemId;
+  const sqlQuery = `
+    DELETE FROM checklist
+          WHERE checklistItemId = $1
+  `;
+  const params = [
+    checklistItemId
+  ];
+  db.query(sqlQuery, params)
+    .then(result => res.status(202).json({ message: 'Checklist item deleted successfully' }))
     .catch(err => next(err));
 });
 
