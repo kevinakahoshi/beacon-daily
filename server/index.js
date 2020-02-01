@@ -20,7 +20,12 @@ app.get('/api/health-check', (req, res, next) => {
 });
 
 app.get('/api/checklist', (req, res, next) => {
-  const sqlQuery = 'SELECT * FROM users INNER JOIN checklist ON users.userId = checklist.userId';
+  const sqlQuery = `
+         SELECT *
+           FROM users
+     INNER JOIN checklist
+             ON users.userId = checklist.userId
+  `;
   db.query(sqlQuery)
     .then(result => res.status(200).json(result.rows))
     .catch(err => next(err));
@@ -41,6 +46,23 @@ app.post('/api/create-checklist-item', (req, res, next) => {
   ];
   db.query(sqlQuery, params)
     .then(result => res.status(201).json({ message: 'Checklist item created successfully' }))
+    .catch(err => next(err));
+});
+
+app.put('/api/update-checklist-item', (req, res, next) => {
+  const checklistItemId = req.body.checklistItemId;
+  const updatedChecklistItem = req.body.updatedChecklistItem;
+  const sqlQuery = `
+    UPDATE checklist
+       SET checklistItem = $1
+     WHERE checklistItemId = $2
+  `;
+  const params = [
+    updatedChecklistItem,
+    checklistItemId
+  ];
+  db.query(sqlQuery, params)
+    .then(result => res.status(202).json({ message: 'Checklist item updated successfully' }))
     .catch(err => next(err));
 });
 
