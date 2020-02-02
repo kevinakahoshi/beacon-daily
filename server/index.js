@@ -19,14 +19,28 @@ app.get('/api/health-check', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/get-checklist', (req, res, next) => {
-  const sqlQuery = `
-         SELECT *
-           FROM users
-     INNER JOIN checklist
-             ON users.userId = checklist.userId
+app.get('/api/get-checklist/:id?', (req, res, next) => {
+  const userId = parseInt(req.params.id);
+  let sqlQuery = null;
+  const params = [];
+  if (!userId) {
+    sqlQuery = `
+        SELECT *
+          FROM users
+    INNER JOIN checklist
+            ON users.userId = checklist.userId
   `;
-  db.query(sqlQuery)
+  } else {
+    sqlQuery = `
+      SELECT *
+        FROM users
+       INNER JOIN checklist
+          ON users.userId = checklist.userId
+       WHERE users.userId = $1
+    `;
+    params.push(userId);
+  }
+  db.query(sqlQuery, params)
     .then(result => res.status(200).json(result.rows))
     .catch(err => next(err));
 });
