@@ -15,12 +15,15 @@ class App extends React.Component {
       <>
         <Header />
         <Switch>
-          <Route exact path='/' render={props =>
-            <Home {...props} />} />
-          <Route exact path='/login' render={ props =>
-            <Login {...props} />} />
-          <Route exact path='/checklist' render={props =>
-            <Checklist {...props} />} />
+          <Route exact path='/'
+            render={props =>
+              <Home {...props} />} />
+          <Route exact path='/login'
+            render={ props =>
+              <Login {...props} />} />
+          <Route exact path='/checklist'
+            render={props =>
+              <Checklist {...props} />} />
         </Switch>
       </>
     );
