@@ -9,6 +9,22 @@ import Login from './login';
 import Checklist from './checklist';
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      signedIn: false,
+      checklist: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api/get-checklist')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ checklist: data });
+      })
+      .catch(err => console.error(err));
+  }
 
   render() {
     return (
@@ -23,7 +39,8 @@ class App extends React.Component {
               <Login {...props} />} />
           <Route exact path='/checklist'
             render={props =>
-              <Checklist {...props} />} />
+              <Checklist {...props}
+                checklist={this.state.checklist} />} />
         </Switch>
       </>
     );

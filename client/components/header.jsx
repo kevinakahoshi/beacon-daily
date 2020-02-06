@@ -1,23 +1,40 @@
 import React from 'react';
 import {
-// Link
+  Link
 } from 'react-router-dom';
 import {
-  Box,
-  Drawer
+  AppBar,
+  Toolbar,
+  Typography
 } from '@material-ui/core';
 
-function Header() {
-  return (
-    <>
-      <Drawer>
+class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: null
+    };
+  }
 
-      </Drawer>
-      <Box bgcolor="primary.main" color="primary.contrastText">
-        <h1>Beacon Daily</h1>
-      </Box>
-    </>
-  );
+  componentDidMount() {
+    this.setState({ location: window.location.pathname });
+  }
+
+  render() {
+    return (
+      <>
+        <AppBar position="static" className={this.state.location === '/' ? 'hidden' : ''}>
+          <Toolbar>
+            <Link to="/">
+              <Typography color="inherit">
+                Beacon Daily
+              </Typography>
+            </Link>
+          </Toolbar>
+        </AppBar>
+      </>
+    );
+  }
 }
 
 export default Header;

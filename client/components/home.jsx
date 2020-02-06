@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  Container,
+  Button
+} from '@material-ui/core';
 
 function Home(props) {
   const handleClick = (event, path) => {
@@ -6,11 +10,18 @@ function Home(props) {
   };
 
   return (
-    <>
+    <Container maxWidth="md"
+      height="100%">
       <h1>Home Screen</h1>
-      <button onClick={() => handleClick(event, '/login')}>Log In</button>
-      <button onClick={() => handleClick(event, '/checklist')}>Sign Up</button>
-    </>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => handleClick(event, '/login')}>Log In</Button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => handleClick(event, '/checklist')}>Sign Up</Button>
+    </Container>
   );
 }
 
