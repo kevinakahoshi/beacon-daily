@@ -19,26 +19,10 @@ function Login(props) {
     setName(event.target.value);
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const init = {
-      method: 'POST',
-      body: JSON.stringify({
-        email: 'kevin@beacondaily.com',
-        password: 'test'
-      })
-    };
-
-    fetch('/api/login', init)
-      .then(response => response.json())
-      .then(data => data)
-      .catch(error => console.error(error));
-  };
-
   return (
     <Container size="md">
       <h1>Select a Profile</h1>
-      <form onSubmit={event => handleSubmit(event)}>
+      <form onSubmit={event => props.loginSubmitHandler(event)}>
         <FormControl>
           <InputLabel
             htmlFor="name">

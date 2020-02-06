@@ -17,22 +17,44 @@ class App extends React.Component {
     this.state = {
       signedIn: false,
       checklist: [],
-      weather: null
+      weather: null,
+      user: null
     };
 
-    this.fetchedUser = this.fetchedUser.bind(this);
+    this.getChecklistItems = this.getChecklistItems.bind(this);
+    this.loginSubmitHandler = this.loginSubmitHandler.bind(this);
   }
 
-  fetchedUser() {
-    this.setState({ signedIn: true });
+  loginSubmitHandler(event) {
+    event.preventDefault();
+    const init = {
+      method: 'POST',
+      body: JSON.stringify({
+        email: 'kevin@beacondaily.com',
+        password: 'test'
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    fetch('/api/login', init)
+      .then(response => response.json())
+      .then(user => {
+        this.setState({ user, signedIn: true });
+        this.getChecklistItems(user.userid);
+      })
+      .catch(error => console.error(error));
+  }
+
+  getChecklistItems(id) {
+    fetch(`/api/get-checklist/${id}`)
+      .then(res => res.json())
+      .then(checklist => this.setState({ checklist }))
+      .catch(err => console.error(err));
   }
 
   componentDidMount() {
-    fetch('/api/get-checklist')
-      .then(res => res.json())
-      .then(data => this.setState({ checklist: data }))
-      .catch(err => console.error(err));
-
     // fetch('https://api.openweathermap.org/data/2.5/weather?zip=92618,us&APPID=898a2a99485d6f874e33752a52837aa7')
     //   .then(res => res.json())
     //   .then(data => this.setState({ weather: data }))
@@ -52,7 +74,7 @@ class App extends React.Component {
             <Route exact path='/login'
               render={ props =>
                 <Login {...props}
-                  fetchedUser={this.fetchUser} />} />
+                  loginSubmitHandler={this.loginSubmitHandler} />} />
             <Route exact path='/checklist'
               render={props =>
                 <Checklist {...props}
