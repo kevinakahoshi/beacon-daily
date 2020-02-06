@@ -6,13 +6,19 @@ import {
 } from '@material-ui/core';
 
 function Home(props) {
+  const [componentStatus, setComponentStatus] = React.useState('mounting');
+
   const handleClick = (event, path) => {
-    props.history.push(path);
+    setComponentStatus('unmounting');
+    setTimeout(() => {
+      props.history.push(path);
+    }, 1000);
   };
 
   return (
     <Container
-      maxWidth="md">
+      maxWidth="md"
+      className={componentStatus}>
       <Box justifyContent="center">
         <h1>Home Screen</h1>
         <Button

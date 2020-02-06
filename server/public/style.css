@@ -3,8 +3,13 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.mount {
+.mounting {
   animation: mount 1s;
+  animation-fill-mode: forwards;
+}
+
+.unmounting {
+  animation: unmount 1s;
   animation-fill-mode: forwards;
 }
 
@@ -17,5 +22,17 @@ body {
   100% {
     opacity: 1;
     transform: translateY(0%);
+  }
+}
+
+@keyframes unmount {
+  0% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(10%);
   }
 }

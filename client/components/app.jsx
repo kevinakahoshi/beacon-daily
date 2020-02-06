@@ -18,14 +18,15 @@ class App extends React.Component {
       signedIn: false,
       checklist: [],
       weather: null,
-      user: null
+      user: null,
+      componentStatus: 'mounting'
     };
 
     this.getChecklistItems = this.getChecklistItems.bind(this);
     this.loginSubmitHandler = this.loginSubmitHandler.bind(this);
   }
 
-  loginSubmitHandler(event) {
+  loginSubmitHandler(event, historyProps) {
     event.preventDefault();
     const init = {
       method: 'POST',
@@ -41,8 +42,12 @@ class App extends React.Component {
     fetch('/api/login', init)
       .then(response => response.json())
       .then(user => {
-        this.setState({ user, signedIn: true });
+        this.setState({ user, signedIn: true, componentStatus: 'unmounting' });
         this.getChecklistItems(user.userid);
+        setTimeout(() => {
+          historyProps.push('/checklist');
+          this.setState({ componentStatus: 'mounting' });
+        }, 1000);
       })
       .catch(error => console.error(error));
   }
@@ -70,15 +75,18 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/'
               render={props =>
-                <Home {...props} />} />
+                <Home {...props}
+                  componentStatus={this.state.componentStatus} />} />
             <Route exact path='/login'
               render={ props =>
                 <Login {...props}
-                  loginSubmitHandler={this.loginSubmitHandler} />} />
+                  loginSubmitHandler={this.loginSubmitHandler}
+                  componentStatus={this.state.componentStatus} />} />
             <Route exact path='/checklist'
               render={props =>
                 <Checklist {...props}
-                  checklist={this.state.checklist} />} />
+                  checklist={this.state.checklist}
+                  componentStatus={this.state.componentStatus} />} />
           </Switch>
         </Fade>
       </>
