@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  Container,
+  Grid,
+  // Container,
   Box,
   Button
 } from '@material-ui/core';
@@ -16,25 +17,32 @@ function Home(props) {
   };
 
   return (
-    <Container
-      maxWidth="md"
-      className={componentStatus}>
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      className={componentStatus}
+      height={100}>
       <Box justifyContent="center">
-        <h1>Home Screen</h1>
+        <h1>Beacon Daily</h1>
+        <h2>Your daily planner.</h2>
         <Button
           variant="contained"
           color="primary"
+          m={2}
           onClick={() => handleClick(event, '/login')}>
             Log In
         </Button>
         <Button
           variant="contained"
           color="primary"
+          m={2}
           onClick={() => handleClick(event, '/checklist')}>
             Sign Up
         </Button>
       </Box>
-    </Container>
+    </Grid>
   );
 }
 
