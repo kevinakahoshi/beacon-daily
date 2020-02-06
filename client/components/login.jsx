@@ -20,9 +20,10 @@ function Login(props) {
   };
 
   return (
-    <Container size="md">
+    <Container size="md"
+      className={props.componentStatus}>
       <h1>Select a Profile</h1>
-      <form onSubmit={event => props.loginSubmitHandler(event)}>
+      <form onSubmit={event => props.loginSubmitHandler(event, props.history)}>
         <FormControl>
           <InputLabel
             htmlFor="name">
