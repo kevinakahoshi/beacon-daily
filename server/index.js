@@ -33,10 +33,8 @@ app.get('/api/get-checklist/:id?', (req, res, next) => {
   } else {
     sqlQuery = `
       SELECT *
-        FROM users
-       INNER JOIN checklist
-          ON users.userId = checklist.userId
-       WHERE users.userId = $1
+        FROM checklist
+       WHERE userId = $1
     `;
     params.push(userId);
   }
@@ -65,7 +63,7 @@ app.post('/api/create-an-account', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('api/login', (req, res, next) => {
+app.post('/api/login', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const sqlQuery = `
@@ -79,7 +77,16 @@ app.post('api/login', (req, res, next) => {
     password
   ];
   db.query(sqlQuery, params)
-    .then(result => res.status(200).json({}));
+    .then(result => {
+      const user = {
+        email: result.rows[0].email,
+        firstname: result.rows[0].firstname,
+        lastname: result.rows[0].lastname,
+        userid: result.rows[0].userid
+      };
+      res.status(200).json(user);
+    })
+    .catch(err => next(err));
 });
 
 app.post('/api/create-checklist-item', (req, res, next) => {

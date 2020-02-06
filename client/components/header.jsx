@@ -23,7 +23,7 @@ class Header extends React.Component {
   render() {
     return (
       <>
-        <AppBar position="static" className={this.state.location === '/' ? 'hidden' : ''}>
+        <AppBar position="static">
           <Toolbar>
             <Link to="/">
               <Typography color="inherit">
