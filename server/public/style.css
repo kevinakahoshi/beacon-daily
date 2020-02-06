@@ -3,6 +3,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.main {
+  height: 100vh;
+}
+
 .mounting {
   animation: mount 1s;
   animation-fill-mode: forwards;

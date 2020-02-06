@@ -26,13 +26,13 @@ class App extends React.Component {
     this.loginSubmitHandler = this.loginSubmitHandler.bind(this);
   }
 
-  loginSubmitHandler(event, historyProps) {
+  loginSubmitHandler(event, user, historyProps) {
     event.preventDefault();
     const init = {
       method: 'POST',
       body: JSON.stringify({
-        email: 'kevin@beacondaily.com',
-        password: 'test'
+        email: user.email,
+        password: user.password
       }),
       headers: {
         'Content-Type': 'application/json'
