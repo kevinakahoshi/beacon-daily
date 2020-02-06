@@ -1,5 +1,21 @@
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  height: 100vh;
+}
+
+.mount {
+  animation: mount 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes mount {
+  0% {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
 }

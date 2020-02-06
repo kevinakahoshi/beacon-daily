@@ -65,7 +65,7 @@ app.post('/api/create-an-account', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('api/login', (req, res, next) => {
+app.post('/api/login', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const sqlQuery = `
@@ -79,7 +79,8 @@ app.post('api/login', (req, res, next) => {
     password
   ];
   db.query(sqlQuery, params)
-    .then(result => res.status(200).json({}));
+    .then(result => res.status(200).json(result.rows[0]))
+    .catch(err => next(err));
 });
 
 app.post('/api/create-checklist-item', (req, res, next) => {
