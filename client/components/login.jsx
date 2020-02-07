@@ -33,20 +33,6 @@ function Login(props) {
       <form onSubmit={event => props.loginSubmitHandler(event, user, props.history)}>
         <FormGroup>
           <FormControl>
-            {/* <InputLabel
-            htmlFor="name">
-            Name
-          </InputLabel>
-          <Select
-            id="name"
-            aria-describedby="name"
-            value={name}
-            onChange={event => handleChange(event)}>
-            <MenuItem
-              value="Kevin">
-              Kevin
-            </MenuItem>
-          </Select> */}
             <InputLabel
               htmlFor="email">
             Email

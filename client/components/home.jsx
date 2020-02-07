@@ -38,7 +38,7 @@ function Home(props) {
           variant="contained"
           color="primary"
           m={2}
-          onClick={() => handleClick(event, '/checklist')}>
+          onClick={() => handleClick(event, '/sign-up')}>
             Sign Up
         </Button>
       </Box>
