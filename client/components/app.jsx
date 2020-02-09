@@ -47,7 +47,11 @@ class App extends React.Component {
       fetch('/api/create-an-account', init)
         .then(response => response.json())
         .then(user => {
-          this.setState({ user, signedIn: true, componentStatus: 'unmounting' });
+          this.setState({
+            user,
+            signedIn: true,
+            componentStatus: 'unmounting'
+          });
           this.getChecklistItems(user.userid);
           setTimeout(() => {
             historyProps.push('/checklist');
@@ -75,11 +79,17 @@ class App extends React.Component {
       fetch('/api/login', init)
         .then(response => response.json())
         .then(user => {
-          this.setState({ user, signedIn: true, componentStatus: 'unmounting' });
+          this.setState({
+            user,
+            signedIn: true,
+            componentStatus: 'unmounting'
+          });
           this.getChecklistItems(user.userid);
           setTimeout(() => {
             historyProps.push('/checklist');
-            this.setState({ componentStatus: 'mounting' });
+            this.setState({
+              componentStatus: 'mounting'
+            });
           }, 1000);
         })
         .catch(error => console.error(error));
@@ -107,21 +117,25 @@ class App extends React.Component {
           weather={this.state.weather}/>
         <Fade in={true}>
           <Switch>
-            <Route exact path='/'
+            <Route
+              exact path='/'
               render={props =>
                 <Home {...props}
                   componentStatus={this.state.componentStatus} />} />
-            <Route exact path='/login'
+            <Route
+              exact path='/login'
               render={ props =>
                 <Login {...props}
                   loginSubmitHandler={this.loginSubmitHandler}
                   componentStatus={this.state.componentStatus} />} />
-            <Route exact path='/sign-up'
+            <Route
+              exact path='/sign-up'
               render={ props =>
                 <SignUp {...props}
                   createAccountHandler={this.createAccountHandler}
                   componentStatus={this.state.componentStatus} />} />
-            <Route exact path='/checklist'
+            <Route
+              exact path='/checklist'
               render={props =>
                 <Checklist {...props}
                   checklist={this.state.checklist}
