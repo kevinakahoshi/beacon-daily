@@ -1,5 +1,8 @@
 import React from 'react';
 import {
+  Link
+} from 'react-router-dom';
+import {
   AppBar,
   Toolbar,
   Typography
@@ -20,11 +23,15 @@ class Header extends React.Component {
   render() {
     return (
       <>
-        <AppBar position="sticky">
+        <AppBar
+          position="sticky">
           <Toolbar>
-            <Typography color="inherit">
+            <Link to="/">
+              <Typography
+                color="textPrimary">
                 Beacon Daily
-            </Typography>
+              </Typography>
+            </Link>
           </Toolbar>
         </AppBar>
       </>
