@@ -9,6 +9,9 @@ body {
 
 .main {
   height: 100vh;
+  background-image: linear-gradient(#000000cc, #000000cc), url('./images/map-pattern.png');
+  background-position: center;
+  background-size: contain;
 }
 
 .mounting {

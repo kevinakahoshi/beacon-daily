@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
   },
   contentSection: {
     margin: 'auto',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#ffffff'
   },
   buttons: {
     margin: theme.spacing(2)
@@ -48,6 +49,7 @@ function Home(props) {
           <Button
             variant="contained"
             color="primary"
+            size="large"
             onClick={() => handleClick(event, '/login')}
             className={classes.buttons}>
               Log In
@@ -55,6 +57,7 @@ function Home(props) {
           <Button
             variant="contained"
             color="primary"
+            size="large"
             className={classes.buttons}
             onClick={() => handleClick(event, '/sign-up')}>
               Sign Up
