@@ -35,9 +35,10 @@ function SignUp(props) {
 
   return (
     <Container
-      size="md"
-      className={props.componentStatus}>
-      <form onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}>
+      size="md">
+      <form
+        onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
+        className={props.componentStatus}>
         <FormGroup>
           <FormControl>
             <InputLabel>

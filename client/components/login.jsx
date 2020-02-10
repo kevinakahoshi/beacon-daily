@@ -1,15 +1,9 @@
 import React from 'react';
 import {
-// Link
-} from 'react-router-dom';
-import {
-  Container,
   Box,
   FormControl,
   InputLabel,
   Input,
-  // Select,
-  // MenuItem,
   Button,
   FormGroup
 } from '@material-ui/core';
@@ -28,15 +22,15 @@ function Login(props) {
   };
 
   return (
-    <Container
-      maxWidth="xs"
-      className={props.componentStatus}>
+    <Box
+      p={2}
+      height="100%">
       <Box
         p={2}
-        my={2}
         border={1}
         borderRadius={5}
-        borderColor="grey.500">
+        borderColor="grey.500"
+        className={props.componentStatus}>
         <h1>Log In to Your Account</h1>
         <form
           onSubmit={event => props.loginSubmitHandler(event, user, props.history)}>
@@ -77,7 +71,7 @@ function Login(props) {
           </Box>
         </form>
       </Box>
-    </Container>
+    </Box>
   );
 }
 

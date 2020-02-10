@@ -3,6 +3,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .main {
   height: 100vh;
 }

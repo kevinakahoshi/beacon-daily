@@ -22,9 +22,10 @@ function Home(props) {
       direction="row"
       justify="center"
       alignItems="center"
-      className={componentStatus}
-      height={100}>
-      <Box justifyContent="center">
+      className={componentStatus}>
+      <Box
+        justifyContent="center"
+        height="100%">
         <h1>Beacon Daily</h1>
         <h2>Your daily planner.</h2>
         <Button
