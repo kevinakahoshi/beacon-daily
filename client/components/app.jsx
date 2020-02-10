@@ -11,6 +11,7 @@ import Home from './home';
 import Login from './login';
 import SignUp from './sign-up';
 import Checklist from './checklist';
+import MiniDrawer from './mini-drawer';
 
 class App extends React.Component {
   constructor() {
@@ -68,8 +69,8 @@ class App extends React.Component {
       const init = {
         method: 'POST',
         body: JSON.stringify({
-          email: user.email,
-          password: user.password
+          email: 'kevin@beacondaily.com',
+          password: 'test'
         }),
         headers: {
           'Content-Type': 'application/json'
@@ -86,7 +87,7 @@ class App extends React.Component {
           });
           this.getChecklistItems(user.userid);
           setTimeout(() => {
-            historyProps.push('/checklist');
+            historyProps.push('/drawer');
             this.setState({
               componentStatus: 'mounting'
             });
@@ -114,6 +115,7 @@ class App extends React.Component {
     return (
       <>
         <Header
+          signedIn={this.state.signedIn}
           weather={this.state.weather}/>
         <Fade in={true}>
           <Switch>
@@ -140,6 +142,11 @@ class App extends React.Component {
                 <Checklist {...props}
                   checklist={this.state.checklist}
                   componentStatus={this.state.componentStatus} />} />
+            <Route
+              exact path='/drawer'
+              render={props =>
+                <MiniDrawer {...props}
+                  checklist={this.state.checklist} />} />
           </Switch>
         </Fade>
       </>
