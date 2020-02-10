@@ -1,12 +1,28 @@
 import React from 'react';
 import {
-  Grid,
-  // Container,
   Box,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  mainSection: {
+    display: 'flex',
+    height: '100%',
+    overflow: 'hidden'
+  },
+  contentSection: {
+    margin: 'auto',
+    textAlign: 'center'
+  },
+  buttons: {
+    margin: theme.spacing(2)
+  }
+}));
 
 function Home(props) {
+  const classes = useStyles();
   const [componentStatus, setComponentStatus] = React.useState('mounting');
 
   const handleClick = (event, path) => {
@@ -17,33 +33,35 @@ function Home(props) {
   };
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-      className={componentStatus}>
+    <Box
+      className={classes.mainSection}>
       <Box
-        justifyContent="center"
-        height="100%">
-        <h1>Beacon Daily</h1>
-        <h2>Your daily planner.</h2>
-        <Button
-          variant="contained"
-          color="primary"
-          m={2}
-          onClick={() => handleClick(event, '/login')}>
-            Log In
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          m={2}
-          onClick={() => handleClick(event, '/sign-up')}>
-            Sign Up
-        </Button>
+        className={`${componentStatus} ${classes.contentSection}`}>
+        <Typography variant="h1">
+            Beacon Daily
+        </Typography>
+        <Typography variant="h2">
+            Your daily planner.
+        </Typography>
+        <Box
+          p={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleClick(event, '/login')}
+            className={classes.buttons}>
+              Log In
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.buttons}
+            onClick={() => handleClick(event, '/sign-up')}>
+              Sign Up
+          </Button>
+        </Box>
       </Box>
-    </Grid>
+    </Box>
   );
 }
 
