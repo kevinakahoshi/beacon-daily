@@ -3,15 +3,10 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import {
-  Fade
-} from '@material-ui/core';
-import Header from './header';
 import Home from './home';
 import Login from './login';
 import SignUp from './sign-up';
 import Checklist from './checklist';
-import MiniDrawer from './mini-drawer';
 
 class App extends React.Component {
   constructor() {
@@ -87,7 +82,7 @@ class App extends React.Component {
           });
           this.getChecklistItems(user.userid);
           setTimeout(() => {
-            historyProps.push('/drawer');
+            historyProps.push('/checklist');
             this.setState({
               componentStatus: 'mounting'
             });
@@ -114,41 +109,37 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Header
-          signedIn={this.state.signedIn}
-          weather={this.state.weather}/>
-        <Fade in={true}>
-          <Switch>
-            <Route
-              exact path='/'
-              render={props =>
-                <Home {...props}
-                  componentStatus={this.state.componentStatus} />} />
-            <Route
-              exact path='/login'
-              render={ props =>
-                <Login {...props}
-                  loginSubmitHandler={this.loginSubmitHandler}
-                  componentStatus={this.state.componentStatus} />} />
-            <Route
-              exact path='/sign-up'
-              render={ props =>
-                <SignUp {...props}
-                  createAccountHandler={this.createAccountHandler}
-                  componentStatus={this.state.componentStatus} />} />
-            <Route
-              exact path='/checklist'
-              render={props =>
-                <Checklist {...props}
-                  checklist={this.state.checklist}
-                  componentStatus={this.state.componentStatus} />} />
-            <Route
-              exact path='/drawer'
-              render={props =>
-                <MiniDrawer {...props}
-                  checklist={this.state.checklist} />} />
-          </Switch>
-        </Fade>
+        <Switch>
+          <Route
+            exact path='/'
+            render={props =>
+              <Home {...props}
+                componentStatus={this.state.componentStatus} />} />
+          <Route
+            exact path='/login'
+            render={ props =>
+              <Login {...props}
+                loginSubmitHandler={this.loginSubmitHandler}
+                componentStatus={this.state.componentStatus} />} />
+          <Route
+            exact path='/sign-up'
+            render={ props =>
+              <SignUp {...props}
+                createAccountHandler={this.createAccountHandler}
+                componentStatus={this.state.componentStatus} />} />
+          {/* <Route
+            exact path='/checklist'
+            render={props =>
+              <Checklist {...props}
+                checklist={this.state.checklist}
+                componentStatus={this.state.componentStatus} />} /> */}
+          <Route
+            exact path='/checklist'
+            render={props =>
+              <Checklist {...props}
+                componentStatus={this.state.componentStatus}
+                checklist={this.state.checklist} />} />
+        </Switch>
       </>
     );
   }
