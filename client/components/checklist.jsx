@@ -93,6 +93,7 @@ function Checklist(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [viewCompleted, setViewCompleted] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -112,20 +113,41 @@ function Checklist(props) {
   </Box>;
 
   if (props.checklist.length) {
-    checklistItems = props.checklist.map((checklistItem, index) => {
-      return (
-        <Box
-          p={2}
-          my={2}
-          border={1}
-          borderRadius={5}
-          borderColor="grey.500"
-          key={index}
-          className={props.componentStatus}>
-          <h3>{checklistItem.checklistitem}</h3>
-        </Box>
-      );
-    });
+    if (viewCompleted) {
+      checklistItems = props.checklist.map((checklistItem, index) => {
+        if (checklistItem.isCompleted) {
+          return (
+            <Box
+              p={2}
+              my={2}
+              border={1}
+              borderRadius={5}
+              borderColor="grey.500"
+              key={index}
+              className={props.componentStatus}>
+              <h3>{checklistItem.checklistitem}</h3>
+            </Box>
+          );
+        }
+      });
+    } else {
+      checklistItems = props.checklist.map((checklistItem, index) => {
+        if (!checklistItem.isCompleted) {
+          return (
+            <Box
+              p={2}
+              my={2}
+              border={1}
+              borderRadius={5}
+              borderColor="grey.500"
+              key={index}
+              className={props.componentStatus}>
+              <h3>{checklistItem.checklistitem}</h3>
+            </Box>
+          );
+        }
+      });
+    }
   }
 
   return (
@@ -148,7 +170,8 @@ function Checklist(props) {
             <MenuIcon />
           </IconButton>
           <Typography
-            variant="h6">
+            variant="h6"
+            onClick={() => props.history.push('/')}>
             Your Daily Planner
           </Typography>
         </Toolbar>
@@ -187,7 +210,8 @@ function Checklist(props) {
           <ListItem
             button
             className={classes.menuOptions}>
-            <ListItemIcon>
+            <ListItemIcon
+              onClick={setViewCompleted(true)}>
               <CheckBoxOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="View Completed" />

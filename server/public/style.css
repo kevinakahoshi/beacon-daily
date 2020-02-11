@@ -9,9 +9,16 @@ body {
 
 .main {
   height: 100vh;
-  background-image: linear-gradient(#000000cc, #000000cc), url('./images/map-pattern.png');
   background-position: center;
   background-size: contain;
+}
+
+.light-mode {
+  background-image: linear-gradient(#fffffff1, #fffffff1), url('./images/light-mode-background.png');
+}
+
+.dark-mode {
+  background-image: linear-gradient(#000000CC, #000000CC), url('./images/dark-mode-background.png');
 }
 
 .mounting {
@@ -27,7 +34,7 @@ body {
 @keyframes mount {
   0% {
     opacity: 0;
-    transform: translateY(20%);
+    transform: translateY(15%);
   }
 
   100% {
@@ -44,6 +51,6 @@ body {
 
   100% {
     opacity: 0;
-    transform: translateY(10%);
+    transform: translateY(15%);
   }
 }

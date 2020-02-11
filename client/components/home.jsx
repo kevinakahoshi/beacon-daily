@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   contentSection: {
     margin: 'auto',
     textAlign: 'center',
-    color: '#ffffff'
+    color: 'inherit'
   },
   buttons: {
     margin: theme.spacing(2)
