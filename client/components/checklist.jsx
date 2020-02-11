@@ -20,6 +20,7 @@ import WbIncandescentOutlinedIcon from '@material-ui/icons/WbIncandescentOutline
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 
 const drawerWidth = 300;
 
@@ -260,6 +261,16 @@ function Checklist(props) {
           </ListItem>
         </List>
         <Divider />
+        <List>
+          <ListItem
+            button
+            className={classes.menuOptions}>
+            <ListItemIcon>
+              <ExitToAppOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Sign Out" />
+          </ListItem>
+        </List>
       </Drawer>
       <main
         className={`${classes.content} ${props.componentStatus}`}>

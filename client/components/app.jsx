@@ -107,6 +107,7 @@ function App() {
           render={props =>
             <Home {...props}
               user={user}
+              handleFade={handleFade}
               componentStatus={componentStatus}
               signedIn={signedIn} />} />
         <Route
@@ -120,6 +121,7 @@ function App() {
           exact path='/sign-up'
           render={props =>
             <SignUp {...props}
+              handleFade={handleFade}
               createAccountHandler={createAccountHandler}
               componentStatus={componentStatus} />} />
         <Route

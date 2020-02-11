@@ -68,7 +68,8 @@ function Login(props) {
           Log In to Your Acount
           </Typography>
           <form
-            onSubmit={event => props.loginSubmitHandler(event, user, props.history)}>
+            onSubmit={event => props.loginSubmitHandler(event, user, props.history)}
+            className={props.componentStatus}>
             <FormGroup>
               <FormControl>
                 <InputLabel
