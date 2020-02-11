@@ -91,6 +91,14 @@ function App() {
       .catch(err => console.error(err));
   };
 
+  const handleFade = (historyProps, path) => {
+    setComponentStatus('unmounting');
+    setTimeout(() => {
+      historyProps.push(path);
+      setComponentStatus('mounting');
+    }, 1000);
+  };
+
   return (
     <>
       <Switch theme={theme}>
@@ -105,6 +113,7 @@ function App() {
           exact path='/login'
           render={props =>
             <Login {...props}
+              handleFade={handleFade}
               loginSubmitHandler={loginSubmitHandler}
               componentStatus={componentStatus} />} />
         <Route
