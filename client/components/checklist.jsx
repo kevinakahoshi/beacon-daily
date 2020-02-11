@@ -96,6 +96,7 @@ function Checklist(props) {
   const [open, setOpen] = React.useState(false);
   const [viewCompleted, setViewCompleted] = React.useState(false);
   const [mounting, setMounting] = React.useState('mounting');
+  const [fade, setFade] = React.useState('fade-in');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,6 +104,14 @@ function Checklist(props) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const leavePage = () => {
+    setFade('fade-out');
+    setMounting('unmounting');
+    setTimeout(() => {
+      props.history.push('/');
+    }, 1000);
   };
 
   const toggleView = bool => {
@@ -161,7 +170,7 @@ function Checklist(props) {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} ${fade}`}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -181,7 +190,7 @@ function Checklist(props) {
           </IconButton>
           <Typography
             variant="h6"
-            onClick={() => props.history.push('/')}>
+            onClick={leavePage}>
             Your Daily Planner
           </Typography>
         </Toolbar>
@@ -220,7 +229,7 @@ function Checklist(props) {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => toggleView(false)}>
+            onClick={() => viewCompleted ? toggleView(false) : null}>
             <ListItemIcon>
               <CheckBoxOutlineBlankOutlinedIcon />
             </ListItemIcon>
@@ -229,7 +238,7 @@ function Checklist(props) {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => toggleView(true)}>
+            onClick={() => viewCompleted ? null : toggleView(true)}>
             <ListItemIcon>
               <CheckBoxOutlinedIcon />
             </ListItemIcon>
@@ -238,8 +247,10 @@ function Checklist(props) {
         </List>
         <Divider />
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
+      <main
+        className={`${classes.content} ${props.componentStatus}`}>
+        <div
+          className={classes.toolbar} />
         {checklistItems}
       </main>
     </div>
