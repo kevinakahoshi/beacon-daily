@@ -87,8 +87,11 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(1, 3)
     }
   },
-  quoteWeather: {
-    whiteSpace: 'normal'
+  pointer: {
+    cursor: 'pointer'
+  },
+  noWrap: {
+    whiteSpace: 'nowrap'
   }
 }));
 
@@ -124,15 +127,18 @@ function Checklist(props) {
     }, 1000);
   };
 
-  let checklistItems = <Box
-    p={2}
-    my={2}
-    border={1}
-    borderRadius={5}
-    borderColor="grey.500"
-    className={props.componentStatus}>
-    <h3>You have no to-do items!</h3>
-  </Box>;
+  let checklistItems =
+    <Box
+      p={2}
+      my={2}
+      border={1}
+      borderColor="grey.500"
+      className={props.componentStatus}>
+      <Typography
+        className={classes.noWrap}>
+        You have no to-do items!
+      </Typography>
+    </Box>;
 
   if (props.checklist.length) {
     if (viewCompleted) {
@@ -143,11 +149,13 @@ function Checklist(props) {
               p={2}
               my={2}
               border={1}
-              borderRadius={5}
               borderColor="grey.500"
               key={index}
               className={mounting}>
-              <h3>{checklistItem.checklistitem}</h3>
+              <Typography
+                className={classes.noWrap}>
+                {checklistItem.checklistitem}
+              </Typography>
             </Box>
           );
         }
@@ -160,11 +168,13 @@ function Checklist(props) {
               p={2}
               my={2}
               border={1}
-              borderRadius={5}
               borderColor="grey.500"
               key={index}
               className={mounting}>
-              <h3>{checklistItem.checklistitem}</h3>
+              <Typography
+                className={classes.noWrap}>
+                {checklistItem.checklistitem}
+              </Typography>
             </Box>
           );
         }
@@ -193,6 +203,7 @@ function Checklist(props) {
           </IconButton>
           <Typography
             variant="h6"
+            className={`${classes.noWrap} ${classes.pointer}`}
             onClick={leavePage}>
             Your Daily Planner
           </Typography>
