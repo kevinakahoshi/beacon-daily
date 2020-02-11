@@ -127,7 +127,8 @@ function Checklist(props) {
     my={2}
     border={1}
     borderRadius={5}
-    borderColor="grey.500">
+    borderColor="grey.500"
+    className={props.componentStatus}>
     <h3>You have no to-do items!</h3>
   </Box>;
 
