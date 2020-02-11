@@ -34,7 +34,6 @@ function Home(props) {
           <Button
             variant="contained"
             color="primary"
-            size="large"
             onClick={() => handleClick(event, '/checklist')}
             className={classes.buttons}>
               View Checklist
@@ -48,7 +47,6 @@ function Home(props) {
           <Button
             variant="contained"
             color="primary"
-            size="large"
             onClick={() => handleClick(event, '/login')}
             className={classes.buttons}>
               Log In
@@ -56,7 +54,6 @@ function Home(props) {
           <Button
             variant="contained"
             color="primary"
-            size="large"
             className={classes.buttons}
             onClick={() => handleClick(event, '/sign-up')}>
               Sign Up
