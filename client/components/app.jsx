@@ -98,6 +98,7 @@ function App() {
           exact path='/'
           render={props =>
             <Home {...props}
+              user={user}
               componentStatus={componentStatus}
               signedIn={signedIn} />} />
         <Route
