@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 
 function Home(props) {
   const classes = useStyles();
-  const [componentStatus, setComponentStatus] = React.useState('mounting');
 
   const buttonSwitch = user => {
     if (user) {
@@ -34,8 +33,8 @@ function Home(props) {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => handleClick(event, '/checklist')}
-            className={classes.buttons}>
+            onClick={() => props.handleFade(props.history, '/checklist')}
+            className={`${classes.buttons} ${props.componentStatus}`}>
               View Checklist
           </Button>
         </Box>
@@ -47,15 +46,15 @@ function Home(props) {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => handleClick(event, '/login')}
-            className={classes.buttons}>
+            onClick={() => props.handleFade(props.history, '/login')}
+            className={`${classes.buttons} ${props.componentStatus}`}>
               Log In
           </Button>
           <Button
             variant="contained"
             color="primary"
-            className={classes.buttons}
-            onClick={() => handleClick(event, '/sign-up')}>
+            onClick={() => props.handleFade(props.history, '/sign-up')}
+            className={`${classes.buttons} ${props.componentStatus}`}>
               Sign Up
           </Button>
         </Box>
@@ -63,18 +62,11 @@ function Home(props) {
     }
   };
 
-  const handleClick = (event, path) => {
-    setComponentStatus('unmounting');
-    setTimeout(() => {
-      props.history.push(path);
-    }, 1000);
-  };
-
   return (
     <Box
       className={classes.mainSection}>
       <Box
-        className={`${componentStatus} ${classes.contentSection}`}>
+        className={`${props.componentStatus} ${classes.contentSection}`}>
         <Typography variant="h1">
             Beacon Daily
         </Typography>
