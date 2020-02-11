@@ -83,7 +83,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
   },
   menuOptions: {
-    padding: theme.spacing(1, 3)
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(1, 3)
+    }
   },
   quoteWeather: {
     whiteSpace: 'normal'
