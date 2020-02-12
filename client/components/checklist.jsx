@@ -134,7 +134,7 @@ function Checklist(props) {
       my={2}
       border={1}
       borderColor="grey.500"
-      className={props.componentStatus}>
+      className={mounting}>
       <Typography
         className={classes.noWrap}>
         You have no to-do items!
@@ -276,6 +276,11 @@ function Checklist(props) {
         className={`${classes.content} ${props.componentStatus}`}>
         <div
           className={classes.toolbar} />
+        <Typography
+          variant="h3"
+          className={mounting}>
+          {viewCompleted ? 'Completed' : 'Incomplete'} Items
+        </Typography>
         {checklistItems}
       </main>
     </div>
