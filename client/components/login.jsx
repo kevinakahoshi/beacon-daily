@@ -80,6 +80,7 @@ function Login(props) {
                 <Input
                   id="email"
                   name="email"
+                  autoComplete="off"
                   value={email}
                   onChange={event => handleChange(event)} />
               </FormControl>
@@ -93,6 +94,7 @@ function Login(props) {
                 <Input
                   id="password"
                   name="password"
+                  type="password"
                   value={password}
                   onChange={event => handleChange(event)} />
               </FormControl>
