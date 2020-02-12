@@ -8,6 +8,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
+import ModalOverlay from './modal-overlay';
 
 const useStyles = makeStyles(theme => ({
   mainSection: {
@@ -106,6 +107,12 @@ function Login(props) {
           </form>
         </Box>
       </Box>
+      {props.modalOpen
+        ? <ModalOverlay
+          modalOpen={props.modalOpen}
+          handleModalClose={props.handleModalClose}
+          modalMessage={props.modalMessage} />
+        : null}
     </Box>
   );
 }

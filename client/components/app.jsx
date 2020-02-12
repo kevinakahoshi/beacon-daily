@@ -13,6 +13,8 @@ function App() {
   const [user, setUser] = React.useState(null);
   const [signedIn, setSignedIn] = React.useState(false);
   const [checklist, setChecklist] = React.useState([]);
+  const [modalMessage, setModalMessage] = React.useState(null);
+  const [modalOpen, setModalOpen] = React.useState(false);
   // const [weather, setWeather] = React.useState(null);
   const [componentStatus, setComponentStatus] = React.useState('mounting');
 
@@ -60,8 +62,8 @@ function App() {
       const init = {
         method: 'POST',
         body: JSON.stringify({
-          email: 'kevin@beacondaily.com',
-          password: 'test'
+          email: user.email,
+          password: user.password
         }),
         headers: {
           'Content-Type': 'application/json'
@@ -71,14 +73,20 @@ function App() {
       fetch('/api/login', init)
         .then(response => response.json())
         .then(user => {
-          setUser(user);
-          setSignedIn(true);
-          setComponentStatus('unmounting');
-          getChecklistItems(user.userid);
-          setTimeout(() => {
-            historyProps.push('/checklist');
-            setComponentStatus('mounting');
-          }, 1000);
+          if (!user.error) {
+            setUser(user);
+            setModalMessage(null);
+            setSignedIn(true);
+            setComponentStatus('unmounting');
+            getChecklistItems(user.userid);
+            setTimeout(() => {
+              historyProps.push('/checklist');
+              setComponentStatus('mounting');
+            }, 1000);
+          } else {
+            setModalMessage('Either email address or password were not correct.');
+            handleModalOpen();
+          }
         })
         .catch(error => console.error(error));
     }
@@ -99,6 +107,14 @@ function App() {
     }, 1000);
   };
 
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <Switch theme={theme}>
@@ -115,6 +131,9 @@ function App() {
           render={props =>
             <Login {...props}
               handleFade={handleFade}
+              modalOpen={modalOpen}
+              modalMessage={modalMessage}
+              handleModalClose={handleModalClose}
               loginSubmitHandler={loginSubmitHandler}
               componentStatus={componentStatus} />} />
         <Route
