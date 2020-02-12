@@ -73,65 +73,69 @@ function SignUp(props) {
           variant="h1">
             Beacon Daily
         </Typography>
-        <Typography
-          variant="h6">
+        <Box
+          p={2}
+          borderColor="grey.500">
+          <Typography
+            variant="h6">
             Create an Account
-        </Typography>
-        <form
-          onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
-          className={props.componentStatus}>
-          <FormGroup>
-            <FormControl>
-              <InputLabel>
+          </Typography>
+          <form
+            onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
+            className={props.componentStatus}>
+            <FormGroup>
+              <FormControl>
+                <InputLabel>
             First Name
-              </InputLabel>
-              <Input
-                name="firstName"
-                value={firstName}
-                onChange={event => handleChange(event)} />
-            </FormControl>
-          </FormGroup>
-          <FormGroup>
-            <FormControl>
-              <InputLabel>
+                </InputLabel>
+                <Input
+                  name="firstName"
+                  value={firstName}
+                  onChange={event => handleChange(event)} />
+              </FormControl>
+            </FormGroup>
+            <FormGroup>
+              <FormControl>
+                <InputLabel>
               Last Name
-              </InputLabel>
-              <Input
-                name="lastName"
-                value={lastName}
-                onChange={event => handleChange(event)} />
-            </FormControl>
-          </FormGroup>
-          <FormGroup>
-            <FormControl>
-              <InputLabel>
+                </InputLabel>
+                <Input
+                  name="lastName"
+                  value={lastName}
+                  onChange={event => handleChange(event)} />
+              </FormControl>
+            </FormGroup>
+            <FormGroup>
+              <FormControl>
+                <InputLabel>
               Email
-              </InputLabel>
-              <Input
-                name="email"
-                value={email}
-                onChange={event => handleChange(event)} />
-            </FormControl>
-          </FormGroup>
-          <FormGroup>
-            <FormControl>
-              <InputLabel>
+                </InputLabel>
+                <Input
+                  name="email"
+                  value={email}
+                  onChange={event => handleChange(event)} />
+              </FormControl>
+            </FormGroup>
+            <FormGroup>
+              <FormControl>
+                <InputLabel>
               Password
-              </InputLabel>
-              <Input
-                name="password"
-                value={password}
-                onChange={event => handleChange(event)} />
-            </FormControl>
-          </FormGroup>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            className={classes.buttons}>
+                </InputLabel>
+                <Input
+                  name="password"
+                  value={password}
+                  onChange={event => handleChange(event)} />
+              </FormControl>
+            </FormGroup>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              className={classes.buttons}>
             Submit
-          </Button>
-        </form>
+            </Button>
+          </form>
+        </Box>
       </Box>
     </Box>
   );
