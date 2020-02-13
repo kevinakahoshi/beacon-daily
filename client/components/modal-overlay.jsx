@@ -47,10 +47,10 @@ function ModalOverlay(props) {
         <div className={classes.paper}>
           <Typography
             variant="h5">
-              An error occurred.
+            {props.modalMessage.heading}
           </Typography>
           <p>
-            {props.modalMessage}
+            {props.modalMessage.messageBody}
           </p>
           <Box
             mt={2}>

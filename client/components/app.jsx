@@ -84,7 +84,10 @@ function App() {
               setComponentStatus('mounting');
             }, 1000);
           } else {
-            setModalMessage('Either email address or password were not correct.');
+            setModalMessage({
+              heading: 'An unexpected error occured',
+              messageBody: 'Either email address or password were not correct.'
+            });
             handleModalOpen();
           }
         })
