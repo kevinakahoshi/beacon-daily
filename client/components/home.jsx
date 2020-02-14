@@ -35,7 +35,7 @@ function Home(props) {
             color="primary"
             onClick={() => props.handleFade(props.history, '/checklist')}
             className={`${classes.buttons} ${props.componentStatus}`}>
-              View Checklist
+              View Planner
           </Button>
         </Box>
       );
