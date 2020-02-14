@@ -1,10 +1,10 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
@@ -56,7 +56,8 @@ function Login(props) {
         onClick={() => props.handleFade(props.history, '/')}>
         <ChevronLeftOutlinedIcon />BACK
       </Button>
-      <Box className={`${props.componentStatus} ${classes.contentSection}`}>
+      <Box
+        className={`${props.componentStatus} ${classes.contentSection}`}>
         <Typography
           variant="h1">
             Beacon Daily

@@ -103,7 +103,7 @@ function Checklist(props) {
   const [open, setOpen] = React.useState(false);
   const [mounting, setMounting] = React.useState('mounting');
   const [fade, setFade] = React.useState('fade-in');
-  const [view, setView] = React.useState('incomplete');
+  const [view, setView] = React.useState('create');
 
   const handleDrawerOpen = () => {
     setOpen(true);
