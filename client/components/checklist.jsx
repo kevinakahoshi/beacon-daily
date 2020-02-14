@@ -1,7 +1,8 @@
 import React from 'react';
+import ChecklistItems from './checklist-items';
+import CreateChecklistItem from './create-checklist-item';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -100,9 +101,9 @@ function Checklist(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [viewCompleted, setViewCompleted] = React.useState(false);
   const [mounting, setMounting] = React.useState('mounting');
   const [fade, setFade] = React.useState('fade-in');
+  const [view, setView] = React.useState('incomplete');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -120,71 +121,19 @@ function Checklist(props) {
     }, 1000);
   };
 
-  const toggleView = bool => {
-    setMounting('unmounting');
-    setTimeout(() => {
-      setViewCompleted(bool);
-      setMounting('mounting');
-    }, 1000);
+  const toggleView = newView => {
+    if (view !== newView) {
+      setMounting('unmounting');
+      setTimeout(() => {
+        setView(newView);
+        setMounting('mounting');
+      }, 1000);
+    }
   };
 
-  let checklistItems =
-    <Box
-      p={2}
-      my={2}
-      border={1}
-      borderColor="grey.500"
-      className={mounting}>
-      <Typography
-        className={classes.noWrap}>
-        You have no to-do items!
-      </Typography>
-    </Box>;
-
-  if (props.checklist.length) {
-    if (viewCompleted) {
-      checklistItems = props.checklist.map((checklistItem, index) => {
-        if (checklistItem.iscompleted) {
-          return (
-            <Box
-              p={2}
-              my={2}
-              border={1}
-              borderColor="grey.500"
-              key={index}
-              className={mounting}>
-              <Typography
-                className={classes.noWrap}>
-                {checklistItem.checklistitem}
-              </Typography>
-            </Box>
-          );
-        }
-      });
-    } else {
-      checklistItems = props.checklist.map((checklistItem, index) => {
-        if (!checklistItem.iscompleted) {
-          return (
-            <Box
-              p={2}
-              my={2}
-              border={1}
-              borderColor="grey.500"
-              key={index}
-              className={mounting}>
-              <Typography
-                className={classes.noWrap}>
-                {checklistItem.checklistitem}
-              </Typography>
-            </Box>
-          );
-        }
-      });
-    }
-  }
-
   return (
-    <div className={`${classes.root} ${fade}`}>
+    <div
+      className={`${classes.root} ${fade}`}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -222,42 +171,57 @@ function Checklist(props) {
             [classes.drawerClose]: !open
           })
         }}>
-        <div className={classes.toolbar}>
+        <div
+          className={classes.toolbar}>
           <WbIncandescentOutlinedIcon />
-          <Typography variant="h6">
+          <Typography
+            variant="h6">
             Beacon Daily
           </Typography>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          <IconButton
+            onClick={handleDrawerClose}>
+            {theme.direction === 'rtl'
+              ? <ChevronRightIcon />
+              : <ChevronLeftIcon />}
           </IconButton>
         </div>
         <Divider />
         <List>
           <ListItem
             button
-            className={classes.menuOptions}>
+            className={classes.menuOptions}
+            onClick={() => view !== 'create'
+              ? toggleView('create')
+              : null }>
             <ListItemIcon>
               <AddBoxOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary="Add New To-Do" />
+            <ListItemText
+              primary="Add New Item" />
           </ListItem>
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => viewCompleted ? toggleView(false) : null}>
+            onClick={() => view !== 'incomplete'
+              ? toggleView('incomplete')
+              : null}>
             <ListItemIcon>
               <CheckBoxOutlineBlankOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary="View Incomplete" />
+            <ListItemText
+              primary="View Incomplete" />
           </ListItem>
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => viewCompleted ? null : toggleView(true)}>
+            onClick={() => view === 'completed'
+              ? null
+              : toggleView('completed')}>
             <ListItemIcon>
               <CheckBoxOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary="View Completed" />
+            <ListItemText
+              primary="View Completed" />
           </ListItem>
         </List>
         <Divider />
@@ -268,7 +232,8 @@ function Checklist(props) {
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary="Sign Out" />
+            <ListItemText
+              primary="Sign Out" />
           </ListItem>
         </List>
       </Drawer>
@@ -276,12 +241,14 @@ function Checklist(props) {
         className={`${classes.content} ${props.componentStatus}`}>
         <div
           className={classes.toolbar} />
-        <Typography
-          variant="h3"
-          className={mounting}>
-          {viewCompleted ? 'Completed' : 'Incomplete'} Items
-        </Typography>
-        {checklistItems}
+        {view === 'create'
+          ? <CreateChecklistItem
+            mounting={mounting} />
+          : <ChecklistItems
+            mounting={mounting}
+            view={view}
+            checklist={props.checklist}
+            classes={classes} />}
       </main>
     </div>
   );
