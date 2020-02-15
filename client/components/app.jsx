@@ -102,6 +102,24 @@ function App() {
       .catch(err => console.error(err));
   };
 
+  const createChecklistItem = checklistItem => {
+    const init = {
+      method: 'POST',
+      body: JSON.stringify({
+        checklistItem: checklistItem,
+        userId: user.userid
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    fetch('/api/create-checklist-item', init)
+      .then(res => res.json());
+    // .then(data => console.log(data))
+    // .catch(err => console.err(err));
+  };
+
   const handleFade = (historyProps, path) => {
     setComponentStatus('unmounting');
     setTimeout(() => {
@@ -120,11 +138,13 @@ function App() {
 
   return (
     <>
-      <Switch theme={theme}>
+      <Switch
+        theme={theme}>
         <Route
           exact path='/'
           render={props =>
-            <Home {...props}
+            <Home
+              {...props}
               user={user}
               handleFade={handleFade}
               componentStatus={componentStatus}
@@ -132,7 +152,8 @@ function App() {
         <Route
           exact path='/login'
           render={props =>
-            <Login {...props}
+            <Login
+              {...props}
               handleFade={handleFade}
               modalOpen={modalOpen}
               modalMessage={modalMessage}
@@ -142,16 +163,20 @@ function App() {
         <Route
           exact path='/sign-up'
           render={props =>
-            <SignUp {...props}
+            <SignUp
+              {...props}
               handleFade={handleFade}
               createAccountHandler={createAccountHandler}
               componentStatus={componentStatus} />} />
         <Route
           exact path='/checklist'
           render={props =>
-            <Checklist {...props}
+            <Checklist
+              {...props}
               user={user}
+              getChecklistItems={getChecklistItems}
               componentStatus={componentStatus}
+              createChecklistItem={createChecklistItem}
               checklist={checklist} />} />
       </Switch>
     </>

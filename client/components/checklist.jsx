@@ -101,9 +101,9 @@ function Checklist(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [mounting, setMounting] = React.useState('mounting');
+  const [view, setView] = React.useState('incomplete');
   const [fade, setFade] = React.useState('fade-in');
-  const [view, setView] = React.useState('create');
+  const [mounting, setMounting] = React.useState('mounting');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -128,6 +128,10 @@ function Checklist(props) {
         setView(newView);
         setMounting('mounting');
       }, 1000);
+    }
+
+    if (newView === 'completed' || newView === 'incomplete') {
+      props.getChecklistItems(props.user.userid);
     }
   };
 
@@ -243,6 +247,7 @@ function Checklist(props) {
           className={classes.toolbar} />
         {view === 'create'
           ? <CreateChecklistItem
+            newItem={props.createChecklistItem}
             mounting={mounting} />
           : <ChecklistItems
             mounting={mounting}
