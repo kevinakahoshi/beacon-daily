@@ -1,16 +1,13 @@
 require('dotenv/config');
 const express = require('express');
-
 const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
-
 const app = express();
 
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
-
 app.use(express.json());
 
 app.get('/api/health-check', (req, res, next) => {
@@ -20,7 +17,12 @@ app.get('/api/health-check', (req, res, next) => {
 });
 
 app.get('/api/get-checklist/:id?', (req, res, next) => {
-  const userId = parseInt(req.params.id);
+  let userId = null;
+  if (req.session.userId) {
+    userId = req.session.userId;
+  } else {
+    userId = parseInt(req.params.id);
+  }
   let sqlQuery = null;
   const params = [];
   if (!userId) {
@@ -41,6 +43,14 @@ app.get('/api/get-checklist/:id?', (req, res, next) => {
   db.query(sqlQuery, params)
     .then(result => res.status(200).json(result.rows))
     .catch(err => next(err));
+});
+
+app.get('/api/get-user', (req, res, next) => {
+  if (req.session.user) {
+    res.status(200).json(req.session.user);
+  } else {
+    res.status(200).json(null);
+  }
 });
 
 app.post('/api/create-an-account', (req, res, next) => {
@@ -78,13 +88,17 @@ app.post('/api/login', (req, res, next) => {
   ];
   db.query(sqlQuery, params)
     .then(result => {
-      const user = {
-        email: result.rows[0].email,
-        firstname: result.rows[0].firstname,
-        lastname: result.rows[0].lastname,
-        userid: result.rows[0].userid
-      };
-      res.status(200).json(user);
+      if (result) {
+        const user = {
+          email: result.rows[0].email,
+          firstname: result.rows[0].firstname,
+          lastname: result.rows[0].lastname,
+          userid: result.rows[0].userid
+        };
+        req.session.user = user;
+        // req.session = JSON.parse(res.session, null, 2);
+        res.status(200).json(user);
+      }
     })
     .catch(err => next(err));
 });

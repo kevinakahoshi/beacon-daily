@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+// import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -40,11 +40,6 @@ function IndividualTodo(props) {
         <FormControl variant="outlined"
           // className={classes.formControl}
         >
-          <InputLabel
-            // ref={inputLabel}
-            htmlFor="is-complete-select">
-            Completed
-          </InputLabel>
           <Select
             native
             defaultValue={completed}

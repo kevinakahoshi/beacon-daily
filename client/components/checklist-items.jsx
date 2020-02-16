@@ -1,15 +1,18 @@
 import React from 'react';
-// import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import IndividualTodo from './individual-todo';
 
 function ChecklistItems(props) {
   let checklistItems =
-    <Typography
-      variant="h6"
-      className={props.mounting}>
-        You have no to-do items.
-    </Typography>;
+    <Box
+      my={2}>
+      <Typography
+        variant="h6"
+        className={props.mounting}>
+          You have no to-do items.
+      </Typography>
+    </Box>;
 
   if (props.checklist.length) {
     // If there are actual checklist items available, we use Array.map to create checklist items
