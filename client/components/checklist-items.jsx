@@ -1,61 +1,32 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+// import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import IndividualTodo from './individual-todo';
 
 function ChecklistItems(props) {
   let checklistItems =
-    <Box
-      p={2}
-      my={2}
-      border={1}
-      borderColor="grey.500"
+    <Typography
+      variant="h6"
       className={props.mounting}>
-      <Typography
-        className={props.classes.noWrap}>
-        You have no to-do items!
-      </Typography>
-    </Box>;
+        You have no to-do items.
+    </Typography>;
 
   if (props.checklist.length) {
-    if (props.view === 'completed') {
-      checklistItems = props.checklist.map((checklistItem, index) => {
-        if (checklistItem.iscompleted) {
-          return (
-            <Box
-              p={2}
-              my={2}
-              border={1}
-              borderColor="grey.500"
-              key={index}
-              className={props.mounting}>
-              <Typography
-                className={props.classes.noWrap}>
-                {checklistItem.checklistitem}
-              </Typography>
-            </Box>
-          );
-        }
-      });
-    } else {
-      checklistItems = props.checklist.map((checklistItem, index) => {
-        if (!checklistItem.iscompleted) {
-          return (
-            <Box
-              p={2}
-              my={2}
-              border={1}
-              borderColor="grey.500"
-              key={index}
-              className={props.mounting}>
-              <Typography
-                className={props.classes.noWrap}>
-                {checklistItem.checklistitem}
-              </Typography>
-            </Box>
-          );
-        }
-      });
-    }
+    // If there are actual checklist items available, we use Array.map to create checklist items
+    checklistItems = props.checklist.map((checklistItem, index) => {
+      // Depending on the view, we either show the completed or incompleted items
+      if (props.view === 'completed'
+        ? checklistItem.iscompleted
+        : !checklistItem.iscompleted) {
+        return (
+          <IndividualTodo
+            key={index}
+            classes={props.classes}
+            checklistItem={checklistItem}
+            mounting={props.mounting} />
+        );
+      }
+    });
   }
 
   return (
