@@ -1,6 +1,7 @@
 import React from 'react';
 import ChecklistItems from './checklist-items';
 import CreateChecklistItem from './create-checklist-item';
+import ModalOverlay from './modal-overlay';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -248,12 +249,19 @@ function Checklist(props) {
         {view === 'create'
           ? <CreateChecklistItem
             newItem={props.createChecklistItem}
+            toggleView={toggleView}
             mounting={mounting} />
           : <ChecklistItems
             mounting={mounting}
             view={view}
             checklist={props.checklist}
             classes={classes} />}
+        {props.modalOpen
+          ? <ModalOverlay
+            modalOpen={props.modalOpen}
+            handleModalClose={props.handleModalClose}
+            modalMessage={props.modalMessage} />
+          : null}
       </main>
     </div>
   );

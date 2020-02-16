@@ -102,7 +102,7 @@ function App() {
       .catch(err => console.error(err));
   };
 
-  const createChecklistItem = checklistItem => {
+  const createChecklistItem = (checklistItem, toggleView) => {
     const init = {
       method: 'POST',
       body: JSON.stringify({
@@ -115,9 +115,13 @@ function App() {
     };
 
     fetch('/api/create-checklist-item', init)
-      .then(res => res.json());
-    // .then(data => console.log(data))
-    // .catch(err => console.err(err));
+      .then(res => res.json())
+      .then(data => {
+        if (!data.error) {
+          toggleView('incomplete');
+        }
+      })
+      .catch(err => console.error(err));
   };
 
   const handleFade = (historyProps, path) => {
