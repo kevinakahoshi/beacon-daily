@@ -23,7 +23,7 @@ function CreateChecklistItem(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    props.newItem(description);
+    props.newItem(description, props.toggleView);
   };
 
   return (

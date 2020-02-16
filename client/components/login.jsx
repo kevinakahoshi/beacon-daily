@@ -54,7 +54,7 @@ function Login(props) {
       <Button
         className={`${classes.backWrapper} ${props.componentStatus}`}
         onClick={() => props.handleFade(props.history, '/')}>
-        <ChevronLeftOutlinedIcon />BACK
+        <ChevronLeftOutlinedIcon />Back
       </Button>
       <Box
         className={`${props.componentStatus} ${classes.contentSection}`}>
@@ -67,7 +67,7 @@ function Login(props) {
           borderColor="grey.500">
           <Typography
             variant="h6">
-          Log In to Your Acount
+              Log In to Your Acount
           </Typography>
           <form
             onSubmit={event => props.loginSubmitHandler(event, user, props.history)}
@@ -76,7 +76,7 @@ function Login(props) {
               <FormControl>
                 <InputLabel
                   htmlFor="email">
-                Email
+                    Email
                 </InputLabel>
                 <Input
                   id="email"
@@ -90,7 +90,7 @@ function Login(props) {
               <FormControl>
                 <InputLabel
                   htmlFor="email">
-                Password
+                    Password
                 </InputLabel>
                 <Input
                   id="password"
@@ -105,7 +105,7 @@ function Login(props) {
               color="primary"
               type="submit"
               className={classes.buttons}>
-              Submit
+                Submit
             </Button>
           </form>
         </Box>
