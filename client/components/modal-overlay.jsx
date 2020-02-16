@@ -41,8 +41,7 @@ function ModalOverlay(props) {
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500
-      }}
-    >
+      }}>
       <Fade in={props.modalOpen}>
         <div className={classes.paper}>
           <Typography

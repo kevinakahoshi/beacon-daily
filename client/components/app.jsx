@@ -15,8 +15,8 @@ function App() {
   const [checklist, setChecklist] = React.useState([]);
   const [modalMessage, setModalMessage] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
-  // const [weather, setWeather] = React.useState(null);
   const [componentStatus, setComponentStatus] = React.useState('mounting');
+  // const [weather, setWeather] = React.useState(null);
 
   const theme = createMuiTheme({
     palette: {
@@ -85,7 +85,7 @@ function App() {
             }, 1000);
           } else {
             setModalMessage({
-              heading: 'An unexpected error occured',
+              heading: 'An unexpected error occurred',
               messageBody: 'Either email address or password were not correct.'
             });
             handleModalOpen();
@@ -119,6 +119,12 @@ function App() {
       .then(data => {
         if (!data.error) {
           toggleView('incomplete');
+        } else {
+          setModalMessage({
+            heading: 'An unexpected error occurred',
+            messageBody: 'Invalid characters in your checklist item'
+          });
+          handleModalOpen();
         }
       })
       .catch(err => console.error(err));
@@ -178,6 +184,9 @@ function App() {
             <Checklist
               {...props}
               user={user}
+              modalOpen={modalOpen}
+              modalMessage={modalMessage}
+              handleModalClose={handleModalClose}
               getChecklistItems={getChecklistItems}
               componentStatus={componentStatus}
               createChecklistItem={createChecklistItem}
