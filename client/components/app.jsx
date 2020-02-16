@@ -95,6 +95,18 @@ function App() {
     }
   };
 
+  const getUser = () => {
+    fetch('/api/get-user')
+      .then(res => res.json())
+      .then(user => {
+        setUser(user);
+        if (user) {
+          getChecklistItems(user.userid);
+        }
+      })
+      .catch(err => console.error(err));
+  };
+
   const getChecklistItems = id => {
     fetch(`/api/get-checklist/${id}`)
       .then(res => res.json())
@@ -145,6 +157,10 @@ function App() {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+
+  React.useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <>
