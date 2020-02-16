@@ -21,6 +21,7 @@ function ChecklistItems(props) {
         return (
           <IndividualTodo
             key={index}
+            completed={props.view}
             classes={props.classes}
             checklistItem={checklistItem}
             mounting={props.mounting} />
