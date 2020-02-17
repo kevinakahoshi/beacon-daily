@@ -1,15 +1,21 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
-// import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
   toDoBox: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  dropdown: {
+    marginLeft: theme.spacing(2)
+  },
+  select: {
+    width: 'fit-content'
   }
 }));
 
@@ -28,7 +34,7 @@ function IndividualTodo(props) {
         <Typography
           variant="h6"
           className={props.classes.noWrap}>
-          Description:
+            Description:
         </Typography>
         <Typography
           variant="body1"
@@ -38,20 +44,24 @@ function IndividualTodo(props) {
       </Box>
       <Box>
         <FormControl variant="outlined"
-          // className={classes.formControl}
-        >
+          className={classes.dropdown}>
           <Select
-            native
             defaultValue={completed}
             // value={state.age}
-            // onChange={handleChange('age')}
+            onChange={() => props.toggleComplete(props.checklistItem.checklistitemid)}
             // labelWidth={labelWidth}
             inputProps={{
               name: 'isComplete',
               id: 'is-complete-select'
             }}>
-            <option value="incomplete">Incomplete</option>
-            <option value="completed">Complete</option>
+            <MenuItem
+              value="incomplete">
+                Incomplete
+            </MenuItem>
+            <MenuItem
+              value="completed">
+                Complete
+            </MenuItem>
           </Select>
         </FormControl>
       </Box>

@@ -26,6 +26,7 @@ function ChecklistItems(props) {
             key={index}
             completed={props.view}
             classes={props.classes}
+            toggleComplete={props.toggleComplete}
             checklistItem={checklistItem}
             mounting={props.mounting} />
         );

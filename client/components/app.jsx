@@ -15,6 +15,7 @@ function App() {
   const [checklist, setChecklist] = React.useState([]);
   const [modalMessage, setModalMessage] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [fetchedUser, setFetchedUser] = React.useState(false);
   const [componentStatus, setComponentStatus] = React.useState('mounting');
   // const [weather, setWeather] = React.useState(null);
 
@@ -99,6 +100,7 @@ function App() {
     fetch('/api/get-user')
       .then(res => res.json())
       .then(user => {
+        setFetchedUser(true);
         setUser(user);
         if (user) {
           getChecklistItems(user.userid);
@@ -142,6 +144,21 @@ function App() {
       .catch(err => console.error(err));
   };
 
+  const toggleComplete = checklistItemId => {
+    const init = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ checklistItemId })
+    };
+
+    fetch('/api/toggle-complete', init)
+      .then(res => res.json())
+      .then(data => getChecklistItems())
+      .catch(err => console.error(err));
+  };
+
   const handleFade = (historyProps, path) => {
     setComponentStatus('unmounting');
     setTimeout(() => {
@@ -162,54 +179,59 @@ function App() {
     getUser();
   }, []);
 
-  return (
-    <>
-      <Switch
-        theme={theme}>
-        <Route
-          exact path='/'
-          render={props =>
-            <Home
-              {...props}
-              user={user}
-              handleFade={handleFade}
-              componentStatus={componentStatus}
-              signedIn={signedIn} />} />
-        <Route
-          exact path='/login'
-          render={props =>
-            <Login
-              {...props}
-              handleFade={handleFade}
-              modalOpen={modalOpen}
-              modalMessage={modalMessage}
-              handleModalClose={handleModalClose}
-              loginSubmitHandler={loginSubmitHandler}
-              componentStatus={componentStatus} />} />
-        <Route
-          exact path='/sign-up'
-          render={props =>
-            <SignUp
-              {...props}
-              handleFade={handleFade}
-              createAccountHandler={createAccountHandler}
-              componentStatus={componentStatus} />} />
-        <Route
-          exact path='/checklist'
-          render={props =>
-            <Checklist
-              {...props}
-              user={user}
-              modalOpen={modalOpen}
-              modalMessage={modalMessage}
-              handleModalClose={handleModalClose}
-              getChecklistItems={getChecklistItems}
-              componentStatus={componentStatus}
-              createChecklistItem={createChecklistItem}
-              checklist={checklist} />} />
-      </Switch>
-    </>
-  );
+  if (fetchedUser) {
+    return (
+      <>
+        <Switch
+          theme={theme}>
+          <Route
+            exact path='/'
+            render={props =>
+              <Home
+                {...props}
+                user={user}
+                handleFade={handleFade}
+                componentStatus={componentStatus}
+                signedIn={signedIn} />} />
+          <Route
+            exact path='/login'
+            render={props =>
+              <Login
+                {...props}
+                handleFade={handleFade}
+                modalOpen={modalOpen}
+                modalMessage={modalMessage}
+                handleModalClose={handleModalClose}
+                loginSubmitHandler={loginSubmitHandler}
+                componentStatus={componentStatus} />} />
+          <Route
+            exact path='/sign-up'
+            render={props =>
+              <SignUp
+                {...props}
+                handleFade={handleFade}
+                createAccountHandler={createAccountHandler}
+                componentStatus={componentStatus} />} />
+          <Route
+            exact path='/checklist'
+            render={props =>
+              <Checklist
+                {...props}
+                user={user}
+                modalOpen={modalOpen}
+                modalMessage={modalMessage}
+                handleModalClose={handleModalClose}
+                getChecklistItems={getChecklistItems}
+                componentStatus={componentStatus}
+                createChecklistItem={createChecklistItem}
+                toggleComplete={toggleComplete}
+                checklist={checklist} />} />
+        </Switch>
+      </>
+    );
+  } else {
+    return null;
+  }
 }
 
 // class App extends React.Component {
