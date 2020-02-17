@@ -136,6 +136,10 @@ function Checklist(props) {
     }
   };
 
+  if (!props.user) {
+    props.history.push('/');
+  }
+
   return (
     <div
       className={`${classes.root} ${fade}`}>
