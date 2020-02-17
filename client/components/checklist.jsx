@@ -136,9 +136,12 @@ function Checklist(props) {
     }
   };
 
-  if (!props.user) {
-    props.history.push('/');
-  }
+  React.useEffect(() => {
+    // if (!props.user) {
+    //   props.history.push('/');
+    // }
+    // console.log(props);
+  }, []);
 
   return (
     <div
@@ -258,6 +261,7 @@ function Checklist(props) {
           : <ChecklistItems
             mounting={mounting}
             view={view}
+            toggleComplete={props.toggleComplete}
             checklist={props.checklist}
             classes={classes} />}
         {props.modalOpen
