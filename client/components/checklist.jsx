@@ -92,9 +92,6 @@ const useStyles = makeStyles(theme => ({
   },
   pointer: {
     cursor: 'pointer'
-  },
-  noWrap: {
-    whiteSpace: 'nowrap'
   }
 }));
 
@@ -165,7 +162,7 @@ function Checklist(props) {
           </IconButton>
           <Typography
             variant="h6"
-            className={`${classes.noWrap} ${classes.pointer}`}
+            className={classes.pointer}
             onClick={leavePage}>
             Your Daily Planner
           </Typography>
