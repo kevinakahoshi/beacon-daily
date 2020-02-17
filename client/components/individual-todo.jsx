@@ -8,11 +8,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
   toDoBox: {
-    display: 'flex',
-    justifyContent: 'space-between'
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex',
+      justifyContent: 'space-between'
+    }
   },
   dropdown: {
-    marginLeft: theme.spacing(2)
+    [theme.breakpoints.up('xs')]: {
+      margin: theme.spacing(2, 0, 0, 0)
+    },
+    [theme.breakpoints.up('sm')]: {
+      margin: theme.spacing(0, 0, 0, 2)
+    }
   },
   select: {
     width: 'fit-content'
@@ -42,14 +49,12 @@ function IndividualTodo(props) {
           {props.checklistItem.checklistitem}
         </Typography>
       </Box>
-      <Box>
-        <FormControl variant="outlined"
-          className={classes.dropdown}>
+      <Box
+        className={classes.dropdown}>
+        <FormControl variant="outlined">
           <Select
             defaultValue={completed}
-            // value={state.age}
             onChange={() => props.toggleComplete(props.checklistItem.checklistitemid)}
-            // labelWidth={labelWidth}
             inputProps={{
               name: 'isComplete',
               id: 'is-complete-select'
