@@ -99,7 +99,7 @@ function Checklist(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [view, setView] = React.useState('completed');
+  const [view, setView] = React.useState('incomplete');
   const [fade, setFade] = React.useState('fade-in');
   const [mounting, setMounting] = React.useState('mounting');
 
