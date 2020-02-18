@@ -237,7 +237,8 @@ function Checklist(props) {
         <List>
           <ListItem
             button
-            className={classes.menuOptions}>
+            className={classes.menuOptions}
+            onClick={() => props.logoutUser(props.history)}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
             </ListItemIcon>
