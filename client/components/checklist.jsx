@@ -99,7 +99,7 @@ function Checklist(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [view, setView] = React.useState('incomplete');
+  const [view, setView] = React.useState('completed');
   const [fade, setFade] = React.useState('fade-in');
   const [mounting, setMounting] = React.useState('mounting');
 
@@ -259,6 +259,7 @@ function Checklist(props) {
           : <ChecklistItems
             mounting={mounting}
             view={view}
+            updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
             checklist={props.checklist}
             classes={classes} />}

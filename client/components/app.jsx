@@ -166,6 +166,21 @@ function App() {
       .catch(error => console.error(error));
   };
 
+  const updateChecklistItem = (updatedChecklistItem, checklistItemId) => {
+    const init = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ updatedChecklistItem, checklistItemId })
+    };
+
+    fetch('/api/update-checklist-item', init)
+      .then(response => response.json())
+      .then(data => data)
+      .catch(error => console.error(error));
+  };
+
   const toggleComplete = checklistItemId => {
     const init = {
       method: 'PATCH',
@@ -246,6 +261,7 @@ function App() {
                 getChecklistItems={getChecklistItems}
                 componentStatus={componentStatus}
                 createChecklistItem={createChecklistItem}
+                updateChecklistItem={updateChecklistItem}
                 toggleComplete={toggleComplete}
                 checklist={checklist}
                 logoutUser={logoutUser} />} />

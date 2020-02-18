@@ -2,9 +2,12 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
+import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles(theme => ({
   toDoBox: {
@@ -23,12 +26,41 @@ const useStyles = makeStyles(theme => ({
   },
   select: {
     width: 'fit-content'
+  },
+  inputBox: {
+    display: 'flex'
+  },
+  editSaveStyling: {
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(2)
+    },
+    padding: theme.spacing(1)
+  },
+  hideButtons: {
+    display: 'none'
   }
 }));
 
 function IndividualTodo(props) {
-  const classes = useStyles();
+  const [editing, setEditing] = React.useState(false);
+  const [value, setValue] = React.useState(props.checklistItem.checklistitem);
   const completed = props.completed;
+  const classes = useStyles();
+
+  const handleEditing = () => {
+    setEditing(!editing);
+  };
+
+  const handleSave = () => {
+    if (value.length) {
+      props.updateChecklistItem(value, props.checklistItem.checklistitemid);
+      handleEditing();
+    }
+  };
+
+  const handleChange = event => {
+    setValue(event.target.value);
+  };
 
   return (
     <Box
@@ -37,17 +69,41 @@ function IndividualTodo(props) {
       border={1}
       borderColor="grey.500"
       className={`${props.mounting} ${classes.toDoBox}`}>
-      <Box>
-        <Typography
-          variant="h6"
-          className={props.classes.noWrap}>
-            Description:
-        </Typography>
-        <Typography
-          variant="body1"
-          className={props.classes.noWrap}>
-          {props.checklistItem.checklistitem}
-        </Typography>
+      <Box
+        width="100%"
+        className={classes.toDoBox}>
+        <FormControl
+          fullWidth>
+          <TextField
+            name="description"
+            type="text"
+            autoComplete="off"
+            inputProps={{
+              maxLength: 100,
+              readOnly: !editing
+            }}
+            label={`Description${editing && value.length > 0 ? ' ' + value.length + '/100' : ''}`}
+            value={value}
+            variant="outlined"
+            onChange={event => handleChange(event)} />
+        </FormControl>
+        <Box
+          className={`${completed === 'completed' ? classes.hideButtons : classes.toDoBox}`}>
+          {editing
+            ? <Button
+              variant="outlined"
+              className={classes.editSaveStyling}
+              onClick={() => handleSave()} >
+              <DoneIcon />
+            </Button>
+            : <Button
+              variant="outlined"
+              className={classes.editSaveStyling}
+              onClick={() => handleEditing()} >
+              <EditIcon />
+            </Button>
+          }
+        </Box>
       </Box>
       <Box
         className={classes.dropdown}>
