@@ -259,6 +259,7 @@ function Checklist(props) {
           : <ChecklistItems
             mounting={mounting}
             view={view}
+            updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
             checklist={props.checklist}
             classes={classes} />}

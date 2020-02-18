@@ -41,6 +41,10 @@ body {
   animation-fill-mode: forwards;
 }
 
+.smooth-transition {
+  transition: .3s all;
+}
+
 @keyframes mount {
   0% {
     opacity: 0;

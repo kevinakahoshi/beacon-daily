@@ -131,8 +131,9 @@ app.post('/api/logout', (req, res, next) => {
 });
 
 app.patch('/api/update-checklist-item', (req, res, next) => {
-  const checklistItemId = req.body.checklistItemId;
   const updatedChecklistItem = req.body.updatedChecklistItem;
+  const checklistItemId = req.body.checklistItemId;
+
   const sqlQuery = `
     UPDATE checklist
        SET checklistItem = $1
