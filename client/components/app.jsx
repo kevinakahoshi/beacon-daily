@@ -62,13 +62,13 @@ function App() {
     if (user.email && user.password) {
       const init = {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           email: user.email,
           password: user.password
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        })
       };
 
       fetch('/api/login', init)
@@ -96,9 +96,31 @@ function App() {
     }
   };
 
+  const logoutUser = historyProps => {
+    const init = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    fetch('/api/logout', init)
+      .then(response => response.json())
+      .then(user => {
+        setSignedIn(false);
+        setUser(null);
+        setComponentStatus('unmounting');
+        setTimeout(() => {
+          historyProps.push('/');
+          setComponentStatus('mounting');
+        }, 1000);
+      })
+      .catch(error => console.error(error));
+  };
+
   const getUser = () => {
     fetch('/api/get-user')
-      .then(res => res.json())
+      .then(response => response.json())
       .then(user => {
         setFetchedUser(true);
         setUser(user);
@@ -106,30 +128,30 @@ function App() {
           getChecklistItems(user.userid);
         }
       })
-      .catch(err => console.error(err));
+      .catch(error => console.error(error));
   };
 
   const getChecklistItems = id => {
     fetch(`/api/get-checklist/${id}`)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(checklist => setChecklist(checklist))
-      .catch(err => console.error(err));
+      .catch(error => console.error(error));
   };
 
   const createChecklistItem = (checklistItem, toggleView) => {
     const init = {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         checklistItem: checklistItem,
         userId: user.userid
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      })
     };
 
     fetch('/api/create-checklist-item', init)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
         if (!data.error) {
           toggleView('incomplete');
@@ -141,12 +163,12 @@ function App() {
           handleModalOpen();
         }
       })
-      .catch(err => console.error(err));
+      .catch(error => console.error(error));
   };
 
   const toggleComplete = checklistItemId => {
     const init = {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -154,9 +176,9 @@ function App() {
     };
 
     fetch('/api/toggle-complete', init)
-      .then(res => res.json())
-      .then(data => getChecklistItems())
-      .catch(err => console.error(err));
+      .then(response => response.json())
+      .then(data => getChecklistItems(user.userid))
+      .catch(error => console.error(error));
   };
 
   const handleFade = (historyProps, path) => {
@@ -225,7 +247,8 @@ function App() {
                 componentStatus={componentStatus}
                 createChecklistItem={createChecklistItem}
                 toggleComplete={toggleComplete}
-                checklist={checklist} />} />
+                checklist={checklist}
+                logoutUser={logoutUser} />} />
         </Switch>
       </>
     );
@@ -323,7 +346,7 @@ function App() {
 //     fetch(`/api/get-checklist/${id}`)
 //       .then(res => res.json())
 //       .then(checklist => this.setState({ checklist }))
-//       .catch(err => console.error(err));
+//       .catch(error => console.error(error));
 //   }
 
 //   toggleMode() {
@@ -334,7 +357,7 @@ function App() {
 //     // fetch('https://api.openweathermap.org/data/2.5/weather?zip=92618,us&APPID=898a2a99485d6f874e33752a52837aa7')
 //     //   .then(res => res.json())
 //     //   .then(data => this.setState({ weather: data }))
-//     //   .catch(err => console.error(err));
+//     //   .catch(error => console.error(error));
 //   }
 
 //   render() {

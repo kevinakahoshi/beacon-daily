@@ -121,7 +121,16 @@ app.post('/api/create-checklist-item', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.put('/api/update-checklist-item', (req, res, next) => {
+app.post('/api/logout', (req, res, next) => {
+  if (req.session.user) {
+    delete req.session.user;
+    res.status(200).json('User has been logged out');
+  } else {
+    next(new ClientError('No user was logged in', 200));
+  }
+});
+
+app.patch('/api/update-checklist-item', (req, res, next) => {
   const checklistItemId = req.body.checklistItemId;
   const updatedChecklistItem = req.body.updatedChecklistItem;
   const sqlQuery = `
@@ -138,7 +147,7 @@ app.put('/api/update-checklist-item', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.put('/api/toggle-complete', (req, res, next) => {
+app.patch('/api/toggle-complete', (req, res, next) => {
   const checklistItemId = req.body.checklistItemId;
 
   const getQuery = `
