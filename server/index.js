@@ -34,10 +34,11 @@ app.get('/api/get-checklist/:id?', (req, res, next) => {
   `;
   } else {
     sqlQuery = `
-      SELECT *
-        FROM checklist
-       WHERE userId = $1
-    `;
+        SELECT *
+          FROM checklist
+         WHERE userId = $1
+      ORDER BY checklistItemId
+      `;
     params.push(userId);
   }
   db.query(sqlQuery, params)
