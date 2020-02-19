@@ -5,6 +5,7 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+// import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import DoneIcon from '@material-ui/icons/Done';
@@ -14,7 +15,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'flex',
       justifyContent: 'space-between'
-    }
+    },
+    borderRadius: '4px'
   },
   dropdown: {
     [theme.breakpoints.up('xs')]: {
@@ -22,7 +24,8 @@ const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up('sm')]: {
       margin: theme.spacing(0, 0, 0, 2)
-    }
+    },
+    display: 'flex'
   },
   select: {
     width: 'fit-content'
@@ -31,10 +34,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex'
   },
   editSaveStyling: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(2)
-    },
-    padding: theme.spacing(1)
+    marginRight: theme.spacing(2),
+    padding: theme.spacing(1),
+    height: '100%'
   },
   hideButtons: {
     display: 'none'
@@ -87,6 +89,9 @@ function IndividualTodo(props) {
             variant="outlined"
             onChange={event => handleChange(event)} />
         </FormControl>
+      </Box>
+      <Box
+        className={classes.dropdown}>
         <Box
           className={`${completed === 'completed' ? classes.hideButtons : classes.toDoBox}`}>
           {editing
@@ -104,9 +109,6 @@ function IndividualTodo(props) {
             </Button>
           }
         </Box>
-      </Box>
-      <Box
-        className={classes.dropdown}>
         <FormControl variant="outlined">
           <Select
             defaultValue={completed}
