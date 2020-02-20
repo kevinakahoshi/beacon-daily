@@ -10,7 +10,7 @@ function ChecklistItems(props) {
       <Typography
         variant="h6"
         className={props.mounting}>
-          You have no to-do items.
+          Nothing new here.
       </Typography>
     </Box>;
 

@@ -47,9 +47,8 @@ function App() {
           setUser(user);
           setSignedIn(true);
           setComponentStatus('unmounting');
-          getChecklistItems(user.userid);
           setTimeout(() => {
-            historyProps.push('/checklist');
+            historyProps.push('/login');
             setComponentStatus('mounting');
           }, 1000);
         })
