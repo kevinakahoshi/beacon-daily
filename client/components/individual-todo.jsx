@@ -81,10 +81,10 @@ function IndividualTodo(props) {
             type="text"
             autoComplete="off"
             inputProps={{
-              maxLength: 100,
+              maxLength: 50,
               readOnly: !editing
             }}
-            label={`Description${editing && value.length > 0 ? ' ' + value.length + '/100' : ''}`}
+            label={`Description${editing && value.length > 0 ? ' - ' + value.length + '/50 Characters' : ''}`}
             value={value}
             variant="outlined"
             onChange={event => handleChange(event)} />

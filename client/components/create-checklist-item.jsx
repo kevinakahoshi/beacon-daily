@@ -52,13 +52,13 @@ function CreateChecklistItem(props) {
                 type="text"
                 autoComplete="off"
                 inputProps={{
-                  maxLength: 100
+                  maxLength: 50
                 }}
                 value={description}
                 onChange={event => handleChange(event)} />
             </FormControl>
             <Typography>
-              {description.length}/100 Characters
+              {description.length}/50 Characters
             </Typography>
           </FormGroup>
           <Button
