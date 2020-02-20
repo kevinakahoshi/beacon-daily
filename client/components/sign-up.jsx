@@ -86,33 +86,36 @@ function SignUp(props) {
             <FormGroup>
               <FormControl>
                 <InputLabel>
-            First Name
+                  First Name
                 </InputLabel>
                 <Input
                   name="firstName"
                   value={firstName}
+                  autoComplete="off"
                   onChange={event => handleChange(event)} />
               </FormControl>
             </FormGroup>
             <FormGroup>
               <FormControl>
                 <InputLabel>
-              Last Name
+                  Last Name
                 </InputLabel>
                 <Input
                   name="lastName"
                   value={lastName}
+                  autoComplete="off"
                   onChange={event => handleChange(event)} />
               </FormControl>
             </FormGroup>
             <FormGroup>
               <FormControl>
                 <InputLabel>
-              Email
+                  Email
                 </InputLabel>
                 <Input
                   name="email"
                   value={email}
+                  autoComplete="off"
                   onChange={event => handleChange(event)} />
               </FormControl>
             </FormGroup>
@@ -123,6 +126,7 @@ function SignUp(props) {
                 </InputLabel>
                 <Input
                   name="password"
+                  type="password"
                   value={password}
                   onChange={event => handleChange(event)} />
               </FormControl>
@@ -132,7 +136,7 @@ function SignUp(props) {
               color="primary"
               type="submit"
               className={classes.buttons}>
-            Submit
+                Submit
             </Button>
           </form>
         </Box>
