@@ -264,6 +264,7 @@ function Checklist(props) {
             view={view}
             updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
+            deleteChecklistItem={props.deleteChecklistItem}
             checklist={props.checklist}
             classes={classes} />}
         {props.modalOpen

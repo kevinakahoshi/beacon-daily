@@ -195,6 +195,21 @@ function App() {
       .catch(error => console.error(error));
   };
 
+  const deleteChecklistItem = checklistItemId => {
+    const init = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ checklistItemId })
+    };
+
+    fetch('/api/delete-checklist-item/', init)
+      .then(response => response.json())
+      .then(data => getChecklistItems(user.userid))
+      .catch(error => console.error(error));
+  };
+
   const handleFade = (historyProps, path) => {
     setComponentStatus('unmounting');
     setTimeout(() => {
@@ -262,6 +277,7 @@ function App() {
                 createChecklistItem={createChecklistItem}
                 updateChecklistItem={updateChecklistItem}
                 toggleComplete={toggleComplete}
+                deleteChecklistItem={deleteChecklistItem}
                 checklist={checklist}
                 logoutUser={logoutUser} />} />
         </Switch>

@@ -110,7 +110,7 @@ function IndividualTodo(props) {
               </Button>
             }
             <Button
-              onClick={() => alert('Delete FOREVER')} >
+              onClick={() => props.deleteChecklistItem(props.id)} >
               <DeleteForeverIcon />
             </Button>
           </ButtonGroup>
