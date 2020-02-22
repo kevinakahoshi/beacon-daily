@@ -24,10 +24,12 @@ function ChecklistItems(props) {
         return (
           <IndividualTodo
             key={index}
+            id={checklistItem.checklistitemid}
             completed={props.view}
             classes={props.classes}
             updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
+            deleteChecklistItem={props.deleteChecklistItem}
             checklistItem={checklistItem}
             mounting={props.mounting} />
         );
