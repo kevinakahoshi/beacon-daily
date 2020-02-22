@@ -5,7 +5,6 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-// import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import EditIcon from '@material-ui/icons/Edit';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
@@ -27,10 +26,11 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       margin: theme.spacing(0, 0, 0, 2)
     },
-    display: 'flex'
+    display: 'flex',
+    maxHeight: '56px'
   },
   select: {
-    width: 'fit-content'
+    width: '100%'
   },
   inputBox: {
     display: 'flex'
@@ -87,6 +87,7 @@ function IndividualTodo(props) {
             name="description"
             type="text"
             autoComplete="off"
+            multiline
             inputProps={{
               maxLength: 50,
               readOnly: !editing
@@ -121,7 +122,9 @@ function IndividualTodo(props) {
             </Button>
           </ButtonGroup>
         </Box>
-        <FormControl variant="outlined">
+        <FormControl
+          variant="outlined"
+          className={classes.select}>
           <Select
             defaultValue={completed}
             onChange={event => handleSelectChange(event)}

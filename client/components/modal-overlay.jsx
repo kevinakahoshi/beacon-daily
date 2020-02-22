@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     [focus]: {
       outline: 'none'
-    }
+    },
+    padding: theme.spacing(2)
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -48,9 +49,9 @@ function ModalOverlay(props) {
             variant="h5">
             {props.modalMessage.heading}
           </Typography>
-          <p>
+          <Typography>
             {props.modalMessage.messageBody}
-          </p>
+          </Typography>
           <Box
             mt={2}>
             { props.deleting
