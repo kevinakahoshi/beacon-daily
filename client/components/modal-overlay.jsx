@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     [focus]: {
       outline: 'none'
-    }
+    },
+    padding: theme.spacing(2)
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -48,9 +49,9 @@ function ModalOverlay(props) {
             variant="h5">
             {props.modalMessage.heading}
           </Typography>
-          <p>
+          <Typography>
             {props.modalMessage.messageBody}
-          </p>
+          </Typography>
           <Box
             mt={2}>
             { props.deleting
@@ -61,11 +62,7 @@ function ModalOverlay(props) {
                 onClick={() => props.deleteChecklistItem(props.deleteId)}>
                   Delete
               </Button>
-              : null
-              // Individual Todo passes in the checklistitemid as a prop
-              // Clicking the button sends the checklistitemid to app.jsx
-              // Item is deleted and updated list is fetched
-            }
+              : null }
             <Button
               variant="contained"
               color="primary"

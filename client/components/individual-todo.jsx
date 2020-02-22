@@ -5,7 +5,6 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-// import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import EditIcon from '@material-ui/icons/Edit';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
@@ -27,10 +26,11 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       margin: theme.spacing(0, 0, 0, 2)
     },
-    display: 'flex'
+    display: 'flex',
+    maxHeight: '56px'
   },
   select: {
-    width: 'fit-content'
+    width: '100%'
   },
   inputBox: {
     display: 'flex'
@@ -45,24 +45,30 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function IndividualTodo(props) {
-  const [editing, setEditing] = React.useState(false);
-  const [value, setValue] = React.useState(props.checklistItem.checklistitem);
-  const completed = props.completed;
   const classes = useStyles();
+  const completed = props.completed;
+  const [editing, setEditing] = React.useState(false);
+  const [descriptionValue, setDescriptionValue] = React.useState(props.checklistItem.checklistitem);
 
   const handleEditing = () => {
     setEditing(!editing);
   };
 
   const handleSave = () => {
-    if (value.length) {
-      props.updateChecklistItem(value, props.checklistItem.checklistitemid);
+    if (descriptionValue.length) {
+      props.updateChecklistItem(descriptionValue, props.checklistItem.checklistitemid);
       handleEditing();
     }
   };
 
-  const handleChange = event => {
-    setValue(event.target.value);
+  const handleDescriptionChange = event => {
+    setDescriptionValue(event.target.value);
+  };
+
+  const handleSelectChange = event => {
+    if (event.target.value !== completed) {
+      props.toggleComplete(props.checklistItem.checklistitemid);
+    }
   };
 
   return (
@@ -81,14 +87,15 @@ function IndividualTodo(props) {
             name="description"
             type="text"
             autoComplete="off"
+            multiline
             inputProps={{
               maxLength: 50,
               readOnly: !editing
             }}
-            label={`Description${editing && value.length > 0 ? ' - ' + value.length + '/50 Characters' : ''}`}
-            value={value}
+            label={`Description${editing && descriptionValue.length > 0 ? ' - ' + descriptionValue.length + '/50 Characters' : ''}`}
+            value={descriptionValue}
             variant="outlined"
-            onChange={event => handleChange(event)} />
+            onChange={event => handleDescriptionChange(event)} />
         </FormControl>
       </Box>
       <Box
@@ -110,16 +117,17 @@ function IndividualTodo(props) {
               </Button>
             }
             <Button
-              // onClick={() => props.deleteChecklistItem(props.id)} >
               onClick={() => props.handleDeleteClick(props.id)} >
               <DeleteForeverIcon />
             </Button>
           </ButtonGroup>
         </Box>
-        <FormControl variant="outlined">
+        <FormControl
+          variant="outlined"
+          className={classes.select}>
           <Select
             defaultValue={completed}
-            onChange={() => props.toggleComplete(props.checklistItem.checklistitemid)}
+            onChange={event => handleSelectChange(event)}
             inputProps={{
               name: 'isComplete',
               id: 'is-complete-select'
