@@ -61,11 +61,7 @@ function ModalOverlay(props) {
                 onClick={() => props.deleteChecklistItem(props.deleteId)}>
                   Delete
               </Button>
-              : null
-              // Individual Todo passes in the checklistitemid as a prop
-              // Clicking the button sends the checklistitemid to app.jsx
-              // Item is deleted and updated list is fetched
-            }
+              : null }
             <Button
               variant="contained"
               color="primary"
