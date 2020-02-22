@@ -15,6 +15,8 @@ function App() {
   const [checklist, setChecklist] = React.useState([]);
   const [modalMessage, setModalMessage] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [deleting, setDeleting] = React.useState(false);
+  const [deleteId, setDeleteId] = React.useState(null);
   const [fetchedUser, setFetchedUser] = React.useState(false);
   const [componentStatus, setComponentStatus] = React.useState('mounting');
   // const [weather, setWeather] = React.useState(null);
@@ -30,15 +32,15 @@ function App() {
     if (newAccount.firstName && newAccount.lastName && newAccount.email && newAccount.password) {
       const init = {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           firstName: newAccount.firstName,
           lastName: newAccount.lastName,
           email: newAccount.email,
           password: newAccount.password
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        })
       };
 
       fetch('/api/create-an-account', init)
@@ -206,8 +208,21 @@ function App() {
 
     fetch('/api/delete-checklist-item/', init)
       .then(response => response.json())
-      .then(data => getChecklistItems(user.userid))
+      .then(data => {
+        handleModalClose();
+        getChecklistItems(user.userid);
+      })
       .catch(error => console.error(error));
+  };
+
+  const handleDeleteClick = checklistItemId => {
+    setModalMessage({
+      heading: 'Are you sure you want to delete this item?',
+      messageBody: 'Once you delete this checklist item, you cannot restore it!'
+    });
+    setDeleteId(checklistItemId);
+    setDeleting(true);
+    handleModalOpen();
   };
 
   const handleFade = (historyProps, path) => {
@@ -224,6 +239,11 @@ function App() {
 
   const handleModalClose = () => {
     setModalOpen(false);
+    setModalMessage(null);
+    if (deleting) {
+      setDeleting(false);
+      setDeleteId(null);
+    }
   };
 
   React.useEffect(() => {
@@ -272,11 +292,14 @@ function App() {
                 modalOpen={modalOpen}
                 modalMessage={modalMessage}
                 handleModalClose={handleModalClose}
+                handleDeleteClick={handleDeleteClick}
                 getChecklistItems={getChecklistItems}
                 componentStatus={componentStatus}
                 createChecklistItem={createChecklistItem}
                 updateChecklistItem={updateChecklistItem}
                 toggleComplete={toggleComplete}
+                deleting={deleting}
+                deleteId={deleteId}
                 deleteChecklistItem={deleteChecklistItem}
                 checklist={checklist}
                 logoutUser={logoutUser} />} />
@@ -288,150 +311,7 @@ function App() {
   }
 }
 
-// class App extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       signedIn: false,
-//       checklist: [],
-//       weather: null,
-//       user: null,
-//       componentStatus: 'mounting',
-//       lightMode: true
-//     };
-
-//     this.getChecklistItems = this.getChecklistItems.bind(this);
-//     this.createAccountHandler = this.createAccountHandler.bind(this);
-//     this.loginSubmitHandler = this.loginSubmitHandler.bind(this);
-//   }
-
-//   createAccountHandler(event, newAccount, historyProps) {
-//     event.preventDefault();
-//     if (newAccount.firstName && newAccount.lastName && newAccount.email && newAccount.password) {
-//       const init = {
-//         method: 'POST',
-//         body: JSON.stringify({
-//           firstName: newAccount.firstName,
-//           lastName: newAccount.lastName,
-//           email: newAccount.email,
-//           password: newAccount.password
-//         }),
-//         headers: {
-//           'Content-Type': 'application/json'
-//         }
-//       };
-
-//       fetch('/api/create-an-account', init)
-//         .then(response => response.json())
-//         .then(user => {
-//           this.setState({
-//             user,
-//             signedIn: true,
-//             componentStatus: 'unmounting'
-//           });
-//           this.getChecklistItems(user.userid);
-//           setTimeout(() => {
-//             historyProps.push('/checklist');
-//             this.setState({ componentStatus: 'mounting' });
-//           }, 1000);
-//         })
-//         .catch(error => console.error(error));
-//     }
-//   }
-
-//   loginSubmitHandler(event, user, historyProps) {
-//     event.preventDefault();
-//     if (user.email && user.password) {
-//       const init = {
-//         method: 'POST',
-//         body: JSON.stringify({
-//           email: 'kevin@beacondaily.com',
-//           password: 'test'
-//         }),
-//         headers: {
-//           'Content-Type': 'application/json'
-//         }
-//       };
-
-//       fetch('/api/login', init)
-//         .then(response => response.json())
-//         .then(user => {
-//           this.setState({
-//             user,
-//             signedIn: true,
-//             componentStatus: 'unmounting'
-//           });
-//           this.getChecklistItems(user.userid);
-//           setTimeout(() => {
-//             historyProps.push('/checklist');
-//             this.setState({
-//               componentStatus: 'mounting'
-//             });
-//           }, 1000);
-//         })
-//         .catch(error => console.error(error));
-//     }
-//   }
-
-//   getChecklistItems(id) {
-//     fetch(`/api/get-checklist/${id}`)
-//       .then(res => res.json())
-//       .then(checklist => this.setState({ checklist }))
-//       .catch(error => console.error(error));
-//   }
-
-//   toggleMode() {
-//     this.setState({ lightMode: true });
-//   }
-
-//   componentDidMount() {
-//     // fetch('https://api.openweathermap.org/data/2.5/weather?zip=92618,us&APPID=898a2a99485d6f874e33752a52837aa7')
-//     //   .then(res => res.json())
-//     //   .then(data => this.setState({ weather: data }))
-//     //   .catch(error => console.error(error));
-//   }
-
-//   render() {
-//     return (
-//       <>
-//         <Switch>
-//           <ThemeProvider>
-//             <Route
-//               exact path='/'
-//               render={props =>
-//                 <Home {...props}
-//                   componentStatus={this.state.componentStatus}
-//                   toggleMode={this.toggleMode}
-//                   lightMode={this.state.lightMode} />} />
-//             <Route
-//               exact path='/login'
-//               render={ props =>
-//                 <Login {...props}
-//                   loginSubmitHandler={this.loginSubmitHandler}
-//                   componentStatus={this.state.componentStatus} />} />
-//             <Route
-//               exact path='/sign-up'
-//               render={ props =>
-//                 <SignUp {...props}
-//                   createAccountHandler={this.createAccountHandler}
-//                   componentStatus={this.state.componentStatus} />} />
-//             {/* <Route
-//             exact path='/checklist'
-//             render={props =>
-//               <Checklist {...props}
-//                 checklist={this.state.checklist}
-//                 componentStatus={this.state.componentStatus} />} /> */}
-//             <Route
-//               exact path='/checklist'
-//               render={props =>
-//                 <Checklist {...props}
-//                   componentStatus={this.state.componentStatus}
-//                   checklist={this.state.checklist} />} />
-//           </ThemeProvider>
-//         </Switch>
-//       </>
-//     );
-//   }
-// }
-
 export default App;
+
+// Weather API
+// https://api.openweathermap.org/data/2.5/weather?zip=92618,us&APPID=898a2a99485d6f874e33752a52837aa7

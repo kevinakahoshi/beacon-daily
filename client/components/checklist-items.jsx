@@ -31,6 +31,7 @@ function ChecklistItems(props) {
             toggleComplete={props.toggleComplete}
             deleteChecklistItem={props.deleteChecklistItem}
             checklistItem={checklistItem}
+            handleDeleteClick={props.handleDeleteClick}
             mounting={props.mounting} />
         );
       }

@@ -264,11 +264,14 @@ function Checklist(props) {
             view={view}
             updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
-            deleteChecklistItem={props.deleteChecklistItem}
             checklist={props.checklist}
+            handleDeleteClick={props.handleDeleteClick}
             classes={classes} />}
         {props.modalOpen
           ? <ModalOverlay
+            deleting={props.deleting}
+            deleteId={props.deleteId}
+            deleteChecklistItem={props.deleteChecklistItem}
             modalOpen={props.modalOpen}
             handleModalClose={props.handleModalClose}
             modalMessage={props.modalMessage} />
