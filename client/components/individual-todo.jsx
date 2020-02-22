@@ -7,8 +7,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 // import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import EditIcon from '@material-ui/icons/Edit';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import DoneIcon from '@material-ui/icons/Done';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles(theme => ({
   toDoBox: {
@@ -35,7 +37,6 @@ const useStyles = makeStyles(theme => ({
   },
   editSaveStyling: {
     marginRight: theme.spacing(2),
-    padding: theme.spacing(1),
     height: '100%'
   },
   hideButtons: {
@@ -94,20 +95,25 @@ function IndividualTodo(props) {
         className={classes.dropdown}>
         <Box
           className={`${completed === 'completed' ? classes.hideButtons : classes.toDoBox}`}>
-          {editing
-            ? <Button
-              variant="outlined"
-              className={classes.editSaveStyling}
-              onClick={() => handleSave()} >
-              <DoneIcon />
+          <ButtonGroup
+            variant="outlined"
+            className={classes.editSaveStyling}
+            size="large">
+            {editing
+              ? <Button
+                onClick={() => handleSave()} >
+                <DoneIcon />
+              </Button>
+              : <Button
+                onClick={() => handleEditing()} >
+                <EditIcon />
+              </Button>
+            }
+            <Button
+              onClick={() => alert('Delete FOREVER')} >
+              <DeleteForeverIcon />
             </Button>
-            : <Button
-              variant="outlined"
-              className={classes.editSaveStyling}
-              onClick={() => handleEditing()} >
-              <EditIcon />
-            </Button>
-          }
+          </ButtonGroup>
         </Box>
         <FormControl variant="outlined">
           <Select
