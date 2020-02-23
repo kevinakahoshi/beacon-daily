@@ -7,7 +7,7 @@ import Home from './home';
 import Login from './login';
 import SignUp from './sign-up';
 import Checklist from './checklist';
-import { createMuiTheme } from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 function App() {
   const [user, setUser] = React.useState(null);

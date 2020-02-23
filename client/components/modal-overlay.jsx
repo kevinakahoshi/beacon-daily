@@ -52,8 +52,7 @@ function ModalOverlay(props) {
           <Typography>
             {props.modalMessage.messageBody}
           </Typography>
-          <Box
-            mt={2}>
+          <Box>
             { props.deleting
               ? <Button
                 variant="contained"

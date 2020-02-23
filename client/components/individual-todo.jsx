@@ -20,24 +20,37 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '4px'
   },
   dropdown: {
-    [theme.breakpoints.up('xs')]: {
-      margin: theme.spacing(2, 0, 0, 0)
-    },
     [theme.breakpoints.up('sm')]: {
-      margin: theme.spacing(0, 0, 0, 2)
-    },
-    display: 'flex',
-    maxHeight: '56px'
+      margin: theme.spacing(0, 0, 0, 2),
+      display: 'flex'
+    }
   },
-  select: {
+  selectBox: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(2)
+    },
     width: '100%'
   },
-  inputBox: {
-    display: 'flex'
+  selectInput: {
+    height: '61px'
   },
-  editSaveStyling: {
-    marginRight: theme.spacing(2),
-    height: '100%'
+  inputBox: {
+    lineHeight: 1.5
+  },
+  buttonGroupStyling: {
+    [theme.breakpoints.up('sm')]: {
+      marginRight: theme.spacing(2)
+    },
+    [theme.breakpoints.down('xs')]: {
+      margin: theme.spacing(2, 0, 0, 0)
+    },
+    width: '100%',
+    height: '61px'
+  },
+  editSaveDelete: {
+    [theme.breakpoints.down('sm')]: {
+      width: '50%'
+    }
   },
   hideButtons: {
     display: 'none'
@@ -90,10 +103,12 @@ function IndividualTodo(props) {
             multiline
             inputProps={{
               maxLength: 50,
-              readOnly: !editing
+              readOnly: !editing,
+              className: classes.inputBox
             }}
-            label={`Description${editing && descriptionValue.length > 0 ? ' - ' + descriptionValue.length + '/50 Characters' : ''}`}
+            label={`Description${editing && descriptionValue.length >= 0 ? ' - ' + descriptionValue.length + '/50 Characters' : ''}`}
             value={descriptionValue}
+            error={descriptionValue.length === 0}
             variant="outlined"
             onChange={event => handleDescriptionChange(event)} />
         </FormControl>
@@ -104,19 +119,22 @@ function IndividualTodo(props) {
           className={`${completed === 'completed' ? classes.hideButtons : classes.toDoBox}`}>
           <ButtonGroup
             variant="outlined"
-            className={classes.editSaveStyling}
+            className={classes.buttonGroupStyling}
             size="large">
             {editing
               ? <Button
+                className={classes.editSaveDelete}
                 onClick={() => handleSave()} >
                 <DoneIcon />
               </Button>
               : <Button
+                className={classes.editSaveDelete}
                 onClick={() => handleEditing()} >
                 <EditIcon />
               </Button>
             }
             <Button
+              className={classes.editSaveDelete}
               onClick={() => props.handleDeleteClick(props.id)} >
               <DeleteForeverIcon />
             </Button>
@@ -124,10 +142,11 @@ function IndividualTodo(props) {
         </Box>
         <FormControl
           variant="outlined"
-          className={classes.select}>
+          className={classes.selectBox}>
           <Select
             defaultValue={completed}
             onChange={event => handleSelectChange(event)}
+            className={classes.selectInput}
             inputProps={{
               name: 'isComplete',
               id: 'is-complete-select'
