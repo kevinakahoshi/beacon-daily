@@ -90,8 +90,9 @@ function SignUp(props) {
                 </InputLabel>
                 <Input
                   name="firstName"
+                  type="text"
                   value={firstName}
-                  autoComplete="off"
+                  autoComplete="new-password"
                   onChange={event => handleChange(event)} />
               </FormControl>
             </FormGroup>
@@ -102,8 +103,9 @@ function SignUp(props) {
                 </InputLabel>
                 <Input
                   name="lastName"
+                  type="text"
                   value={lastName}
-                  autoComplete="off"
+                  autoComplete="new-password"
                   onChange={event => handleChange(event)} />
               </FormControl>
             </FormGroup>

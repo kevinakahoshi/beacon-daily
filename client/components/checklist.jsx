@@ -241,7 +241,10 @@ function Checklist(props) {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => props.logoutUser(props.history)}>
+            onClick={() => {
+              setFade('fade-out');
+              props.logoutUser(props.history);
+            }}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
             </ListItemIcon>
