@@ -4,6 +4,7 @@ import {
   Button,
   Typography
 } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -63,19 +64,22 @@ function Home(props) {
   };
 
   return (
-    <Box
-      className={classes.mainSection}>
+    <>
+      <CssBaseline />
       <Box
-        className={`${props.componentStatus} ${classes.contentSection}`}>
-        <Typography variant="h1">
+        className={classes.mainSection}>
+        <Box
+          className={`${props.componentStatus} ${classes.contentSection}`}>
+          <Typography variant="h1">
             Beacon Daily
-        </Typography>
-        <Typography variant="h2">
+          </Typography>
+          <Typography variant="h2">
             Your daily planner.
-        </Typography>
-        {buttonSwitch(props.user)}
+          </Typography>
+          {buttonSwitch(props.user)}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 

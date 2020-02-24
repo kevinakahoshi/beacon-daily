@@ -13,13 +13,13 @@ body {
   background-size: contain;
 }
 
-.light-mode {
+/* .light-mode {
   background-image: linear-gradient(#fffffff1, #fffffff1), url('./images/light-mode-background.png');
 }
 
 .dark-mode {
   background-image: linear-gradient(#000000CC, #000000CC), url('./images/dark-mode-background.png');
-}
+} */
 
 .mounting {
   animation: mount 1s;
