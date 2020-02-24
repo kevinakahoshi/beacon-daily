@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
+  createBox: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '4px'
+  },
   buttons: {
     margin: theme.spacing(2, 0)
   }
@@ -37,6 +41,7 @@ function CreateChecklistItem(props) {
         p={2}
         my={2}
         border={1}
+        className={classes.createBox}
         borderColor="grey.500">
         <form
           onSubmit={event => handleSubmit(event)}>

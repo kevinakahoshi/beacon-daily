@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       justifyContent: 'space-between'
     },
-    borderRadius: '4px'
+    borderRadius: '4px',
+    backgroundColor: theme.palette.background.paper
   },
   dropdown: {
     [theme.breakpoints.up('sm')]: {

@@ -23,9 +23,39 @@ function App() {
   const [componentStatus, setComponentStatus] = React.useState('mounting');
   // const [weather, setWeather] = React.useState(null);
 
-  const theme = createMuiTheme({
+  const lightTheme = createMuiTheme({
     palette: {
-      type: colorMode
+      type: 'light'
+    },
+    overrides: {
+      MuiCssBaseline: {
+        '@global': {
+          body: {
+            backgroundImage: "linear-gradient(#fffffff1, #fffffff1), url('./images/light-mode-background.png')",
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }
+        }
+      }
+    }
+  });
+
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: 'dark'
+    },
+    overrides: {
+      MuiCssBaseline: {
+        '@global': {
+          body: {
+            backgroundImage: "linear-gradient(#000000CC, #000000CC), url('./images/dark-mode-background.png')",
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }
+        }
+      }
     }
   });
 
@@ -263,7 +293,9 @@ function App() {
   if (fetchedUser) {
     return (
       <MuiThemeProvider
-        theme={theme}>
+        theme={colorMode === 'light'
+          ? lightTheme
+          : darkTheme}>
         <Switch>
           <Route
             exact path='/'

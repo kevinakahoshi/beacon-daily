@@ -18,12 +18,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+// import Switch from '@material-ui/core/Switch';
 import WbIncandescentOutlinedIcon from '@material-ui/icons/WbIncandescentOutlined';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import Switch from '@material-ui/core/Switch';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 const drawerWidth = 300;
 
@@ -242,13 +244,24 @@ function Checklist(props) {
         <List>
           <ListItem
             button
+            onClick={props.toggleColorMode}
             className={classes.menuOptions}>
-            <Switch
+            {/* <Switch
               checked={props.colorMode !== 'light'}
               size="small"
               color="default"
               value={props.colorMode}
-              onChange={props.toggleColorMode} />
+              onChange={props.toggleColorMode} /> */}
+            <ListItemIcon>
+              {props.colorMode === 'light'
+                ? <Brightness4Icon />
+                : <Brightness7Icon />}
+            </ListItemIcon>
+            <ListItemText
+              primary={props.colorMode === 'light'
+                ? 'Dark Mode'
+                : 'Light Mode'}>
+            </ListItemText>
           </ListItem>
           <ListItem
             button
