@@ -12,16 +12,14 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    [focus]: {
-      outline: 'none'
-    },
     padding: theme.spacing(2)
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2),
-    textAlign: 'center'
+    textAlign: 'center',
+    outline: 0
   },
   buttons: {
     margin: theme.spacing(2)
