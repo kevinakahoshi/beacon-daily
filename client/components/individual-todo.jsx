@@ -107,7 +107,9 @@ function IndividualTodo(props) {
               readOnly: !editing,
               className: classes.inputBox
             }}
-            label={`Description${editing && descriptionValue.length >= 0 ? ' - ' + descriptionValue.length + '/50 Characters' : ''}`}
+            label={`Description${editing && descriptionValue.length >= 0
+              ? ' - ' + descriptionValue.length + '/50 Characters'
+              : ''}`}
             value={descriptionValue}
             error={descriptionValue.length === 0}
             variant="outlined"
@@ -117,7 +119,9 @@ function IndividualTodo(props) {
       <Box
         className={classes.dropdown}>
         <Box
-          className={`${completed === 'completed' ? classes.hideButtons : classes.toDoBox}`}>
+          className={`${completed === 'completed'
+          ? classes.hideButtons
+          : classes.toDoBox}`}>
           <ButtonGroup
             variant="outlined"
             className={classes.buttonGroupStyling}

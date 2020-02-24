@@ -137,6 +137,7 @@ function Checklist(props) {
 
     if (newView === 'completed' || newView === 'incomplete') {
       props.getChecklistItems(props.user.userid);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -145,6 +146,7 @@ function Checklist(props) {
     //   props.history.push('/');
     // }
     // console.log(props);
+    window.scrollTo(0, 0);
   }, []);
 
   return (
