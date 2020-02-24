@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
 
 const useStyles = makeStyles(theme => ({
@@ -58,92 +59,95 @@ function SignUp(props) {
   };
 
   return (
-    <Box
-      p={2}
-      height="100%"
-      className={classes.mainSection}>
-      <Button
-        className={`${classes.backWrapper} ${props.componentStatus}`}
-        onClick={() => props.handleFade(props.history, '/')}>
-        <ChevronLeftOutlinedIcon />BACK
-      </Button>
+    <>
+      <CssBaseline />
       <Box
-        className={`${props.componentStatus} ${classes.contentSection}`}>
-        <Typography
-          variant="h1">
-            Beacon Daily
-        </Typography>
+        p={2}
+        height="100%"
+        className={classes.mainSection}>
+        <Button
+          className={`${classes.backWrapper} ${props.componentStatus}`}
+          onClick={() => props.handleFade(props.history, '/')}>
+          <ChevronLeftOutlinedIcon />BACK
+        </Button>
         <Box
-          p={2}
-          borderColor="grey.500">
+          className={`${props.componentStatus} ${classes.contentSection}`}>
           <Typography
-            variant="h6">
-            Create an Account
+            variant="h1">
+            Beacon Daily
           </Typography>
-          <form
-            onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
-            className={props.componentStatus}>
-            <FormGroup>
-              <FormControl>
-                <InputLabel>
+          <Box
+            p={2}
+            borderColor="grey.500">
+            <Typography
+              variant="h6">
+            Create an Account
+            </Typography>
+            <form
+              onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
+              className={props.componentStatus}>
+              <FormGroup>
+                <FormControl>
+                  <InputLabel>
                   First Name
-                </InputLabel>
-                <Input
-                  name="firstName"
-                  type="text"
-                  value={firstName}
-                  autoComplete="new-password"
-                  onChange={event => handleChange(event)} />
-              </FormControl>
-            </FormGroup>
-            <FormGroup>
-              <FormControl>
-                <InputLabel>
+                  </InputLabel>
+                  <Input
+                    name="firstName"
+                    type="text"
+                    value={firstName}
+                    autoComplete="new-password"
+                    onChange={event => handleChange(event)} />
+                </FormControl>
+              </FormGroup>
+              <FormGroup>
+                <FormControl>
+                  <InputLabel>
                   Last Name
-                </InputLabel>
-                <Input
-                  name="lastName"
-                  type="text"
-                  value={lastName}
-                  autoComplete="new-password"
-                  onChange={event => handleChange(event)} />
-              </FormControl>
-            </FormGroup>
-            <FormGroup>
-              <FormControl>
-                <InputLabel>
+                  </InputLabel>
+                  <Input
+                    name="lastName"
+                    type="text"
+                    value={lastName}
+                    autoComplete="new-password"
+                    onChange={event => handleChange(event)} />
+                </FormControl>
+              </FormGroup>
+              <FormGroup>
+                <FormControl>
+                  <InputLabel>
                   Email
-                </InputLabel>
-                <Input
-                  name="email"
-                  value={email}
-                  autoComplete="off"
-                  onChange={event => handleChange(event)} />
-              </FormControl>
-            </FormGroup>
-            <FormGroup>
-              <FormControl>
-                <InputLabel>
+                  </InputLabel>
+                  <Input
+                    name="email"
+                    value={email}
+                    autoComplete="off"
+                    onChange={event => handleChange(event)} />
+                </FormControl>
+              </FormGroup>
+              <FormGroup>
+                <FormControl>
+                  <InputLabel>
               Password
-                </InputLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={event => handleChange(event)} />
-              </FormControl>
-            </FormGroup>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              className={classes.buttons}>
+                  </InputLabel>
+                  <Input
+                    name="password"
+                    type="password"
+                    value={password}
+                    onChange={event => handleChange(event)} />
+                </FormControl>
+              </FormGroup>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className={classes.buttons}>
                 Submit
-            </Button>
-          </form>
+              </Button>
+            </form>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 

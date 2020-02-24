@@ -23,6 +23,7 @@ import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import Switch from '@material-ui/core/Switch';
 
 const drawerWidth = 300;
 
@@ -35,7 +36,8 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    backgroundColor: theme.palette.type === 'dark' ? theme.palette.background.paper : theme.primary
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -238,6 +240,16 @@ function Checklist(props) {
         </List>
         <Divider />
         <List>
+          <ListItem
+            button
+            className={classes.menuOptions}>
+            <Switch
+              checked={props.colorMode !== 'light'}
+              size="small"
+              color="default"
+              value={props.colorMode}
+              onChange={props.toggleColorMode} />
+          </ListItem>
           <ListItem
             button
             className={classes.menuOptions}

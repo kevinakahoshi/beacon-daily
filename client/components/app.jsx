@@ -7,6 +7,7 @@ import Home from './home';
 import Login from './login';
 import SignUp from './sign-up';
 import Checklist from './checklist';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 function App() {
@@ -18,12 +19,13 @@ function App() {
   const [deleting, setDeleting] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState(null);
   const [fetchedUser, setFetchedUser] = React.useState(false);
+  const [colorMode, setColorMode] = React.useState('light');
   const [componentStatus, setComponentStatus] = React.useState('mounting');
   // const [weather, setWeather] = React.useState(null);
 
   const theme = createMuiTheme({
     palette: {
-      type: 'dark'
+      type: colorMode
     }
   });
 
@@ -246,15 +248,23 @@ function App() {
     }
   };
 
+  const toggleColorMode = () => {
+    if (colorMode === 'light') {
+      setColorMode('dark');
+    } else {
+      setColorMode('light');
+    }
+  };
+
   React.useEffect(() => {
     getUser();
   }, []);
 
   if (fetchedUser) {
     return (
-      <>
-        <Switch
-          theme={theme}>
+      <MuiThemeProvider
+        theme={theme}>
+        <Switch>
           <Route
             exact path='/'
             render={props =>
@@ -302,9 +312,11 @@ function App() {
                 deleteId={deleteId}
                 deleteChecklistItem={deleteChecklistItem}
                 checklist={checklist}
-                logoutUser={logoutUser} />} />
+                logoutUser={logoutUser}
+                colorMode={colorMode}
+                toggleColorMode={toggleColorMode} />} />
         </Switch>
-      </>
+      </MuiThemeProvider>
     );
   } else {
     return null;
