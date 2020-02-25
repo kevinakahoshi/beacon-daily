@@ -130,20 +130,6 @@ function Login(props) {
                       onChange={event => handleChange(event)} />
                   </FormControl>
                 </FormGroup>
-                <FormGroup>
-                  <FormControl>
-                    {/* <InputLabel
-                      htmlFor="email">
-                    Password
-                    </InputLabel>
-                    <Input
-                      id="password"
-                      name="password"
-                      type="password"
-                      value={password}
-                      onChange={event => handleChange(event)} /> */}
-                  </FormControl>
-                </FormGroup>
                 <Button
                   variant="contained"
                   color="primary"

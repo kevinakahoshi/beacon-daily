@@ -1,8 +1,9 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
+// import InputLabel from '@material-ui/core/InputLabel';
+// import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
@@ -21,6 +22,15 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     color: 'inherit'
   },
+  formControlBox: {
+    margin: theme.spacing(0, 0, 2, 0)
+  },
+  formBox: {
+    margin: theme.spacing(2, 0)
+  },
+  formInputs: {
+    background: theme.palette.background.paper
+  },
   buttons: {
     margin: theme.spacing(2)
   },
@@ -35,28 +45,70 @@ const useStyles = makeStyles(theme => ({
 function SignUp(props) {
   const classes = useStyles();
   const [firstName, setFirstName] = React.useState('');
+  const [firstNameValidation, setFirstNameValidation] = React.useState(false);
   const [lastName, setLastName] = React.useState('');
+  const [lastNameValidation, setLastNameValidation] = React.useState(false);
   const [email, setEmail] = React.useState('');
+  const [emailValidation, setEmailValidation] = React.useState(false);
   const [password, setPassword] = React.useState('');
-
   const newAccount = { firstName, lastName, email, password };
 
   const handleChange = event => {
+    const nameRegEx = new RegExp(/^[a-zA-Z ]+$/);
+    const emailRegEx = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
     switch (event.target.name) {
       case 'firstName':
-        setFirstName(event.target.value);
+        if (event.target.value.indexOf('  ') === -1) {
+          setFirstName(event.target.value);
+          if (!nameRegEx.test(event.target.value) && firstName.length > 0) {
+            setFirstNameValidation(true);
+          } else {
+            setFirstNameValidation(false);
+          }
+        }
         break;
       case 'lastName':
-        setLastName(event.target.value);
+        if (event.target.value.indexOf('  ') === -1) {
+          setLastName(event.target.value);
+          if (!nameRegEx.test(event.target.value) && lastName.length > 0) {
+            setLastNameValidation(true);
+          } else {
+            setLastNameValidation(false);
+          }
+        }
         break;
       case 'email':
-        setEmail(event.target.value);
+        if (event.target.value.indexOf(' ') === -1) {
+          setEmail(event.target.value);
+          if (!emailRegEx.test(event.target.value) && email.length > 0) {
+            setEmailValidation(true);
+          } else {
+            setEmailValidation(false);
+          }
+        }
         break;
       case 'password':
-        setPassword(event.target.value);
+        if (event.target.value.indexOf(' ') === -1) {
+          setPassword(event.target.value);
+        }
         break;
     }
   };
+
+  React.useEffect(() => {
+    if (!firstName.length) {
+      setFirstNameValidation(false);
+    }
+
+    if (!lastName.length) {
+      setLastNameValidation(false);
+    }
+
+    if (!email.length) {
+      setEmailValidation(false);
+    }
+  }, [firstName, lastName, email]);
 
   return (
     <>
@@ -81,69 +133,79 @@ function SignUp(props) {
             borderColor="grey.500">
             <Typography
               variant="h6">
-            Create an Account
+                Create an Account
             </Typography>
-            <form
-              onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
-              className={props.componentStatus}>
-              <FormGroup>
-                <FormControl>
-                  <InputLabel>
-                  First Name
-                  </InputLabel>
-                  <Input
-                    name="firstName"
-                    type="text"
-                    value={firstName}
-                    autoComplete="new-password"
-                    onChange={event => handleChange(event)} />
-                </FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl>
-                  <InputLabel>
-                  Last Name
-                  </InputLabel>
-                  <Input
-                    name="lastName"
-                    type="text"
-                    value={lastName}
-                    autoComplete="new-password"
-                    onChange={event => handleChange(event)} />
-                </FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl>
-                  <InputLabel>
-                  Email
-                  </InputLabel>
-                  <Input
-                    name="email"
-                    value={email}
-                    autoComplete="off"
-                    onChange={event => handleChange(event)} />
-                </FormControl>
-              </FormGroup>
-              <FormGroup>
-                <FormControl>
-                  <InputLabel>
-              Password
-                  </InputLabel>
-                  <Input
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={event => handleChange(event)} />
-                </FormControl>
-              </FormGroup>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                className={classes.buttons}>
+            <Box
+              className={classes.formBox}>
+              <form
+                onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
+                className={props.componentStatus}>
+                <FormGroup>
+                  <FormControl
+                    className={classes.formControlBox}>
+                    <TextField
+                      label="First Name"
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      autoComplete="off"
+                      variant="outlined"
+                      value={firstName}
+                      error={firstNameValidation}
+                      className={classes.formInputs}
+                      onChange={event => handleChange(event)} />
+                  </FormControl>
+                </FormGroup>
+                <FormGroup>
+                  <FormControl
+                    className={classes.formControlBox}>
+                    <TextField
+                      label="Last Name"
+                      id="last-name"
+                      name="lastName"
+                      type="text"
+                      autoComplete="new-password"
+                      variant="outlined"
+                      value={lastName}
+                      error={lastNameValidation}
+                      className={classes.formInputs}
+                      onChange={event => handleChange(event)} />
+                  </FormControl>
+                  <FormControl
+                    className={classes.formControlBox}>
+                    <TextField
+                      label="Email"
+                      id="email"
+                      name="email"
+                      autoComplete="new-password"
+                      variant="outlined"
+                      value={email}
+                      error={emailValidation}
+                      className={classes.formInputs}
+                      onChange={event => handleChange(event)} />
+                  </FormControl>
+                  <FormControl>
+                    <TextField
+                      label="Password"
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="new-password"
+                      variant="outlined"
+                      value={password}
+                      className={classes.formInputs}
+                      onChange={event => handleChange(event)} />
+                  </FormControl>
+                </FormGroup>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  className={classes.buttons}>
                 Submit
-              </Button>
-            </form>
+                </Button>
+              </form>
+            </Box>
           </Box>
         </Box>
       </Box>
