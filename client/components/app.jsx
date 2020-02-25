@@ -99,7 +99,7 @@ function App() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: user.email,
+          email: user.email.toLowerCase(),
           password: user.password
         })
       };

@@ -82,7 +82,12 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: theme.spacing(1, 3),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1, 3)
+    },
+    [theme.breakpoints.up('xs')]: {
+      padding: theme.spacing(0, 2)
+    },
     ...theme.mixins.toolbar
   },
   content: {
