@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Login(props) {
+const Login = props => {
   const classes = useStyles();
   const [email, setEmail] = React.useState('');
   const [emailValidation, setEmailValidation] = React.useState(false);
@@ -150,6 +150,6 @@ function Login(props) {
       </Box>
     </>
   );
-}
+};
 
 export default Login;

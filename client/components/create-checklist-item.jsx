@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CreateChecklistItem(props) {
+const CreateChecklistItem = props => {
   const classes = useStyles();
   const [description, setDescription] = React.useState('');
 
@@ -31,17 +31,17 @@ function CreateChecklistItem(props) {
   };
 
   return (
-    <Box
-      className={props.mounting}>
+    <Box>
       <Typography
-        variant="h3">
+        variant="h3"
+        className={props.mounting}>
             Create a New Checklist Item
       </Typography>
       <Box
         p={2}
         my={2}
         border={1}
-        className={classes.createBox}
+        className={`${classes.createBox} ${props.mounting}`}
         borderColor="grey.500">
         <form
           onSubmit={event => handleSubmit(event)}>
@@ -77,6 +77,6 @@ function CreateChecklistItem(props) {
       </Box>
     </Box>
   );
-}
+};
 
 export default CreateChecklistItem;

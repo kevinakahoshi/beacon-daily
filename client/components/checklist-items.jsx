@@ -14,25 +14,6 @@ function ChecklistItems(props) {
       </Typography>
     </Box>;
 
-  // If there are actual checklist items available, we use the filter method
-  // to create a filtered list of the items that match the view, then we use the
-  // map method to create individual
-  // const checklistItems = props.checklist.filter(checklistItem => checklistItem.iscompleted === (props.view === 'completed')).map((checklistItem, index) => {
-  //   return (
-  //     <IndividualTodo
-  //       key={index}
-  //       id={checklistItem.checklistitemid}
-  //       completed={props.view}
-  //       classes={props.classes}
-  //       updateChecklistItem={props.updateChecklistItem}
-  //       toggleComplete={props.toggleComplete}
-  //       deleteChecklistItem={props.deleteChecklistItem}
-  //       checklistItem={checklistItem}
-  //       handleDeleteClick={props.handleDeleteClick}
-  //       mounting={props.mounting} />
-  //   );
-  // });
-
   if (props.checklist.length) {
     // If there are actual checklist items available, we use Array.map to create checklist items
     checklistItems = props.checklist.map((checklistItem, index) => {
@@ -42,7 +23,7 @@ function ChecklistItems(props) {
         : !checklistItem.iscompleted) {
         return (
           <IndividualTodo
-            key={index}
+            key={checklistItem.checklistitemid}
             id={checklistItem.checklistitemid}
             completed={props.view}
             classes={props.classes}
@@ -66,7 +47,6 @@ function ChecklistItems(props) {
           ? 'Completed'
           : 'Incomplete'} Items
       </Typography>
-      {/* {checklistItems.length ? checklistItems : showNothing} */}
       {checklistItems}
     </>
   );
