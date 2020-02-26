@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SignUp(props) {
+const SignUp = props => {
   const classes = useStyles();
   const [firstName, setFirstName] = React.useState('');
   const [firstNameValidation, setFirstNameValidation] = React.useState(false);
@@ -209,6 +209,6 @@ function SignUp(props) {
       </Box>
     </>
   );
-}
+};
 
 export default SignUp;

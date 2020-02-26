@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ModalOverlay(props) {
+const ModalOverlay = props => {
   const classes = useStyles();
 
   return (
@@ -72,6 +72,6 @@ function ModalOverlay(props) {
       </Fade>
     </Modal>
   );
-}
+};
 
 export default ModalOverlay;

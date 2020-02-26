@@ -10,7 +10,7 @@ import Checklist from './checklist';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
-function App() {
+const App = () => {
   const [user, setUser] = React.useState(null);
   const [signedIn, setSignedIn] = React.useState(false);
   const [checklist, setChecklist] = React.useState([]);
@@ -353,7 +353,7 @@ function App() {
   } else {
     return null;
   }
-}
+};
 
 export default App;
 

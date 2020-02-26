@@ -106,12 +106,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Checklist(props) {
+const Checklist = props => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [view, setView] = React.useState('incomplete');
   const [fade, setFade] = React.useState('fade-in');
+  const [filteredList, setFilteredList] = React.useState([]);
   const [mounting, setMounting] = React.useState('mounting');
 
   const handleDrawerOpen = () => {
@@ -145,13 +146,14 @@ function Checklist(props) {
     }
   };
 
+  const filterList = () => {
+    setFilteredList(props.checklist.filter(checklistItem => checklistItem.iscompleted === (view === 'completed')));
+  };
+
   React.useEffect(() => {
-    // if (!props.user) {
-    //   props.history.push('/');
-    // }
-    // console.log(props);
+    filterList();
     window.scrollTo(0, 0);
-  }, []);
+  }, [view, props.checklist]);
 
   return (
     <div
@@ -292,7 +294,7 @@ function Checklist(props) {
             view={view}
             updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
-            checklist={props.checklist.filter(checklistItem => checklistItem.iscompleted === (view === 'completed'))}
+            checklist={filteredList}
             handleDeleteClick={props.handleDeleteClick}
             classes={classes} />}
         {props.modalOpen
@@ -307,6 +309,6 @@ function Checklist(props) {
       </main>
     </div>
   );
-}
+};
 
 export default Checklist;

@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Home(props) {
+const Home = props => {
   const classes = useStyles();
 
   const buttonSwitch = user => {
@@ -81,6 +81,6 @@ function Home(props) {
       </Box>
     </>
   );
-}
+};
 
 export default Home;

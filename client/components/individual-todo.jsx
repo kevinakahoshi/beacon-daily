@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function IndividualTodo(props) {
+const IndividualTodo = props => {
   const classes = useStyles();
   const completed = props.completed;
   const [unmounting, setUnmounting] = React.useState('mounting');
@@ -173,6 +173,6 @@ function IndividualTodo(props) {
       </Box>
     </Box>
   );
-}
+};
 
 export default IndividualTodo;
