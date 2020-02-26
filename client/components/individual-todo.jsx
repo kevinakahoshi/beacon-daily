@@ -61,6 +61,7 @@ const useStyles = makeStyles(theme => ({
 function IndividualTodo(props) {
   const classes = useStyles();
   const completed = props.completed;
+  const [unmounting, setUnmounting] = React.useState('mounting');
   const [editing, setEditing] = React.useState(false);
   const [descriptionValue, setDescriptionValue] = React.useState(props.checklistItem.checklistitem);
 
@@ -81,7 +82,10 @@ function IndividualTodo(props) {
 
   const handleSelectChange = event => {
     if (event.target.value !== completed) {
-      props.toggleComplete(props.checklistItem.checklistitemid);
+      setUnmounting('unmounting');
+      setTimeout(() => {
+        props.toggleComplete(props.checklistItem.checklistitemid);
+      }, 1000);
     }
   };
 
@@ -91,7 +95,7 @@ function IndividualTodo(props) {
       my={2}
       border={1}
       borderColor="grey.500"
-      className={`${props.mounting} ${classes.toDoBox}`}>
+      className={`${props.mounting} ${unmounting} ${classes.toDoBox}`}>
       <Box
         width="100%"
         className={classes.toDoBox}>

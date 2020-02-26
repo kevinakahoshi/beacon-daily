@@ -18,7 +18,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import Switch from '@material-ui/core/Switch';
 import WbIncandescentOutlinedIcon from '@material-ui/icons/WbIncandescentOutlined';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
@@ -253,12 +252,6 @@ function Checklist(props) {
             button
             onClick={props.toggleColorMode}
             className={classes.menuOptions}>
-            {/* <Switch
-              checked={props.colorMode !== 'light'}
-              size="small"
-              color="default"
-              value={props.colorMode}
-              onChange={props.toggleColorMode} /> */}
             <ListItemIcon>
               {props.colorMode === 'light'
                 ? <Brightness4Icon />
@@ -299,7 +292,7 @@ function Checklist(props) {
             view={view}
             updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
-            checklist={props.checklist}
+            checklist={props.checklist.filter(checklistItem => checklistItem.iscompleted === (view === 'completed'))}
             handleDeleteClick={props.handleDeleteClick}
             classes={classes} />}
         {props.modalOpen
