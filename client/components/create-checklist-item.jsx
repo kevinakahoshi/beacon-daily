@@ -56,6 +56,7 @@ const CreateChecklistItem = props => {
                 name="description"
                 type="text"
                 autoComplete="off"
+                variant="outlined"
                 inputProps={{
                   maxLength: 50
                 }}
