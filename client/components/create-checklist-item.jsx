@@ -22,7 +22,9 @@ const CreateChecklistItem = props => {
   const [description, setDescription] = React.useState('');
 
   const handleChange = event => {
-    setDescription(event.target.value);
+    if (event.target.value[0] !== ' ' && event.target.value.indexOf('  ') === -1) {
+      setDescription(event.target.value);
+    }
   };
 
   const handleSubmit = event => {
