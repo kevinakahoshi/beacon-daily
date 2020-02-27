@@ -15,26 +15,20 @@ function ChecklistItems(props) {
     </Box>;
 
   if (props.checklist.length) {
-    // If there are actual checklist items available, we use Array.map to create checklist items
     checklistItems = props.checklist.map((checklistItem, index) => {
-      // Depending on the view, we either show the completed or incompleted items
-      if (props.view === 'completed'
-        ? checklistItem.iscompleted
-        : !checklistItem.iscompleted) {
-        return (
-          <IndividualTodo
-            key={checklistItem.checklistitemid}
-            id={checklistItem.checklistitemid}
-            completed={props.view}
-            classes={props.classes}
-            updateChecklistItem={props.updateChecklistItem}
-            toggleComplete={props.toggleComplete}
-            deleteChecklistItem={props.deleteChecklistItem}
-            checklistItem={checklistItem}
-            handleDeleteClick={props.handleDeleteClick}
-            mounting={props.mounting} />
-        );
-      }
+      return (
+        <IndividualTodo
+          key={checklistItem.checklistitemid}
+          id={checklistItem.checklistitemid}
+          completed={props.view}
+          classes={props.classes}
+          updateChecklistItem={props.updateChecklistItem}
+          toggleComplete={props.toggleComplete}
+          deleteChecklistItem={props.deleteChecklistItem}
+          checklistItem={checklistItem}
+          handleDeleteClick={props.handleDeleteClick}
+          mounting={props.mounting} />
+      );
     });
   }
 
