@@ -123,9 +123,10 @@ const IndividualTodo = props => {
       <Box
         className={classes.dropdown}>
         <Box
-          className={`${completed === 'completed'
-          ? classes.hideButtons
-          : classes.toDoBox}`}>
+          // className={`${completed === 'completed'
+          // ? classes.hideButtons
+          // : classes.toDoBox}`}
+        >
           <ButtonGroup
             variant="outlined"
             className={classes.buttonGroupStyling}

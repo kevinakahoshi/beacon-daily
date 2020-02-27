@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '4px'
   },
   buttons: {
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(2, 0, 0, 0)
   }
 }));
 
@@ -22,7 +22,9 @@ const CreateChecklistItem = props => {
   const [description, setDescription] = React.useState('');
 
   const handleChange = event => {
-    setDescription(event.target.value);
+    if (event.target.value[0] !== ' ' && event.target.value.indexOf('  ') === -1) {
+      setDescription(event.target.value);
+    }
   };
 
   const handleSubmit = event => {
@@ -46,12 +48,9 @@ const CreateChecklistItem = props => {
         <form
           onSubmit={event => handleSubmit(event)}>
           <FormGroup>
-            <Typography
-              variant="h6">
-                Description:
-            </Typography>
             <FormControl>
               <TextField
+                label="Description"
                 id="description"
                 name="description"
                 type="text"
