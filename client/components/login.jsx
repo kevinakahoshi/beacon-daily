@@ -134,8 +134,9 @@ const Login = props => {
                   variant="contained"
                   color="primary"
                   type="submit"
+                  disabled={!email || !password}
                   className={classes.buttons}>
-                Submit
+                    Submit
                 </Button>
               </form>
             </Box>
