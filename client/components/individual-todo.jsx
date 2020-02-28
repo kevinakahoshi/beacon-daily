@@ -92,8 +92,7 @@ const IndividualTodo = props => {
         <Grid
           item
           md={7}
-          xs={12}
-        >
+          xs={12}>
           <FormControl
             fullWidth>
             <TextField
