@@ -21,6 +21,8 @@ const App = () => {
   const [fetchedUser, setFetchedUser] = React.useState(false);
   const [colorMode, setColorMode] = React.useState('light');
   const [componentStatus, setComponentStatus] = React.useState('mounting');
+  const nameRegEx = new RegExp(/^[a-zA-Z -]+$/);
+  const emailRegEx = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   // const [weather, setWeather] = React.useState(null);
 
   const lightTheme = createMuiTheme({
@@ -60,7 +62,7 @@ const App = () => {
   });
 
   const createAccountHandler = (event, newAccount, historyProps) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (newAccount.firstName && newAccount.lastName && newAccount.email && newAccount.password) {
       const init = {
         method: 'POST',
@@ -68,10 +70,10 @@ const App = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          firstName: newAccount.firstName,
-          lastName: newAccount.lastName,
-          email: newAccount.email,
-          password: newAccount.password
+          firstName: newAccount.firstName.trim(),
+          lastName: newAccount.lastName.trim(),
+          email: newAccount.email.toLowerCase(),
+          password: newAccount.password.trim()
         })
       };
 
@@ -311,6 +313,7 @@ const App = () => {
             render={props =>
               <Login
                 {...props}
+                emailCheck={emailRegEx}
                 handleFade={handleFade}
                 modalOpen={modalOpen}
                 modalMessage={modalMessage}
@@ -322,6 +325,8 @@ const App = () => {
             render={props =>
               <SignUp
                 {...props}
+                nameCheck={nameRegEx}
+                emailCheck={emailRegEx}
                 handleFade={handleFade}
                 createAccountHandler={createAccountHandler}
                 componentStatus={componentStatus} />} />

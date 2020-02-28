@@ -52,45 +52,44 @@ const SignUp = props => {
   const newAccount = { firstName, lastName, email, password };
 
   const handleChange = event => {
-    const nameRegEx = new RegExp(/^[a-zA-Z ]+$/);
-    const emailRegEx = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-
-    switch (event.target.name) {
-      case 'firstName':
-        if (event.target.value.indexOf('  ') === -1) {
-          setFirstName(event.target.value);
-          if (!nameRegEx.test(event.target.value) && firstName.length > 0) {
-            setFirstNameValidation(true);
-          } else {
-            setFirstNameValidation(false);
+    if (event.target.value[0] !== ' ') {
+      switch (event.target.name) {
+        case 'firstName':
+          if (event.target.value.indexOf('  ') === -1 && event.target.value.indexOf('--') === -1) {
+            if (!props.nameCheck.test(event.target.value)) {
+              setFirstNameValidation(true);
+            } else {
+              setFirstNameValidation(false);
+            }
+            setFirstName(event.target.value);
           }
-        }
-        break;
-      case 'lastName':
-        if (event.target.value.indexOf('  ') === -1) {
-          setLastName(event.target.value);
-          if (!nameRegEx.test(event.target.value) && lastName.length > 0) {
-            setLastNameValidation(true);
-          } else {
-            setLastNameValidation(false);
+          break;
+        case 'lastName':
+          if (event.target.value.indexOf('  ') === -1 && event.target.value.indexOf('--') === -1) {
+            if (!props.nameCheck.test(event.target.value) && lastName.length > 0) {
+              setLastNameValidation(true);
+            } else {
+              setLastNameValidation(false);
+            }
+            setLastName(event.target.value);
           }
-        }
-        break;
-      case 'email':
-        if (event.target.value.indexOf(' ') === -1) {
-          setEmail(event.target.value);
-          if (!emailRegEx.test(event.target.value) && email.length > 0) {
-            setEmailValidation(true);
-          } else {
-            setEmailValidation(false);
+          break;
+        case 'email':
+          if (event.target.value.indexOf(' ') === -1) {
+            setEmail(event.target.value);
+            if (!props.emailCheck.test(event.target.value) && email.length > 0) {
+              setEmailValidation(true);
+            } else {
+              setEmailValidation(false);
+            }
           }
-        }
-        break;
-      case 'password':
-        if (event.target.value.indexOf(' ') === -1) {
-          setPassword(event.target.value);
-        }
-        break;
+          break;
+        case 'password':
+          if (event.target.value.indexOf(' ') === -1) {
+            setPassword(event.target.value);
+          }
+          break;
+      }
     }
   };
 
@@ -136,7 +135,12 @@ const SignUp = props => {
             <Box
               className={classes.formBox}>
               <form
-                onSubmit={event => props.createAccountHandler(event, newAccount, props.history)}
+                onSubmit={event => {
+                  event.preventDefault();
+                  if (!firstNameValidation && !lastNameValidation && !emailValidation && password.length) {
+                    props.createAccountHandler(event, newAccount, props.history);
+                  }
+                }}
                 className={props.componentStatus}>
                 <FormGroup>
                   <FormControl
@@ -149,7 +153,7 @@ const SignUp = props => {
                       autoComplete="off"
                       variant="outlined"
                       value={firstName}
-                      error={firstNameValidation}
+                      error={!props.nameCheck.test(firstName) && firstName.length > 0}
                       className={classes.formInputs}
                       onChange={event => handleChange(event)} />
                   </FormControl>
@@ -165,7 +169,7 @@ const SignUp = props => {
                       autoComplete="new-password"
                       variant="outlined"
                       value={lastName}
-                      error={lastNameValidation}
+                      error={!props.nameCheck.test(lastName) && lastName.length > 0}
                       className={classes.formInputs}
                       onChange={event => handleChange(event)} />
                   </FormControl>
@@ -178,7 +182,7 @@ const SignUp = props => {
                       autoComplete="new-password"
                       variant="outlined"
                       value={email}
-                      error={emailValidation}
+                      error={!props.emailCheck.test(email) && email.length > 0}
                       className={classes.formInputs}
                       onChange={event => handleChange(event)} />
                   </FormControl>
@@ -199,8 +203,9 @@ const SignUp = props => {
                   variant="contained"
                   color="primary"
                   type="submit"
+                  disabled={!firstName || !lastName || !email || !password}
                   className={classes.buttons}>
-                Submit
+                    Submit
                 </Button>
               </form>
             </Box>
