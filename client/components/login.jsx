@@ -51,16 +51,14 @@ const Login = props => {
   const user = { email, password };
 
   const handleChange = event => {
-    const emailRegEx = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-
     if (event.target.value.indexOf(' ') === -1) {
       if (event.target.name === 'email') {
-        setEmail(event.target.value);
-        if (!emailRegEx.test(event.target.value) && email.length > 0) {
+        if (!props.emailCheck.test(event.target.value) && email.length > 0) {
           setEmailValidation(true);
         } else {
           setEmailValidation(false);
         }
+        setEmail(event.target.value);
       } else {
         setPassword(event.target.value);
       }
@@ -101,7 +99,11 @@ const Login = props => {
             <Box
               className={classes.formBox}>
               <form
-                onSubmit={event => props.loginSubmitHandler(event, user, props.history)}
+                onSubmit={event => {
+                  if (!emailValidation && password.length) {
+                    props.loginSubmitHandler(event, user, props.history);
+                  }
+                }}
                 className={props.componentStatus}>
                 <FormGroup>
                   <FormControl
@@ -113,7 +115,7 @@ const Login = props => {
                       autoComplete="off"
                       variant="outlined"
                       value={email}
-                      error={emailValidation}
+                      error={!props.emailCheck.test(email) && email.length > 0}
                       className={classes.formInputs}
                       onChange={event => handleChange(event)} />
                   </FormControl>
