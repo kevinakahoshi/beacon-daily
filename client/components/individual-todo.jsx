@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -27,9 +28,6 @@ const useStyles = makeStyles(theme => ({
     }
   },
   selectBox: {
-    [theme.breakpoints.down('xs')]: {
-      marginTop: theme.spacing(2)
-    },
     width: '100%'
   },
   selectInput: {
@@ -39,19 +37,11 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 1.5
   },
   buttonGroupStyling: {
-    [theme.breakpoints.up('sm')]: {
-      marginRight: theme.spacing(2)
-    },
-    [theme.breakpoints.down('xs')]: {
-      margin: theme.spacing(2, 0, 0, 0)
-    },
     width: '100%',
     height: '61px'
   },
   editSaveDelete: {
-    [theme.breakpoints.down('sm')]: {
-      width: '50%'
-    }
+    width: '50%'
   },
   hideButtons: {
     display: 'none'
@@ -96,37 +86,39 @@ const IndividualTodo = props => {
       border={1}
       borderColor="grey.500"
       className={`${props.mounting} ${unmounting} ${classes.toDoBox}`}>
-      <Box
-        width="100%"
-        className={classes.toDoBox}>
-        <FormControl
-          fullWidth>
-          <TextField
-            name="description"
-            type="text"
-            autoComplete="off"
-            multiline
-            inputProps={{
-              maxLength: 50,
-              readOnly: !editing,
-              className: classes.inputBox
-            }}
-            label={`Description${editing && descriptionValue.length >= 0
+      <Grid
+        container
+        spacing={2}>
+        <Grid
+          item
+          md={7}
+          xs={12}
+        >
+          <FormControl
+            fullWidth>
+            <TextField
+              name="description"
+              type="text"
+              autoComplete="off"
+              multiline
+              inputProps={{
+                maxLength: 50,
+                readOnly: !editing,
+                className: classes.inputBox
+              }}
+              label={`Description${editing && descriptionValue.length >= 0
               ? ' - ' + descriptionValue.length + '/50 Characters'
               : ''}`}
-            value={descriptionValue}
-            error={descriptionValue.length === 0}
-            variant="outlined"
-            onChange={event => handleDescriptionChange(event)} />
-        </FormControl>
-      </Box>
-      <Box
-        className={classes.dropdown}>
-        <Box
-          // className={`${completed === 'completed'
-          // ? classes.hideButtons
-          // : classes.toDoBox}`}
-        >
+              value={descriptionValue}
+              error={descriptionValue.length === 0}
+              variant="outlined"
+              onChange={event => handleDescriptionChange(event)} />
+          </FormControl>
+        </Grid>
+        <Grid
+          item
+          md
+          xs={12}>
           <ButtonGroup
             variant="outlined"
             className={classes.buttonGroupStyling}
@@ -149,29 +141,34 @@ const IndividualTodo = props => {
               <DeleteForeverIcon />
             </Button>
           </ButtonGroup>
-        </Box>
-        <FormControl
-          variant="outlined"
-          className={classes.selectBox}>
-          <Select
-            defaultValue={completed}
-            onChange={event => handleSelectChange(event)}
-            className={classes.selectInput}
-            inputProps={{
-              name: 'isComplete',
-              id: 'is-complete-select'
-            }}>
-            <MenuItem
-              value="incomplete">
-                Incomplete
-            </MenuItem>
-            <MenuItem
-              value="completed">
-                Complete
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+        </Grid>
+        <Grid
+          item
+          md
+          xs={12}>
+          <FormControl
+            variant="outlined"
+            className={classes.selectBox}>
+            <Select
+              defaultValue={completed}
+              onChange={event => handleSelectChange(event)}
+              className={classes.selectInput}
+              inputProps={{
+                name: 'isComplete',
+                id: 'is-complete-select'
+              }}>
+              <MenuItem
+                value="incomplete">
+              Incomplete
+              </MenuItem>
+              <MenuItem
+                value="completed">
+              Complete
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
