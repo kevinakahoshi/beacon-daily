@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   selectInput: {
-    height: '61px'
+    height: '61px',
+    textAlign: 'center'
   },
   inputBox: {
     lineHeight: 1.5
@@ -45,6 +46,10 @@ const useStyles = makeStyles(theme => ({
   },
   hideButtons: {
     display: 'none'
+  },
+  dropdownText: {
+    display: 'block',
+    textAlign: 'center'
   }
 }));
 
@@ -157,10 +162,12 @@ const IndividualTodo = props => {
                 id: 'is-complete-select'
               }}>
               <MenuItem
+                className={classes.dropdownText}
                 value="incomplete">
               Incomplete
               </MenuItem>
               <MenuItem
+                className={classes.dropdownText}
                 value="completed">
               Complete
               </MenuItem>
