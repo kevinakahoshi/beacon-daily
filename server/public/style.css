@@ -42,24 +42,32 @@ body {
 @keyframes mount {
   0% {
     opacity: 0;
-    transform: translateY(15%);
+    transform: translate3d(0, 15%, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0%);
+    transform: translate3d(0, 0%, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
   }
 }
 
 @keyframes unmount {
   0% {
     opacity: 1;
-    transform: translateY(0%);
+    transform: translate3d(0, 0%, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
   }
 
   100% {
     opacity: 0;
-    transform: translateY(15%);
+    transform: translate3d(0, 15%, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
   }
 }
 
