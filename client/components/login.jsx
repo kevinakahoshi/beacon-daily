@@ -100,8 +100,9 @@ const Login = props => {
               className={classes.formBox}>
               <form
                 onSubmit={event => {
+                  event.preventDefault();
                   if (!emailValidation && password.length) {
-                    props.loginSubmitHandler(event, user, props.history);
+                    props.loginSubmitHandler(user, props.history);
                   }
                 }}
                 className={props.componentStatus}>

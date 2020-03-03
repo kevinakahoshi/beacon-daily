@@ -61,8 +61,7 @@ const App = () => {
     }
   });
 
-  const createAccountHandler = (event, newAccount, historyProps) => {
-    // event.preventDefault();
+  const createAccountHandler = (newAccount, historyProps) => {
     if (newAccount.firstName && newAccount.lastName && newAccount.email && newAccount.password) {
       const init = {
         method: 'POST',
@@ -92,8 +91,7 @@ const App = () => {
     }
   };
 
-  const loginSubmitHandler = (event, user, historyProps) => {
-    event.preventDefault();
+  const loginSubmitHandler = (user, historyProps) => {
     if (user.email && user.password) {
       const init = {
         method: 'POST',
