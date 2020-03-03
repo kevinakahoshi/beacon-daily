@@ -4,6 +4,7 @@ const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
+const bcrypt = require('bcrypt');
 const app = express();
 
 app.use(staticMiddleware);
@@ -55,50 +56,62 @@ app.get('/api/get-user', (req, res, next) => {
 });
 
 app.post('/api/create-an-account', (req, res, next) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const password = req.body.password;
+  const saltRounds = 12;
   const sqlQuery = `
-    INSERT INTO users (firstname, lastname, email, password)
-         VALUES ($1, $2, $3, $4)
+  INSERT INTO users (firstname, lastname, email, password)
+  VALUES ($1, $2, $3, $4)
   `;
-  const params = [
-    firstName,
-    lastName,
-    email,
-    password
-  ];
-  db.query(sqlQuery, params)
-    .then(result => res.status(201).json({ message: 'User created successfully' }))
-    .catch(err => next(err));
+
+  bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const password = hash;
+    const params = [
+      firstName,
+      lastName,
+      email,
+      password
+    ];
+    db.query(sqlQuery, params)
+      .then(result => res.status(201).json({ message: 'User created successfully' }))
+      .catch(err => next(err));
+    if (err) {
+      console.error(err);
+    }
+  });
 });
 
 app.post('/api/login', (req, res, next) => {
   const email = req.body.email;
-  const password = req.body.password;
   const sqlQuery = `
-    SELECT *
-      FROM users
-     WHERE email = $1
-       AND password = $2
+           SELECT *
+             FROM users
+            WHERE email = $1
   `;
+
   const params = [
-    email,
-    password
+    email
   ];
+
   db.query(sqlQuery, params)
     .then(result => {
       if (result) {
-        const user = {
-          email: result.rows[0].email,
-          firstname: result.rows[0].firstname,
-          lastname: result.rows[0].lastname,
-          userid: result.rows[0].userid
-        };
-        req.session.user = user;
-        // req.session = JSON.parse(res.session, null, 2);
-        res.status(200).json(user);
+        bcrypt.compare(req.body.password, result.rows[0].password)
+          .then(response => {
+            if (response) {
+              const user = {
+                email: result.rows[0].email,
+                firstname: result.rows[0].firstname,
+                lastname: result.rows[0].lastname,
+                userid: result.rows[0].userid
+              };
+              req.session.user = user;
+              res.status(200).json(user);
+            } else {
+              next(new ClientError('Incorrect email or password', 400));
+            }
+          });
       }
     })
     .catch(err => next(err));
