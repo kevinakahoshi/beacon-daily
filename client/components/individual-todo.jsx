@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 const IndividualTodo = props => {
   const classes = useStyles();
-  const completed = props.completed;
+  const [completed, setCompleted] = React.useState(props.completed);
   const [unmounting, setUnmounting] = React.useState('mounting');
   const [editing, setEditing] = React.useState(false);
   const [descriptionValue, setDescriptionValue] = React.useState(props.checklistItem.checklistitem);
@@ -77,6 +77,7 @@ const IndividualTodo = props => {
 
   const handleSelectChange = event => {
     if (event.target.value !== completed) {
+      setCompleted(event.target.value);
       setUnmounting('unmounting');
       setTimeout(() => {
         props.toggleComplete(props.checklistItem.checklistitemid);
@@ -154,7 +155,7 @@ const IndividualTodo = props => {
             variant="outlined"
             className={classes.selectBox}>
             <Select
-              defaultValue={completed}
+              value={completed}
               onChange={event => handleSelectChange(event)}
               className={classes.selectInput}
               inputProps={{
@@ -164,12 +165,12 @@ const IndividualTodo = props => {
               <MenuItem
                 className={classes.dropdownText}
                 value="incomplete">
-              Incomplete
+                  Incomplete
               </MenuItem>
               <MenuItem
                 className={classes.dropdownText}
                 value="completed">
-              Complete
+                  Complete
               </MenuItem>
             </Select>
           </FormControl>
