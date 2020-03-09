@@ -48,8 +48,10 @@ const useStyles = makeStyles(theme => ({
     display: 'none'
   },
   dropdownText: {
-    display: 'block',
-    textAlign: 'center'
+    display: 'flex'
+  },
+  dropdownTextSpan: {
+    margin: 'auto'
   }
 }));
 
@@ -165,12 +167,18 @@ const IndividualTodo = props => {
               <MenuItem
                 className={classes.dropdownText}
                 value="incomplete">
+                <span
+                  className={classes.dropdownTextSpan}>
                   Incomplete
+                </span>
               </MenuItem>
               <MenuItem
                 className={classes.dropdownText}
                 value="completed">
+                <span
+                  className={classes.dropdownTextSpan}>
                   Complete
+                </span>
               </MenuItem>
             </Select>
           </FormControl>
