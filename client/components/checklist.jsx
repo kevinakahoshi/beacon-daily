@@ -221,17 +221,10 @@ const Checklist = props => {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => {
-              if (view !== 'create') {
-                handleDrawerClose();
-                setTimeout(() => {
-                  toggleView('create');
-                }, 200);
-              }
-              // view !== 'create'
-              //   ? toggleView('create')
-              //   : null;
-            }}>
+            onClick={() =>
+              view !== 'create'
+                ? toggleView('create')
+                : null}>
             <ListItemIcon>
               <AddBoxOutlinedIcon />
             </ListItemIcon>
@@ -241,17 +234,10 @@ const Checklist = props => {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => {
-              if (view !== 'incomplete') {
-                handleDrawerClose();
-                setTimeout(() => {
-                  toggleView('incomplete');
-                }, 200);
-              }
-              // view !== 'incomplete'
-              // ? toggleView('incomplete')
-              // : null
-            }}>
+            onClick={() =>
+              view !== 'incomplete'
+                ? toggleView('incomplete')
+                : null}>
             <ListItemIcon>
               <CheckBoxOutlineBlankOutlinedIcon />
             </ListItemIcon>
@@ -261,17 +247,10 @@ const Checklist = props => {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => {
-              if (view !== 'completed') {
-                handleDrawerClose();
-                setTimeout(() => {
-                  toggleView('completed');
-                }, 300);
-              }
-              // view === 'completed'
-              // ? null
-              // : toggleView('completed')
-            }}>
+            onClick={() =>
+              view === 'completed'
+                ? null
+                : toggleView('completed')}>
             <ListItemIcon>
               <CheckBoxOutlinedIcon />
             </ListItemIcon>
@@ -283,12 +262,7 @@ const Checklist = props => {
         <List>
           <ListItem
             button
-            onClick={() => {
-              props.toggleColorMode();
-              // setTimeout(() => {
-              // }, 300);
-              handleDrawerClose();
-            }}
+            onClick={props.toggleColorMode}
             className={classes.menuOptions}>
             <ListItemIcon>
               {props.colorMode === 'light'
@@ -305,11 +279,8 @@ const Checklist = props => {
             button
             className={classes.menuOptions}
             onClick={() => {
-              handleDrawerClose();
-              setTimeout(() => {
-                setFade('fade-out');
-                props.logoutUser(props.history);
-              }, 300);
+              setFade('fade-out');
+              props.logoutUser(props.history);
             }}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
