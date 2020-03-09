@@ -76,7 +76,7 @@ const App = () => {
         })
       };
 
-      fetch('/api/create-an-account', init)
+      fetch('/api/user/create-an-account', init)
         .then(response => response.json())
         .then(user => {
           setUser(user);
@@ -104,7 +104,7 @@ const App = () => {
         })
       };
 
-      fetch('/api/login', init)
+      fetch('/api/user/login', init)
         .then(response => response.json())
         .then(user => {
           if (!user.error) {
@@ -137,7 +137,7 @@ const App = () => {
       }
     };
 
-    fetch('/api/logout', init)
+    fetch('/api/user/logout', init)
       .then(response => response.json())
       .then(user => {
         setSignedIn(false);
@@ -152,7 +152,7 @@ const App = () => {
   };
 
   const getUser = () => {
-    fetch('/api/get-user')
+    fetch('/api/user/get-user')
       .then(response => response.json())
       .then(user => {
         setFetchedUser(true);
@@ -165,7 +165,7 @@ const App = () => {
   };
 
   const getChecklistItems = id => {
-    fetch(`/api/get-checklist/${id}`)
+    fetch(`/api/checklist/get-checklist/${id}`)
       .then(response => response.json())
       .then(checklist => setChecklist(checklist))
       .catch(error => console.error(error));
@@ -183,7 +183,7 @@ const App = () => {
       })
     };
 
-    fetch('/api/create-checklist-item', init)
+    fetch('/api/checklist/create-checklist-item', init)
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
@@ -208,7 +208,7 @@ const App = () => {
       body: JSON.stringify({ updatedChecklistItem, checklistItemId })
     };
 
-    fetch('/api/update-checklist-item', init)
+    fetch('/api/checklist/update-checklist-item', init)
       .then(response => response.json())
       .then(data => data)
       .catch(error => console.error(error));
@@ -223,7 +223,7 @@ const App = () => {
       body: JSON.stringify({ checklistItemId })
     };
 
-    fetch('/api/toggle-complete', init)
+    fetch('/api/checklist/toggle-complete', init)
       .then(response => response.json())
       .then(data => getChecklistItems(user.userid))
       .catch(error => console.error(error));
@@ -238,7 +238,7 @@ const App = () => {
       body: JSON.stringify({ checklistItemId })
     };
 
-    fetch('/api/delete-checklist-item/', init)
+    fetch('/api/checklist/delete-checklist-item/', init)
       .then(response => response.json())
       .then(data => {
         handleModalClose();

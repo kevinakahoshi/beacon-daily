@@ -210,9 +210,9 @@ app.use(routes);
 //     .catch(err => next(err));
 // });
 
-// app.use('/api', (req, res, next) => {
-//   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
-// });
+app.use('/api', (req, res, next) => {
+  next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
+});
 
 app.use((err, req, res, next) => {
   if (err instanceof ClientError) {
