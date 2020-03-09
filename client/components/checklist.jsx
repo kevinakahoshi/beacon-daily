@@ -72,7 +72,8 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
+    // width: theme.spacing(7) + 1,
+    width: 0,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1
     }
@@ -91,7 +92,13 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    // padding: theme.spacing(3)
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(3)
+    },
+    [theme.breakpoints.up('xs')]: {
+      padding: theme.spacing(2)
+    }
   },
   menuOptions: {
     [theme.breakpoints.up('sm')]: {
@@ -214,9 +221,10 @@ const Checklist = props => {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => view !== 'create'
-              ? toggleView('create')
-              : null }>
+            onClick={() =>
+              view !== 'create'
+                ? toggleView('create')
+                : null}>
             <ListItemIcon>
               <AddBoxOutlinedIcon />
             </ListItemIcon>
@@ -226,9 +234,10 @@ const Checklist = props => {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => view !== 'incomplete'
-              ? toggleView('incomplete')
-              : null}>
+            onClick={() =>
+              view !== 'incomplete'
+                ? toggleView('incomplete')
+                : null}>
             <ListItemIcon>
               <CheckBoxOutlineBlankOutlinedIcon />
             </ListItemIcon>
@@ -238,9 +247,10 @@ const Checklist = props => {
           <ListItem
             button
             className={classes.menuOptions}
-            onClick={() => view === 'completed'
-              ? null
-              : toggleView('completed')}>
+            onClick={() =>
+              view === 'completed'
+                ? null
+                : toggleView('completed')}>
             <ListItemIcon>
               <CheckBoxOutlinedIcon />
             </ListItemIcon>
