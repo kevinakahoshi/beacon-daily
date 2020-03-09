@@ -1,117 +1,15 @@
 const express = require('express');
-const db = require('../../../database');
+const getChecklist = require('./get-checklist');
+const createChecklistItem = require('./create-checklist-item');
+const updateChecklistItem = require('./update-checklist-item');
+const toggleComplete = require('./toggle-complete');
+const deleteChecklistItem = require('./delete-checklist-item');
 const router = express.Router();
 
-router.get('/get-checklist/:id?', (req, res, next) => {
-  let userId = null;
-  if (req.session.userId) {
-    userId = req.session.userId;
-  } else {
-    userId = parseInt(req.params.id);
-  }
-  let sqlQuery = null;
-  const params = [];
-  if (!userId) {
-    sqlQuery = `
-        SELECT *
-          FROM users
-    INNER JOIN checklist
-            ON users.userId = checklist.userId
-  `;
-  } else {
-    sqlQuery = `
-        SELECT *
-          FROM checklist
-         WHERE userId = $1
-      ORDER BY checklistItemId
-      `;
-    params.push(userId);
-  }
-  db.query(sqlQuery, params)
-    .then(result => res.status(200).json(result.rows))
-    .catch(err => next(err));
-});
-
-router.post('/create-checklist-item', (req, res, next) => {
-  const userId = req.body.userId;
-  const checklistItem = req.body.checklistItem;
-  const isCompleted = false;
-  const sqlQuery = `
-            INSERT INTO checklist (userId, checklistItem, isCompleted)
-            VALUES ($1, $2, $3)
-          `;
-  const params = [
-    userId,
-    checklistItem,
-    isCompleted
-  ];
-  db.query(sqlQuery, params)
-    .then(result => res.status(201).json({ message: 'Checklist item created successfully' }))
-    .catch(err => next(err));
-});
-
-router.patch('/update-checklist-item', (req, res, next) => {
-  const updatedChecklistItem = req.body.updatedChecklistItem;
-  const checklistItemId = req.body.checklistItemId;
-
-  const sqlQuery = `
-            UPDATE checklist
-               SET checklistItem = $1
-             WHERE checklistItemId = $2
-          `;
-  const params = [
-    updatedChecklistItem,
-    checklistItemId
-  ];
-  db.query(sqlQuery, params)
-    .then(result => res.status(202).json({ message: 'Checklist item updated successfully' }))
-    .catch(err => next(err));
-});
-
-router.patch('/toggle-complete', (req, res, next) => {
-  const checklistItemId = req.body.checklistItemId;
-
-  const getQuery = `
-    SELECT *
-      FROM checklist
-      WHERE checklistItemId = $1
-  `;
-
-  const getParams = [
-    checklistItemId
-  ];
-
-  db.query(getQuery, getParams)
-    .then(result => {
-      const isCompleted = !result.rows[0].iscompleted;
-      const updateQuery = `
-        UPDATE checklist
-            SET isCompleted = $1
-          WHERE checklistItemId = $2
-      `;
-      const updateParams = [
-        isCompleted,
-        checklistItemId
-      ];
-      db.query(updateQuery, updateParams)
-        .then(result => res.json({ message: 'Checklist item updated successfully' }))
-        .catch(err => next(err));
-    })
-    .catch(err => next(err));
-});
-
-router.delete('/delete-checklist-item', (req, res, next) => {
-  const checklistItemId = req.body.checklistItemId;
-  const sqlQuery = `
-          DELETE FROM checklist
-                WHERE checklistItemId = $1
-        `;
-  const params = [
-    checklistItemId
-  ];
-  db.query(sqlQuery, params)
-    .then(result => res.status(202).json({ message: 'Checklist item deleted successfully' }))
-    .catch(err => next(err));
-});
+router.use('/get-checklist/', getChecklist);
+router.use('/create-checklist-item', createChecklistItem);
+router.use('/update-checklist-item', updateChecklistItem);
+router.use('/toggle-complete', toggleComplete);
+router.use('/delete-checklist-item', deleteChecklistItem);
 
 module.exports = router;
