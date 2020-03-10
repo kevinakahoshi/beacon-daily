@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
   buttons: {
     width: '100%',
     height: '56px'
+  },
+  focusColor: {
+    color: '#fff!important'
   }
 }));
 
@@ -52,8 +55,8 @@ const CreateChecklistItem = props => {
         <form
           onSubmit={event => handleSubmit(event)}>
           <Grid
-            spacing={2}
-            container>
+            container
+            spacing={2}>
             <Grid
               item
               sm={9}
@@ -68,7 +71,8 @@ const CreateChecklistItem = props => {
                     autoComplete="off"
                     variant="outlined"
                     inputProps={{
-                      maxLength: 50
+                      maxLength: 50,
+                      color: classes.focusColor
                     }}
                     value={description}
                     onClick={() => setEditing(true)}
