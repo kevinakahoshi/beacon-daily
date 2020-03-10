@@ -7,6 +7,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
 
 const useStyles = makeStyles(theme => ({
@@ -30,10 +31,10 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.background.paper
   },
   buttons: {
-    margin: theme.spacing(2)
+    width: '100%',
+    height: '56px'
   },
   backWrapper: {
-    display: 'flex',
     position: 'absolute',
     top: theme.spacing(2),
     left: theme.spacing(2)
@@ -115,22 +116,23 @@ const SignUp = props => {
     <>
       <CssBaseline />
       <Box
-        p={2}
+        // p={2}
         height="100%"
         className={classes.mainSection}>
         <Button
+          m={2}
           className={`${classes.backWrapper} ${props.componentStatus}`}
           onClick={() => props.handleFade(props.history, '/')}>
           <ChevronLeftOutlinedIcon />BACK
         </Button>
-        <Box
+        <Container
+          maxWidth="sm"
           className={`${props.componentStatus} ${classes.contentSection}`}>
           <Typography
             variant="h1">
             Beacon Daily
           </Typography>
           <Box
-            p={2}
             borderColor="grey.500">
             <Typography
               variant="h6">
@@ -202,18 +204,21 @@ const SignUp = props => {
                       onChange={event => handleChange(event)} />
                   </FormControl>
                 </FormGroup>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  disabled={!firstName || !lastName || !email || !password}
-                  className={classes.buttons}>
+                <Box
+                  my={2}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={!firstName || !lastName || !email || !password}
+                    className={classes.buttons}>
                     Submit
-                </Button>
+                  </Button>
+                </Box>
               </form>
             </Box>
           </Box>
-        </Box>
+        </Container>
       </Box>
     </>
   );
