@@ -4,6 +4,7 @@ import {
   Button,
   Typography
 } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -25,25 +26,25 @@ const useStyles = makeStyles(theme => ({
 
 const Home = props => {
   const classes = useStyles();
+  const guestUser = {
+    email: 'guest.account@gmail.com',
+    password: 't&ajff!330#cjJ08deRz'
+  };
 
   const buttonSwitch = user => {
     if (user) {
       return (
-        <Box
-          p={2}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => props.handleFade(props.history, '/checklist')}
-            className={`${classes.buttons} ${props.componentStatus}`}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.handleFade(props.history, '/checklist')}
+          className={`${classes.buttons} ${props.componentStatus}`}>
               View Planner
-          </Button>
-        </Box>
+        </Button>
       );
     } else {
       return (
-        <Box
-          p={2}>
+        <>
           <Button
             variant="contained"
             color="primary"
@@ -58,7 +59,18 @@ const Home = props => {
             className={`${classes.buttons} ${props.componentStatus}`}>
               Sign Up
           </Button>
-        </Box>
+          <Box>
+            <Button
+              variant="contained"
+              color="primary"
+              className={`${classes.buttons} ${props.componentStatus}`}
+              onClick={() => {
+                props.loginSubmitHandler(guestUser, props.history);
+              }}>
+                Try as Guest
+            </Button>
+          </Box>
+        </>
       );
     }
   };
@@ -66,7 +78,7 @@ const Home = props => {
   return (
     <>
       <CssBaseline />
-      <Box
+      <Container
         className={classes.mainSection}>
         <Box
           className={`${props.componentStatus} ${classes.contentSection}`}>
@@ -76,9 +88,12 @@ const Home = props => {
           <Typography variant="h2">
             Your daily planner.
           </Typography>
-          {buttonSwitch(props.user)}
+          <Box
+            p={2}>
+            {buttonSwitch(props.user)}
+          </Box>
         </Box>
-      </Box>
+      </Container>
     </>
   );
 };

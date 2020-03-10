@@ -23,7 +23,6 @@ const App = () => {
   const [componentStatus, setComponentStatus] = React.useState('mounting');
   const nameRegEx = new RegExp(/^[a-zA-Z -]+$/);
   const emailRegEx = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-  // const [weather, setWeather] = React.useState(null);
 
   const lightTheme = createMuiTheme({
     palette: {
@@ -108,14 +107,14 @@ const App = () => {
         .then(response => response.json())
         .then(user => {
           if (!user.error) {
-            setUser(user);
-            setModalMessage(null);
-            setSignedIn(true);
             setComponentStatus('unmounting');
-            getChecklistItems(user.userid);
+            setModalMessage(null);
             setTimeout(() => {
               historyProps.push('/checklist');
+              setUser(user);
+              getChecklistItems(user.userid);
               setComponentStatus('mounting');
+              setSignedIn(true);
             }, 1000);
           } else {
             setModalMessage({
@@ -305,7 +304,8 @@ const App = () => {
                 user={user}
                 handleFade={handleFade}
                 componentStatus={componentStatus}
-                signedIn={signedIn} />} />
+                signedIn={signedIn}
+                loginSubmitHandler={loginSubmitHandler} />} />
           <Route
             exact path='/login'
             render={props =>
@@ -359,6 +359,3 @@ const App = () => {
 };
 
 export default App;
-
-// Weather API
-// https://api.openweathermap.org/data/2.5/weather?zip=92618,us&APPID=898a2a99485d6f874e33752a52837aa7
