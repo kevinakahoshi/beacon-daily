@@ -2,8 +2,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import Input from '@material-ui/core/Input';
+import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +32,8 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.background.paper
   },
   buttons: {
-    margin: theme.spacing(2)
+    width: '100%',
+    height: '56px'
   },
   backWrapper: {
     display: 'flex',
@@ -75,22 +75,22 @@ const Login = props => {
     <>
       <CssBaseline />
       <Box
-        p={2}
         height="100%"
         className={classes.mainSection}>
         <Button
+          m={2}
           className={`${classes.backWrapper} ${props.componentStatus}`}
           onClick={() => props.handleFade(props.history, '/')}>
           <ChevronLeftOutlinedIcon />Back
         </Button>
-        <Box
+        <Container
+          maxWidth="sm"
           className={`${props.componentStatus} ${classes.contentSection}`}>
           <Typography
             variant="h1">
             Beacon Daily
           </Typography>
           <Box
-            p={2}
             borderColor="grey.500">
             <Typography
               variant="h6">
@@ -133,18 +133,21 @@ const Login = props => {
                       onChange={event => handleChange(event)} />
                   </FormControl>
                 </FormGroup>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  disabled={!email || !password}
-                  className={classes.buttons}>
-                    Submit
-                </Button>
+                <Box
+                  my={2}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={!email || !password}
+                    className={classes.buttons}>
+                      Submit
+                  </Button>
+                </Box>
               </form>
             </Box>
           </Box>
-        </Box>
+        </Container>
         {props.modalOpen
           ? <ModalOverlay
             modalOpen={props.modalOpen}
