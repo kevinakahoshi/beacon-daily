@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,12 +14,14 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '4px'
   },
   buttons: {
-    margin: theme.spacing(2, 0, 0, 0)
+    width: '100%',
+    height: '56px'
   }
 }));
 
 const CreateChecklistItem = props => {
   const classes = useStyles();
+  const [editing, setEditing] = React.useState(false);
   const [description, setDescription] = React.useState('');
 
   const handleChange = event => {
@@ -37,7 +40,7 @@ const CreateChecklistItem = props => {
       <Typography
         variant="h3"
         className={props.mounting}>
-            Create a New Checklist Item
+          Create a New Checklist Item
       </Typography>
       <Box
         p={2}
@@ -45,34 +48,48 @@ const CreateChecklistItem = props => {
         border={1}
         className={`${classes.createBox} ${props.mounting}`}
         borderColor="grey.500">
+
         <form
           onSubmit={event => handleSubmit(event)}>
-          <FormGroup>
-            <FormControl>
-              <TextField
-                label="Description"
-                id="description"
-                name="description"
-                type="text"
-                autoComplete="off"
-                variant="outlined"
-                inputProps={{
-                  maxLength: 50
-                }}
-                value={description}
-                onChange={event => handleChange(event)} />
-            </FormControl>
-            <Typography>
-              {description.length}/50 Characters
-            </Typography>
-          </FormGroup>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            className={classes.buttons}>
-              Submit
-          </Button>
+          <Grid
+            spacing={2}
+            container>
+            <Grid
+              item
+              sm={9}
+              xs={12}>
+              <FormGroup>
+                <FormControl>
+                  <TextField
+                    label={`Description${editing ? ` - ${description.length}/50 Characters` : ''}`}
+                    id="description"
+                    name="description"
+                    type="text"
+                    autoComplete="off"
+                    variant="outlined"
+                    inputProps={{
+                      maxLength: 50
+                    }}
+                    value={description}
+                    onClick={() => setEditing(true)}
+                    onBlur={() => setEditing(false)}
+                    onChange={event => handleChange(event)} />
+                </FormControl>
+              </FormGroup>
+            </Grid>
+            <Grid
+              item
+              sm={3}
+              xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className={classes.buttons}>
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Box>
     </Box>

@@ -116,7 +116,6 @@ const SignUp = props => {
     <>
       <CssBaseline />
       <Box
-        // p={2}
         height="100%"
         className={classes.mainSection}>
         <Button
