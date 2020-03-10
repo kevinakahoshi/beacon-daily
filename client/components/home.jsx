@@ -5,6 +5,7 @@ import {
   Typography
 } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -20,7 +21,9 @@ const useStyles = makeStyles(theme => ({
     color: 'inherit'
   },
   buttons: {
-    margin: theme.spacing(2)
+    width: '100%',
+    height: '56px'
+    // margin: theme.spacing(2)
   }
 }));
 
@@ -45,21 +48,34 @@ const Home = props => {
     } else {
       return (
         <>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => props.handleFade(props.history, '/login')}
-            className={`${classes.buttons} ${props.componentStatus}`}>
+          <Grid
+            item
+            sm
+            xs={6}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => props.handleFade(props.history, '/login')}
+              className={`${classes.buttons} ${props.componentStatus}`}>
               Log In
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => props.handleFade(props.history, '/sign-up')}
-            className={`${classes.buttons} ${props.componentStatus}`}>
+            </Button>
+          </Grid>
+          <Grid
+            item
+            sm
+            xs={6}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => props.handleFade(props.history, '/sign-up')}
+              className={`${classes.buttons} ${props.componentStatus}`}>
               Sign Up
-          </Button>
-          <Box>
+            </Button>
+          </Grid>
+          <Grid
+            item
+            sm
+            xs={12}>
             <Button
               variant="contained"
               color="primary"
@@ -69,7 +85,7 @@ const Home = props => {
               }}>
                 Try as Guest
             </Button>
-          </Box>
+          </Grid>
         </>
       );
     }
@@ -79,18 +95,26 @@ const Home = props => {
     <>
       <CssBaseline />
       <Container
+        maxWidth="sm"
         className={classes.mainSection}>
         <Box
           className={`${props.componentStatus} ${classes.contentSection}`}>
-          <Typography variant="h1">
-            Beacon Daily
-          </Typography>
-          <Typography variant="h2">
-            Your daily planner.
-          </Typography>
           <Box
-            p={2}>
-            {buttonSwitch(props.user)}
+            my={2}>
+            <Typography variant="h1">
+            Beacon Daily
+            </Typography>
+            <Typography variant="h2">
+            Your daily planner.
+            </Typography>
+          </Box>
+          <Box
+            my={2}>
+            <Grid
+              spacing={2}
+              container>
+              {buttonSwitch(props.user)}
+            </Grid>
           </Box>
         </Box>
       </Container>
