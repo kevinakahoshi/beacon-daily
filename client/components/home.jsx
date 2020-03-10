@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
   buttons: {
     width: '100%',
     height: '56px'
-    // margin: theme.spacing(2)
   }
 }));
 
@@ -37,13 +36,26 @@ const Home = props => {
   const buttonSwitch = user => {
     if (user) {
       return (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.handleFade(props.history, '/checklist')}
-          className={`${classes.buttons} ${props.componentStatus}`}>
+        <>
+          <Grid
+            item
+            md={4}
+            sm={3}
+            xs={false} />
+          <Grid
+            item
+            md={4}
+            sm={6}
+            xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => props.handleFade(props.history, '/checklist')}
+              className={`${classes.buttons} ${props.componentStatus}`}>
               View Planner
-        </Button>
+            </Button>
+          </Grid>
+        </>
       );
     } else {
       return (
@@ -111,8 +123,8 @@ const Home = props => {
           <Box
             my={2}>
             <Grid
-              spacing={2}
-              container>
+              container
+              spacing={2}>
               {buttonSwitch(props.user)}
             </Grid>
           </Box>
