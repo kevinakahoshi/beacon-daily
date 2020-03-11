@@ -35,7 +35,15 @@ const CreateChecklistItem = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    props.newItem(description, props.toggleView);
+    if (description.length) {
+      props.newItem(description, props.toggleView);
+    } else {
+      props.setModalMessage({
+        heading: 'No Description Entered',
+        messageBody: 'Please enter a description and try again.'
+      });
+      props.handleModalOpen();
+    }
   };
 
   return (

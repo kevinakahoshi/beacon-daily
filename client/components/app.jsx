@@ -19,7 +19,7 @@ const App = () => {
   const [deleting, setDeleting] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState(null);
   const [fetchedUser, setFetchedUser] = React.useState(false);
-  const [colorMode, setColorMode] = React.useState('dark');
+  const [colorMode, setColorMode] = React.useState('light');
   const [componentStatus, setComponentStatus] = React.useState('mounting');
   const nameRegEx = new RegExp(/^[a-zA-Z -]+$/);
   const emailRegEx = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -354,7 +354,9 @@ const App = () => {
                 {...props}
                 user={user}
                 modalOpen={modalOpen}
+                setModalMessage={setModalMessage}
                 modalMessage={modalMessage}
+                handleModalOpen={handleModalOpen}
                 handleModalClose={handleModalClose}
                 handleDeleteClick={handleDeleteClick}
                 getChecklistItems={getChecklistItems}

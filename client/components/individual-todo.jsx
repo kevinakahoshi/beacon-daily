@@ -125,6 +125,7 @@ const IndividualTodo = props => {
         <Grid
           item
           md
+          sm={6}
           xs={12}>
           <ButtonGroup
             variant="outlined"
@@ -152,6 +153,7 @@ const IndividualTodo = props => {
         <Grid
           item
           md
+          sm={6}
           xs={12}>
           <FormControl
             variant="outlined"

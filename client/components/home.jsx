@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -37,15 +38,15 @@ const Home = props => {
     if (user) {
       return (
         <>
+          <Hidden
+            xsDown>
+            <Grid
+              item
+              sm={4} />
+          </Hidden>
           <Grid
             item
-            md={4}
-            sm={3}
-            xs={false} />
-          <Grid
-            item
-            md={4}
-            sm={6}
+            sm={4}
             xs={12}>
             <Button
               variant="contained"
