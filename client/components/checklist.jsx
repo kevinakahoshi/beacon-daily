@@ -297,6 +297,8 @@ const Checklist = props => {
         {view === 'create'
           ? <CreateChecklistItem
             newItem={props.createChecklistItem}
+            handleModalOpen={props.handleModalOpen}
+            setModalMessage={props.setModalMessage}
             toggleView={toggleView}
             mounting={mounting} />
           : <ChecklistItems

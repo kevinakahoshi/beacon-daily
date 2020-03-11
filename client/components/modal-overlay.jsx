@@ -1,10 +1,13 @@
 import React from 'react';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +25,8 @@ const useStyles = makeStyles(theme => ({
     outline: 0
   },
   buttons: {
-    margin: theme.spacing(2)
+    width: '100%',
+    height: '56px'
   }
 }));
 
@@ -42,7 +46,9 @@ const ModalOverlay = props => {
         timeout: 500
       }}>
       <Fade in={props.modalOpen}>
-        <div className={classes.paper}>
+        <Container
+          maxWidth="sm"
+          className={classes.paper}>
           <Typography
             variant="h5">
             {props.modalMessage.heading}
@@ -50,25 +56,57 @@ const ModalOverlay = props => {
           <Typography>
             {props.modalMessage.messageBody}
           </Typography>
-          <Box>
-            { props.deleting
-              ? <Button
-                variant="contained"
-                color="primary"
-                className={classes.buttons}
-                onClick={() => props.deleteChecklistItem(props.deleteId)}>
-                  Delete
-              </Button>
-              : null }
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.buttons}
-              onClick={props.handleModalClose}>
+          <Box
+            mt={2}>
+            <Grid
+              container
+              spacing={2}>
+              { props.deleting
+                ? <>
+                  <Hidden
+                    xsDown>
+                    <Grid
+                      item
+                      sm={2} />
+                  </Hidden>
+                  <Grid
+                    item
+                    sm={4}
+                    xs={6}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.buttons}
+                      onClick={() => props.deleteChecklistItem(props.deleteId)}>
+                        Delete
+                    </Button>
+                  </Grid>
+                </>
+                : <Hidden
+                  xsDown>
+                  <Grid
+                    item
+                    sm={props.deleting
+                      ? false
+                      : 4} />
+                </Hidden> }
+              <Grid
+                item
+                sm={4}
+                xs={props.deleting
+                  ? 6
+                  : 12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.buttons}
+                  onClick={props.handleModalClose}>
                 Close
-            </Button>
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
-        </div>
+        </Container>
       </Fade>
     </Modal>
   );
