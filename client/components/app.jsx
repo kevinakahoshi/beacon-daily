@@ -137,8 +137,8 @@ const App = () => {
             }, 1000);
           } else {
             setModalMessage({
-              heading: 'An unexpected error occurred',
-              messageBody: 'Either email address or password were not correct.'
+              heading: 'Invalid Email or Password',
+              messageBody: 'Either email address or password were not correct.  Please update those fields and try again.'
             });
             handleModalOpen();
           }
