@@ -1,4 +1,5 @@
 import React from 'react';
+import ModalOverlay from './modal-overlay';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -49,14 +50,26 @@ const SignUp = props => {
   const [lastNameValidation, setLastNameValidation] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [emailValidation, setEmailValidation] = React.useState(false);
-  const [password, setPassword] = React.useState('');
-  const [passwordValidation, setPasswordValidation] = React.useState(false);
+  const [firstPassword, setFirstPassword] = React.useState('');
+  const [firstPasswordValidation, setFirstPasswordValidation] = React.useState(false);
+  const [secondPassword, setSecondPassword] = React.useState('');
+  const [secondPasswordValidation, setSecondPasswordValidation] = React.useState(false);
   const passwordRegEx = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
-  const newAccount = { firstName, lastName, email, password };
+  const newAccount = { firstName, lastName, email, firstPassword, secondPassword };
 
   const handleChange = event => {
-    const nameField = event.target.name === 'firstName' ? setFirstName : setLastName;
-    const nameValidation = event.target.name === 'firstName' ? setFirstNameValidation : setLastNameValidation;
+    const nameField = event.target.name === 'firstName'
+      ? setFirstName
+      : setLastName;
+    const nameValidation = event.target.name === 'firstName'
+      ? setFirstNameValidation
+      : setLastNameValidation;
+    const passwordField = event.target.name === 'firstPassword'
+      ? setFirstPassword
+      : setSecondPassword;
+    const passwordValidation = event.target.name === 'firstPassword'
+      ? setFirstPasswordValidation
+      : setSecondPasswordValidation;
     if (event.target.value[0] !== ' ' || event.target.value[0] !== '-') {
       switch (event.target.name) {
         case 'firstName':
@@ -72,22 +85,23 @@ const SignUp = props => {
           break;
         case 'email':
           if (event.target.value.indexOf(' ') === -1) {
-            setEmail(event.target.value);
             if (!props.emailCheck.test(event.target.value) && email.length > 0) {
               setEmailValidation(true);
             } else {
               setEmailValidation(false);
             }
+            setEmail(event.target.value);
           }
           break;
-        case 'password':
+        case 'firstPassword':
+        case 'secondPassword':
           if (event.target.value.indexOf(' ') === -1) {
-            setPassword(event.target.value);
-            if (!passwordRegEx.test(event.target.value) && password.length > 0) {
-              setPasswordValidation(true);
+            if (!passwordRegEx.test(event.target.value) && event.target.value.length > 0) {
+              passwordValidation(true);
             } else {
-              setPasswordValidation(false);
+              passwordValidation(false);
             }
+            passwordField(event.target.value);
           }
           break;
       }
@@ -107,10 +121,14 @@ const SignUp = props => {
       setEmailValidation(false);
     }
 
-    if (!password.length) {
-      setPasswordValidation(false);
+    if (!firstPassword.length) {
+      setFirstPasswordValidation(false);
     }
-  }, [firstName, lastName, email]);
+
+    if (!secondPassword.length) {
+      setSecondPasswordValidation(false);
+    }
+  }, [firstName, lastName, email, firstPassword, secondPassword]);
 
   return (
     <>
@@ -142,7 +160,7 @@ const SignUp = props => {
               <form
                 onSubmit={event => {
                   event.preventDefault();
-                  if (!firstNameValidation && !lastNameValidation && !emailValidation && !passwordValidation) {
+                  if (!firstNameValidation && !lastNameValidation && !emailValidation && !firstPasswordValidation && !secondPasswordValidation) {
                     props.createAccountHandler(newAccount, props.history);
                   }
                 }}
@@ -189,16 +207,30 @@ const SignUp = props => {
                       className={classes.formInputs}
                       onChange={event => handleChange(event)} />
                   </FormControl>
-                  <FormControl>
+                  <FormControl
+                    className={classes.formControlBox}>
                     <TextField
                       label="Password"
-                      id="password"
-                      name="password"
+                      id="first-password"
+                      name="firstPassword"
                       type="password"
                       autoComplete="new-password"
                       variant="outlined"
-                      value={password}
-                      error={!passwordRegEx.test(password) && password.length > 0}
+                      value={firstPassword}
+                      error={!passwordRegEx.test(firstPassword) && firstPassword.length > 0}
+                      className={classes.formInputs}
+                      onChange={event => handleChange(event)} />
+                  </FormControl>
+                  <FormControl>
+                    <TextField
+                      label="Re-Enter Password"
+                      id="second-password"
+                      name="secondPassword"
+                      type="password"
+                      autoComplete="new-password"
+                      variant="outlined"
+                      value={secondPassword}
+                      error={!passwordRegEx.test(secondPassword) && secondPassword.length > 0}
                       className={classes.formInputs}
                       onChange={event => handleChange(event)} />
                   </FormControl>
@@ -209,7 +241,7 @@ const SignUp = props => {
                     variant="contained"
                     color="primary"
                     type="submit"
-                    disabled={!firstName || !lastName || !email || !password}
+                    disabled={!firstName || !lastName || !email || !firstPassword || !secondPassword}
                     className={classes.buttons}>
                     Submit
                   </Button>
@@ -218,6 +250,12 @@ const SignUp = props => {
             </Box>
           </Box>
         </Container>
+        {props.modalOpen
+          ? <ModalOverlay
+            modalOpen={props.modalOpen}
+            handleModalClose={props.handleModalClose}
+            modalMessage={props.modalMessage} />
+          : null}
       </Box>
     </>
   );
