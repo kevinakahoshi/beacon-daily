@@ -80,7 +80,12 @@ const App = () => {
   });
 
   const createAccountHandler = (newAccount, historyProps) => {
-    if (newAccount.firstName && newAccount.lastName && newAccount.email && newAccount.password) {
+    if (newAccount.firstName &&
+      newAccount.lastName &&
+      newAccount.email &&
+      newAccount.firstPassword &&
+      newAccount.secondPassword &&
+      newAccount.firstPassword === newAccount.secondPassword) {
       const init = {
         method: 'POST',
         headers: {
@@ -90,7 +95,7 @@ const App = () => {
           firstName: newAccount.firstName.trim(),
           lastName: newAccount.lastName.trim(),
           email: newAccount.email.toLowerCase(),
-          password: newAccount.password.trim()
+          password: newAccount.firstPassword.trim()
         })
       };
 
@@ -106,6 +111,12 @@ const App = () => {
           }, 1000);
         })
         .catch(error => console.error(error));
+    } else {
+      setModalMessage({
+        heading: 'Invalid Sign Up Credentials',
+        messageBody: 'Passwords did not match'
+      });
+      handleModalOpen();
     }
   };
 
@@ -345,6 +356,9 @@ const App = () => {
                 nameCheck={nameRegEx}
                 emailCheck={emailRegEx}
                 handleFade={handleFade}
+                modalOpen={modalOpen}
+                modalMessage={modalMessage}
+                handleModalClose={handleModalClose}
                 createAccountHandler={createAccountHandler}
                 componentStatus={componentStatus} />} />
           <Route
