@@ -49,11 +49,15 @@ const ModalOverlay = props => {
         <Container
           maxWidth="sm"
           className={classes.paper}>
+          <Box
+            mb={2}>
+            <Typography
+              variant="h3">
+              {props.modalMessage.heading}
+            </Typography>
+          </Box>
           <Typography
-            variant="h5">
-            {props.modalMessage.heading}
-          </Typography>
-          <Typography>
+            mb={2}>
             {props.modalMessage.messageBody}
           </Typography>
           <Box
