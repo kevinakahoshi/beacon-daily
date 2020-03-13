@@ -9,6 +9,7 @@ import SignUp from './sign-up';
 import Checklist from './checklist';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import Typography from '@material-ui/core/Typography';
 
 const App = () => {
   const [user, setUser] = React.useState(null);
@@ -114,7 +115,10 @@ const App = () => {
     } else {
       setModalMessage({
         heading: 'Invalid Sign Up Credentials',
-        messageBody: 'Passwords did not match'
+        messageBody:
+          <Typography>
+            Passwords did not match
+          </Typography>
       });
       handleModalOpen();
     }
@@ -149,7 +153,10 @@ const App = () => {
           } else {
             setModalMessage({
               heading: 'Invalid Email or Password',
-              messageBody: 'Either email address or password were not correct.  Please update those fields and try again.'
+              messageBody:
+                <Typography>
+                  Either email address or password were not correct.  Please update those fields and try again.
+                </Typography>
             });
             handleModalOpen();
           }
@@ -220,7 +227,10 @@ const App = () => {
         } else {
           setModalMessage({
             heading: 'An unexpected error occurred',
-            messageBody: 'Invalid characters in your checklist item'
+            messageBody:
+              <Typography>
+                Invalid characters in your checklist item
+              </Typography>
           });
           handleModalOpen();
         }
@@ -279,7 +289,10 @@ const App = () => {
   const handleDeleteClick = checklistItemId => {
     setModalMessage({
       heading: 'Are you sure you want to delete this item?',
-      messageBody: 'Once you delete this checklist item, you cannot restore it!'
+      messageBody:
+        <Typography>
+          Once you delete this checklist item, you cannot restore it!
+        </Typography>
     });
     setDeleteId(checklistItemId);
     setDeleting(true);

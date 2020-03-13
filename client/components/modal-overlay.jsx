@@ -56,10 +56,10 @@ const ModalOverlay = props => {
               {props.modalMessage.heading}
             </Typography>
           </Box>
-          <Typography
+          <Box
             mb={2}>
             {props.modalMessage.messageBody}
-          </Typography>
+          </Box>
           <Box
             mt={2}>
             <Grid
@@ -105,7 +105,7 @@ const ModalOverlay = props => {
                   color="primary"
                   className={classes.buttons}
                   onClick={props.handleModalClose}>
-                Close
+                    Close
                 </Button>
               </Grid>
             </Grid>
