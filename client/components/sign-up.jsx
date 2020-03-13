@@ -10,15 +10,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
+import Grid from '@material-ui/core/Grid';
+import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
+import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 
 const useStyles = makeStyles(theme => ({
   mainSection: {
     display: 'flex',
-    height: '100%',
-    overflow: 'hidden'
+    height: '100%'
   },
   contentSection: {
-    margin: 'auto',
+    margin: theme.spacing(12, 0, 0, 0),
     textAlign: 'center',
     color: 'inherit'
   },
@@ -39,6 +41,19 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: theme.spacing(2),
     left: theme.spacing(2)
+  },
+  displayNone: {
+    display: 'none'
+  },
+  requirementsBox: {
+    background: theme.palette.background.paper
+  },
+  textBoxes: {
+    display: 'flex',
+    margin: theme.spacing(1, 0)
+  },
+  checkboxes: {
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -54,8 +69,23 @@ const SignUp = props => {
   const [firstPasswordValidation, setFirstPasswordValidation] = React.useState(false);
   const [secondPassword, setSecondPassword] = React.useState('');
   const [secondPasswordValidation, setSecondPasswordValidation] = React.useState(false);
+  const [clickedPassword, setClickedPassword] = React.useState(false);
+  const [reqClass, setReqClass] = React.useState('');
   const passwordRegEx = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
   const newAccount = { firstName, lastName, email, firstPassword, secondPassword };
+
+  const toggleReqs = show => {
+    if (show) {
+      setClickedPassword(true);
+      setReqClass('mounting');
+    } else {
+      setReqClass('unmounting');
+      setTimeout(() => {
+        setClickedPassword(false);
+        setReqClass('');
+      }, 1000);
+    }
+  };
 
   const handleChange = event => {
     const nameField = event.target.name === 'firstName'
@@ -143,111 +173,191 @@ const SignUp = props => {
           <ChevronLeftOutlinedIcon />BACK
         </Button>
         <Container
-          maxWidth="sm"
+          maxWidth='md'
+          overflow="auto"
           className={`${props.componentStatus} ${classes.contentSection}`}>
           <Typography
-            variant="h1">
-            Beacon Daily
+            variant="h3">
+              Create an Account
           </Typography>
           <Box
-            borderColor="grey.500">
-            <Typography
-              variant="h6">
-                Create an Account
-            </Typography>
-            <Box
-              className={classes.formBox}>
-              <form
-                onSubmit={event => {
-                  event.preventDefault();
-                  if (!firstNameValidation && !lastNameValidation && !emailValidation && !firstPasswordValidation && !secondPasswordValidation) {
-                    props.createAccountHandler(newAccount, props.history);
-                  }
-                }}
-                className={props.componentStatus}>
-                <FormGroup>
-                  <FormControl
-                    className={classes.formControlBox}>
-                    <TextField
-                      label="First Name"
-                      id="firstName"
-                      name="firstName"
-                      type="text"
-                      autoComplete="off"
-                      variant="outlined"
-                      value={firstName}
-                      error={!props.nameCheck.test(firstName) && firstName.length > 0}
-                      className={classes.formInputs}
-                      onChange={event => handleChange(event)} />
-                  </FormControl>
-                  <FormControl
-                    className={classes.formControlBox}>
-                    <TextField
-                      label="Last Name"
-                      id="last-name"
-                      name="lastName"
-                      type="text"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      value={lastName}
-                      error={!props.nameCheck.test(lastName) && lastName.length > 0}
-                      className={classes.formInputs}
-                      onChange={event => handleChange(event)} />
-                  </FormControl>
-                  <FormControl
-                    className={classes.formControlBox}>
-                    <TextField
-                      label="Email"
-                      id="email"
-                      name="email"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      value={email}
-                      error={!props.emailCheck.test(email) && email.length > 0}
-                      className={classes.formInputs}
-                      onChange={event => handleChange(event)} />
-                  </FormControl>
-                  <FormControl
-                    className={classes.formControlBox}>
-                    <TextField
-                      label="Password"
-                      id="first-password"
-                      name="firstPassword"
-                      type="password"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      value={firstPassword}
-                      error={!passwordRegEx.test(firstPassword) && firstPassword.length > 0}
-                      className={classes.formInputs}
-                      onChange={event => handleChange(event)} />
-                  </FormControl>
-                  <FormControl>
-                    <TextField
-                      label="Re-Enter Password"
-                      id="second-password"
-                      name="secondPassword"
-                      type="password"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      value={secondPassword}
-                      error={!passwordRegEx.test(secondPassword) && secondPassword.length > 0}
-                      className={classes.formInputs}
-                      onChange={event => handleChange(event)} />
-                  </FormControl>
-                </FormGroup>
-                <Box
-                  my={2}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={!firstName || !lastName || !email || !firstPassword || !secondPassword}
-                    className={classes.buttons}>
+            className={classes.formBox}>
+            <Grid
+              container
+              spacing={2}>
+              <Grid
+                item
+                sm={8}
+                xs={12}>
+                <form
+                  onSubmit={event => {
+                    event.preventDefault();
+                    if (!firstNameValidation &&
+                    !lastNameValidation &&
+                    !emailValidation &&
+                    !firstPasswordValidation &&
+                    !secondPasswordValidation) {
+                      props.createAccountHandler(newAccount, props.history);
+                    }
+                  }}
+                  className={props.componentStatus}>
+                  <FormGroup>
+                    <FormControl
+                      className={classes.formControlBox}>
+                      <TextField
+                        label="First Name"
+                        id="firstName"
+                        name="firstName"
+                        type="text"
+                        autoComplete="off"
+                        variant="outlined"
+                        value={firstName}
+                        error={!props.nameCheck.test(firstName) &&
+                        firstName.length > 0}
+                        className={classes.formInputs}
+                        onChange={event => handleChange(event)} />
+                    </FormControl>
+                    <FormControl
+                      className={classes.formControlBox}>
+                      <TextField
+                        label="Last Name"
+                        id="last-name"
+                        name="lastName"
+                        type="text"
+                        autoComplete="new-password"
+                        variant="outlined"
+                        value={lastName}
+                        error={!props.nameCheck.test(lastName) &&
+                        lastName.length > 0}
+                        className={classes.formInputs}
+                        onChange={event => handleChange(event)} />
+                    </FormControl>
+                    <FormControl
+                      className={classes.formControlBox}>
+                      <TextField
+                        label="Email"
+                        id="email"
+                        name="email"
+                        autoComplete="new-password"
+                        variant="outlined"
+                        value={email}
+                        error={!props.emailCheck.test(email) &&
+                        email.length > 0}
+                        className={classes.formInputs}
+                        onChange={event => handleChange(event)} />
+                    </FormControl>
+                    <FormControl
+                      className={classes.formControlBox}>
+                      <TextField
+                        label="Password"
+                        id="first-password"
+                        name="firstPassword"
+                        type="password"
+                        autoComplete="new-password"
+                        variant="outlined"
+                        value={firstPassword}
+                        error={!passwordRegEx.test(firstPassword) &&
+                        firstPassword.length > 0}
+                        className={classes.formInputs}
+                        onFocus={() => toggleReqs(true)}
+                        onBlur={() => toggleReqs(false)}
+                        onChange={event => handleChange(event)} />
+                    </FormControl>
+                    <FormControl>
+                      <TextField
+                        label="Re-Enter Password"
+                        id="second-password"
+                        name="secondPassword"
+                        type="password"
+                        autoComplete="new-password"
+                        variant="outlined"
+                        value={secondPassword}
+                        error={!passwordRegEx.test(secondPassword) &&
+                        secondPassword.length > 0}
+                        className={classes.formInputs}
+                        onChange={event => handleChange(event)} />
+                    </FormControl>
+                  </FormGroup>
+                  <Box
+                    my={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      disabled={!firstName ||
+                      !lastName ||
+                      !email ||
+                      !firstPassword ||
+                      !secondPassword}
+                      className={classes.buttons}>
                     Submit
-                  </Button>
+                    </Button>
+                  </Box>
+                </form>
+              </Grid>
+              <Grid
+                item
+                className={clickedPassword
+                  ? null
+                  : classes.displayNone}
+                sm={4}>
+                <Box
+                  p={2}
+                  border={1}
+                  borderRadius={4}
+                  borderColor="grey.500"
+                  className={`${classes.requirementsBox} ${reqClass}`}>
+                  <Typography
+                    variant="h6">
+                      Requirements:
+                  </Typography>
+                  <Box
+                    className={classes.textBoxes}>
+                    {firstPassword.length >= 8
+                      ? <CheckBoxOutlinedIcon
+                        className={classes.checkboxes} />
+                      : <CheckBoxOutlineBlankOutlinedIcon
+                        className={classes.checkboxes} />}
+                    <Typography>
+                    8+ Characters
+                    </Typography>
+                  </Box>
+                  <Box
+                    className={classes.textBoxes}>
+                    {/[A-Za-z]/.test(firstPassword)
+                      ? <CheckBoxOutlinedIcon
+                        className={classes.checkboxes} />
+                      : <CheckBoxOutlineBlankOutlinedIcon
+                        className={classes.checkboxes} />}
+                    <Typography>
+                    1+ Letter
+                    </Typography>
+                  </Box>
+                  <Box
+                    className={classes.textBoxes}>
+                    {/[0-9]/.test(firstPassword)
+                      ? <CheckBoxOutlinedIcon
+                        className={classes.checkboxes} />
+                      : <CheckBoxOutlineBlankOutlinedIcon
+                        className={classes.checkboxes} />}
+                    <Typography>
+                    1+ Number
+                    </Typography>
+                  </Box>
+                  <Box
+                    className={classes.textBoxes}>
+                    {/[@$!%*#?&]/.test(firstPassword)
+                      ? <CheckBoxOutlinedIcon
+                        className={classes.checkboxes} />
+                      : <CheckBoxOutlineBlankOutlinedIcon
+                        className={classes.checkboxes} />}
+                    <Typography>
+                    1+ Special Caracter
+                    </Typography>
+                  </Box>
                 </Box>
-              </form>
-            </Box>
+              </Grid>
+            </Grid>
           </Box>
         </Container>
         {props.modalOpen

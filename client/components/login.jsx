@@ -87,65 +87,58 @@ const Login = props => {
           maxWidth="sm"
           className={`${props.componentStatus} ${classes.contentSection}`}>
           <Typography
-            variant="h1">
-            Beacon Daily
+            variant="h3">
+              Log In to Your Acount
           </Typography>
           <Box
-            borderColor="grey.500">
-            <Typography
-              variant="h6">
-              Log In to Your Acount
-            </Typography>
-            <Box
-              className={classes.formBox}>
-              <form
-                onSubmit={event => {
-                  event.preventDefault();
-                  if (!emailValidation && password.length) {
-                    props.loginSubmitHandler(user, props.history);
-                  }
-                }}
-                className={props.componentStatus}>
-                <FormGroup>
-                  <FormControl
-                    className={classes.formControlBox}>
-                    <TextField
-                      label="Email"
-                      id="email"
-                      name="email"
-                      autoComplete="off"
-                      variant="outlined"
-                      value={email}
-                      error={!props.emailCheck.test(email) && email.length > 0}
-                      className={classes.formInputs}
-                      onChange={event => handleChange(event)} />
-                  </FormControl>
-                  <FormControl>
-                    <TextField
-                      label="Password"
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="off"
-                      variant="outlined"
-                      value={password}
-                      className={classes.formInputs}
-                      onChange={event => handleChange(event)} />
-                  </FormControl>
-                </FormGroup>
-                <Box
-                  my={2}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={!email || !password}
-                    className={classes.buttons}>
+            className={classes.formBox}>
+            <form
+              onSubmit={event => {
+                event.preventDefault();
+                if (!emailValidation && password.length) {
+                  props.loginSubmitHandler(user, props.history);
+                }
+              }}
+              className={props.componentStatus}>
+              <FormGroup>
+                <FormControl
+                  className={classes.formControlBox}>
+                  <TextField
+                    label="Email"
+                    id="email"
+                    name="email"
+                    autoComplete="off"
+                    variant="outlined"
+                    value={email}
+                    error={!props.emailCheck.test(email) && email.length > 0}
+                    className={classes.formInputs}
+                    onChange={event => handleChange(event)} />
+                </FormControl>
+                <FormControl>
+                  <TextField
+                    label="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="off"
+                    variant="outlined"
+                    value={password}
+                    className={classes.formInputs}
+                    onChange={event => handleChange(event)} />
+                </FormControl>
+              </FormGroup>
+              <Box
+                my={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={!email || !password}
+                  className={classes.buttons}>
                       Submit
-                  </Button>
-                </Box>
-              </form>
-            </Box>
+                </Button>
+              </Box>
+            </form>
           </Box>
         </Container>
         {props.modalOpen
