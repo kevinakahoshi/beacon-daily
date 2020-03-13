@@ -59,7 +59,6 @@ const CreateChecklistItem = props => {
         border={1}
         className={`${classes.createBox} ${props.mounting}`}
         borderColor="grey.500">
-
         <form
           onSubmit={event => handleSubmit(event)}>
           <Grid

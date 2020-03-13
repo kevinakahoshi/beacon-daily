@@ -149,7 +149,7 @@ const App = () => {
           } else {
             setModalMessage({
               heading: 'Invalid Email or Password',
-              messageBody: 'Either email address or password were not correct.  Please update those fields and try again.'
+              messageBody: 'Either your email address or password were not correct.  Please update those fields and try again.'
             });
             handleModalOpen();
           }
