@@ -8,7 +8,7 @@ import Fade from '@material-ui/core/Fade';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -56,10 +56,10 @@ const ModalOverlay = props => {
               {props.modalMessage.heading}
             </Typography>
           </Box>
-          <Box
+          <Typography
             mb={2}>
             {props.modalMessage.messageBody}
-          </Box>
+          </Typography>
           <Box
             mt={2}>
             <Grid

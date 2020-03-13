@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     })
   },
   menuButton: {
-    marginRight: 36
+    marginRight: theme.spacing(4)
   },
   hide: {
     display: 'none'
@@ -142,6 +142,7 @@ const Checklist = props => {
 
   const toggleView = newView => {
     if (view !== newView) {
+      handleDrawerClose();
       setMounting('unmounting');
       setTimeout(() => {
         setView(newView);
@@ -264,7 +265,10 @@ const Checklist = props => {
         <List>
           <ListItem
             button
-            onClick={props.toggleColorMode}
+            onClick={() => {
+              props.toggleColorMode();
+              handleDrawerClose();
+            }}
             className={classes.menuOptions}>
             <ListItemIcon>
               {props.colorMode === 'light'
@@ -281,8 +285,9 @@ const Checklist = props => {
             button
             className={classes.menuOptions}
             onClick={() => {
-              setFade('fade-out');
+              handleDrawerClose();
               props.logoutUser(props.history);
+              setFade('fade-out');
             }}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />

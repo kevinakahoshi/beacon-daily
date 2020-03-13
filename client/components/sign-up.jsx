@@ -13,6 +13,7 @@ import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
 import Grid from '@material-ui/core/Grid';
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles(theme => ({
   mainSection: {
@@ -41,10 +42,15 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: theme.spacing(2),
     left: theme.spacing(2),
-    zIndex: 1100
+    zIndex: theme.zIndex.appBar
   },
   displayNone: {
     display: 'none'
+  },
+  outerFormBox: {
+    [theme.breakpoints.up('sm')]: {
+      margin: theme.spacing(8, 0)
+    }
   },
   requirementsBox: {
     background: theme.palette.background.paper
@@ -70,23 +76,11 @@ const SignUp = props => {
   const [firstPasswordValidation, setFirstPasswordValidation] = React.useState(false);
   const [secondPassword, setSecondPassword] = React.useState('');
   const [secondPasswordValidation, setSecondPasswordValidation] = React.useState(false);
-  // const [clickedPassword, setClickedPassword] = React.useState(false);
-  // const [reqClass, setReqClass] = React.useState('');
   const passwordRegEx = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
+  const containsLetters = new RegExp(/[A-Za-z]/);
+  const containsNumbers = new RegExp(/[0-9]/);
+  const containsSpecial = new RegExp(/[@$!%*#?&]/);
   const newAccount = { firstName, lastName, email, firstPassword, secondPassword };
-
-  // const toggleReqs = show => {
-  //   if (show) {
-  //     setClickedPassword(true);
-  //     setReqClass('mounting');
-  //   } else {
-  //     setReqClass('unmounting');
-  //     setTimeout(() => {
-  //       setClickedPassword(false);
-  //       setReqClass('');
-  //     }, 1000);
-  //   }
-  // };
 
   const handleChange = event => {
     const nameField = event.target.name === 'firstName'
@@ -174,11 +168,12 @@ const SignUp = props => {
           <ChevronLeftOutlinedIcon />BACK
         </Button>
         <Container
-          maxWidth='md'
+          maxWidth="md"
           overflow="auto"
+          fixed
           className={`${props.componentStatus} ${classes.contentSection}`}>
           <Box
-            my={8}>
+            className={classes.outerFormBox}>
             <Typography
               variant="h3">
               Create an Account
@@ -187,102 +182,15 @@ const SignUp = props => {
               className={classes.formBox}>
               <Grid
                 container
-                direction="row-reverse"
                 spacing={2}>
                 <Grid
                   item
-                  sm={4}
-                  xs={12}>
-                  <Box
-                    p={2}
-                    border={1}
-                    borderRadius={4}
-                    borderColor="grey.500"
-                    className={`${classes.requirementsBox} ${props.componentStatus}`}>
-                    <Box>
-                      <Typography
-                        variant="h6">
-                        Password Requirements:
-                      </Typography>
-                      <Box
-                        className={classes.textBoxes}>
-                        {firstPassword.length >= 8
-                          ? <CheckBoxOutlinedIcon
-                            className={classes.checkboxes} />
-                          : <CheckBoxOutlineBlankOutlinedIcon
-                            className={classes.checkboxes} />}
-                        <Typography>
-                        8+ Characters
-                        </Typography>
-                      </Box>
-                      <Box
-                        className={classes.textBoxes}>
-                        {/[A-Za-z]/.test(firstPassword)
-                          ? <CheckBoxOutlinedIcon
-                            className={classes.checkboxes} />
-                          : <CheckBoxOutlineBlankOutlinedIcon
-                            className={classes.checkboxes} />}
-                        <Typography>
-                        1+ Letter
-                        </Typography>
-                      </Box>
-                      <Box
-                        className={classes.textBoxes}>
-                        {/[0-9]/.test(firstPassword)
-                          ? <CheckBoxOutlinedIcon
-                            className={classes.checkboxes} />
-                          : <CheckBoxOutlineBlankOutlinedIcon
-                            className={classes.checkboxes} />}
-                        <Typography>
-                        1+ Number
-                        </Typography>
-                      </Box>
-                      <Box
-                        className={classes.textBoxes}>
-                        {/[@$!%*#?&]/.test(firstPassword)
-                          ? <CheckBoxOutlinedIcon
-                            className={classes.checkboxes} />
-                          : <CheckBoxOutlineBlankOutlinedIcon
-                            className={classes.checkboxes} />}
-                        <Typography>
-                        1+ Special Caracter
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Box
-                      mt={2}>
-                      <Typography
-                        variant="h6">
-                    Password Match:
-                      </Typography>
-                      <Box
-                        className={classes.textBoxes}>
-                        {firstPassword === secondPassword &&
-                      firstPassword.length > 0 &&
-                      secondPassword.length > 0
-                          ? <CheckBoxOutlinedIcon
-                            className={classes.checkboxes} />
-                          : <CheckBoxOutlineBlankOutlinedIcon
-                            className={classes.checkboxes} />}
-                        <Typography>
-                      Passwords Match
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid
-                  item
-                  sm={8}
+                  md={8}
                   xs={12}>
                   <form
                     onSubmit={event => {
                       event.preventDefault();
-                      if (!firstNameValidation &&
-                          !lastNameValidation &&
-                          !emailValidation &&
-                          !firstPasswordValidation &&
-                          !secondPasswordValidation) {
+                      if (!firstNameValidation && !lastNameValidation && !emailValidation && !firstPasswordValidation && !secondPasswordValidation) {
                         props.createAccountHandler(newAccount, props.history);
                       }
                     }}
@@ -298,8 +206,7 @@ const SignUp = props => {
                           autoComplete="off"
                           variant="outlined"
                           value={firstName}
-                          error={!props.nameCheck.test(firstName) &&
-                        firstName.length > 0}
+                          error={!props.nameCheck.test(firstName) && firstName.length > 0}
                           className={classes.formInputs}
                           onChange={event => handleChange(event)} />
                       </FormControl>
@@ -313,8 +220,7 @@ const SignUp = props => {
                           autoComplete="new-password"
                           variant="outlined"
                           value={lastName}
-                          error={!props.nameCheck.test(lastName) &&
-                        lastName.length > 0}
+                          error={!props.nameCheck.test(lastName) && lastName.length > 0}
                           className={classes.formInputs}
                           onChange={event => handleChange(event)} />
                       </FormControl>
@@ -327,8 +233,7 @@ const SignUp = props => {
                           autoComplete="new-password"
                           variant="outlined"
                           value={email}
-                          error={!props.emailCheck.test(email) &&
-                        email.length > 0}
+                          error={!props.emailCheck.test(email) && email.length > 0}
                           className={classes.formInputs}
                           onChange={event => handleChange(event)} />
                       </FormControl>
@@ -342,11 +247,8 @@ const SignUp = props => {
                           autoComplete="new-password"
                           variant="outlined"
                           value={firstPassword}
-                          error={!passwordRegEx.test(firstPassword) &&
-                        firstPassword.length > 0}
+                          error={!passwordRegEx.test(firstPassword) && firstPassword.length > 0}
                           className={classes.formInputs}
-                          // onFocus={() => toggleReqs(true)}
-                          // onBlur={() => toggleReqs(false)}
                           onChange={event => handleChange(event)} />
                       </FormControl>
                       <FormControl>
@@ -358,8 +260,7 @@ const SignUp = props => {
                           autoComplete="new-password"
                           variant="outlined"
                           value={secondPassword}
-                          error={!passwordRegEx.test(secondPassword) &&
-                        secondPassword.length > 0}
+                          error={!passwordRegEx.test(secondPassword) && secondPassword.length > 0}
                           className={classes.formInputs}
                           onChange={event => handleChange(event)} />
                       </FormControl>
@@ -371,16 +272,119 @@ const SignUp = props => {
                         color="primary"
                         type="submit"
                         disabled={!firstName ||
-                      !lastName ||
-                      !email ||
-                      !firstPassword ||
-                      !secondPassword}
+                          !lastName ||
+                          !email ||
+                          !firstPassword ||
+                          !secondPassword ||
+                          firstPasswordValidation ||
+                          secondPasswordValidation}
                         className={classes.buttons}>
-                    Submit
+                              Submit
                       </Button>
                     </Box>
                   </form>
                 </Grid>
+                <Hidden
+                  smDown>
+                  <Grid
+                    item
+                    md={4}>
+                    <Box
+                      p={2}
+                      border={1}
+                      borderRadius={4}
+                      borderColor="grey.400"
+                      className={`${classes.requirementsBox} ${props.componentStatus}`}>
+                      <Box>
+                        <Typography
+                          variant="h6">
+                        Password Requirements:
+                        </Typography>
+                        <Box
+                          color={firstPassword.length >= 8
+                            ? 'inherit'
+                            : 'grey.400'}
+                          className={classes.textBoxes}>
+                          {firstPassword.length >= 8
+                            ? <CheckBoxOutlinedIcon
+                              className={classes.checkboxes} />
+                            : <CheckBoxOutlineBlankOutlinedIcon
+                              className={classes.checkboxes} />}
+                          <Typography>
+                          8+ Characters
+                          </Typography>
+                        </Box>
+                        <Box
+                          color={containsLetters.test(firstPassword)
+                            ? 'inherit'
+                            : 'grey.400'}
+                          className={classes.textBoxes}>
+                          {containsLetters.test(firstPassword)
+                            ? <CheckBoxOutlinedIcon
+                              className={classes.checkboxes} />
+                            : <CheckBoxOutlineBlankOutlinedIcon
+                              className={classes.checkboxes} />}
+                          <Typography>
+                          1+ Letter
+                          </Typography>
+                        </Box>
+                        <Box
+                          color={containsNumbers.test(firstPassword)
+                            ? 'inherit'
+                            : 'grey.400'}
+                          className={classes.textBoxes}>
+                          {containsNumbers.test(firstPassword)
+                            ? <CheckBoxOutlinedIcon
+                              className={classes.checkboxes} />
+                            : <CheckBoxOutlineBlankOutlinedIcon
+                              className={classes.checkboxes} />}
+                          <Typography>
+                          1+ Number
+                          </Typography>
+                        </Box>
+                        <Box
+                          color={containsSpecial.test(firstPassword)
+                            ? 'inherit'
+                            : 'grey.400'}
+                          className={classes.textBoxes}>
+                          {containsSpecial.test(firstPassword)
+                            ? <CheckBoxOutlinedIcon
+                              className={classes.checkboxes} />
+                            : <CheckBoxOutlineBlankOutlinedIcon
+                              className={classes.checkboxes} />}
+                          <Typography>
+                          1+ Special Caracter
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box
+                        mt={2}>
+                        <Typography
+                          variant="h6">
+                        Password Match:
+                        </Typography>
+                        <Box
+                          color={firstPassword === secondPassword &&
+                            firstPassword.length > 0 &&
+                            secondPassword.length > 0
+                            ? 'inherit'
+                            : 'grey.400'}
+                          className={classes.textBoxes}>
+                          {firstPassword === secondPassword &&
+                          firstPassword.length > 0 &&
+                          secondPassword.length > 0
+                            ? <CheckBoxOutlinedIcon
+                              className={classes.checkboxes} />
+                            : <CheckBoxOutlineBlankOutlinedIcon
+                              className={classes.checkboxes} />}
+                          <Typography>
+                          Passwords Match
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Hidden>
               </Grid>
             </Box>
           </Box>
