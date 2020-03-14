@@ -74,7 +74,6 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     overflowX: 'hidden',
-    // width: theme.spacing(7) + 1,
     width: 0,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1
@@ -94,7 +93,6 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    // padding: theme.spacing(3)
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(3)
     },
@@ -189,7 +187,9 @@ const Checklist = props => {
             variant="h6"
             className={`${classes.pointer} ${classes.titleNoWrap}`}
             onClick={leavePage}>
-            Your Daily Planner
+            {props.user
+              ? `Hello, ${props.user.firstname}!`
+              : 'Your Daily Planner'}
           </Typography>
         </Toolbar>
       </AppBar>

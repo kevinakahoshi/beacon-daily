@@ -16,9 +16,6 @@ const useStyles = makeStyles(theme => ({
   buttons: {
     width: '100%',
     height: '56px'
-  },
-  focusColor: {
-    color: '#fff!important'
   }
 }));
 
