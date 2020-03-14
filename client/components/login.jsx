@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
 import ModalOverlay from './modal-overlay';
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   mainSection: {
