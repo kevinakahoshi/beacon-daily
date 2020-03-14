@@ -7,6 +7,7 @@ import Home from './home';
 import Login from './login';
 import SignUp from './sign-up';
 import Checklist from './checklist';
+import NoMatch from './no-match';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
@@ -34,7 +35,6 @@ const App = () => {
           body: {
             backgroundImage: "linear-gradient(#fffffff1, #fffffff1), url('./images/light-mode-background.png')",
             backgroundSize: 'contain',
-            backgroundPosition: 'center',
             backgroundAttachment: 'fixed'
           }
         }
@@ -52,7 +52,6 @@ const App = () => {
           body: {
             backgroundImage: "linear-gradient(#000000CC, #000000CC), url('./images/dark-mode-background.png')",
             backgroundSize: 'contain',
-            backgroundPosition: 'center',
             backgroundAttachment: 'fixed'
           }
         }
@@ -201,31 +200,39 @@ const App = () => {
   };
 
   const createChecklistItem = (checklistItem, toggleView) => {
-    const init = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        checklistItem: checklistItem,
-        userId: user.userid
-      })
-    };
+    if (user) {
+      const init = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          checklistItem: checklistItem,
+          userId: user.userid
+        })
+      };
 
-    fetch('/api/checklist/create-checklist-item', init)
-      .then(response => response.json())
-      .then(data => {
-        if (!data.error) {
-          toggleView('incomplete');
-        } else {
-          setModalMessage({
-            heading: 'An unexpected error occurred',
-            messageBody: 'Invalid characters in your checklist item'
-          });
-          handleModalOpen();
-        }
-      })
-      .catch(error => console.error(error));
+      fetch('/api/checklist/create-checklist-item', init)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.error) {
+            toggleView('incomplete');
+          } else {
+            setModalMessage({
+              heading: 'An Unexpected Error Occurred',
+              messageBody: 'Invalid characters in your checklist item.'
+            });
+            handleModalOpen();
+          }
+        })
+        .catch(error => console.error(error));
+    } else {
+      setModalMessage({
+        heading: 'Not Logged In',
+        messageBody: 'Please sign in to create a new checklist item.'
+      });
+      handleModalOpen();
+    }
   };
 
   const updateChecklistItem = (updatedChecklistItem, checklistItemId) => {
@@ -373,6 +380,7 @@ const App = () => {
                 handleModalOpen={handleModalOpen}
                 handleModalClose={handleModalClose}
                 handleDeleteClick={handleDeleteClick}
+                handleFade={handleFade}
                 getChecklistItems={getChecklistItems}
                 componentStatus={componentStatus}
                 createChecklistItem={createChecklistItem}
@@ -385,6 +393,12 @@ const App = () => {
                 logoutUser={logoutUser}
                 colorMode={colorMode}
                 toggleColorMode={toggleColorMode} />} />
+          <Route
+            render={props =>
+              <NoMatch
+                {...props}
+                componentStatus={componentStatus}
+                handleFade={handleFade} />} />
         </Switch>
       </MuiThemeProvider>
     );

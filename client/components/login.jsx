@@ -11,12 +11,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
 import ModalOverlay from './modal-overlay';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   mainSection: {
     display: 'flex',
-    height: '100%',
-    overflow: 'hidden'
+    height: '100%'
   },
   contentSection: {
     margin: 'auto',
@@ -37,10 +37,10 @@ const useStyles = makeStyles(theme => ({
     height: '56px'
   },
   backWrapper: {
-    display: 'flex',
     position: 'absolute',
     top: theme.spacing(2),
-    left: theme.spacing(2)
+    left: theme.spacing(2),
+    zIndex: theme.zIndex.appBar
   }
 }));
 
@@ -85,7 +85,8 @@ const Login = props => {
           <ChevronLeftOutlinedIcon />Back
         </Button>
         <Container
-          maxWidth="sm"
+          maxWidth="md"
+          fixed
           className={`${props.componentStatus} ${classes.contentSection}`}>
           <Typography
             variant="h3">
@@ -93,73 +94,87 @@ const Login = props => {
           </Typography>
           <Box
             className={classes.formBox}>
-            <form
-              onSubmit={event => {
-                event.preventDefault();
-                if (!emailValidation && password.length) {
-                  props.loginSubmitHandler(user, props.history);
-                }
-              }}
-              className={props.componentStatus}>
-              <FormGroup>
-                <FormControl
-                  className={classes.formControlBox}>
-                  <TextField
-                    label="Email"
-                    id="email"
-                    name="email"
-                    autoComplete="off"
-                    variant="outlined"
-                    value={email}
-                    error={!props.emailCheck.test(email) && email.length > 0}
-                    className={classes.backgroundColor}
-                    onChange={event => handleChange(event)} />
-                </FormControl>
-                <FormControl>
-                  <TextField
-                    label="Password"
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="off"
-                    variant="outlined"
-                    value={password}
-                    className={classes.backgroundColor}
-                    onChange={event => handleChange(event)} />
-                </FormControl>
-              </FormGroup>
-              <Box
-                my={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  disabled={!email || !password}
-                  className={classes.buttons}>
+            <Grid
+              container
+              spacing={2}>
+              <Grid
+                item
+                md={8}
+                xs={12}>
+                <form
+                  onSubmit={event => {
+                    event.preventDefault();
+                    if (!emailValidation && password.length) {
+                      props.loginSubmitHandler(user, props.history);
+                    }
+                  }}
+                  className={props.componentStatus}>
+                  <FormGroup>
+                    <FormControl
+                      className={classes.formControlBox}>
+                      <TextField
+                        label="Email"
+                        id="email"
+                        name="email"
+                        autoComplete="off"
+                        variant="outlined"
+                        value={email}
+                        error={!props.emailCheck.test(email) && email.length > 0}
+                        className={classes.backgroundColor}
+                        onChange={event => handleChange(event)} />
+                    </FormControl>
+                    <FormControl>
+                      <TextField
+                        label="Password"
+                        id="password"
+                        name="password"
+                        type="password"
+                        autoComplete="off"
+                        variant="outlined"
+                        value={password}
+                        className={classes.backgroundColor}
+                        onChange={event => handleChange(event)} />
+                    </FormControl>
+                  </FormGroup>
+                  <Box
+                    mt={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      disabled={!email || !password}
+                      className={classes.buttons}>
                       Submit
-                </Button>
-              </Box>
-            </form>
-          </Box>
-          <Box
-            p={2}
-            border={1}
-            borderRadius={4}
-            borderColor="grey.400"
-            className={`${classes.backgroundColor} ${props.componentStatus}`}>
-            <Typography
-              variant="h6">
-              Don&#39;t have an account?
-            </Typography>
-            <Typography>
-              <Link
-                href=""
-                variant="body1"
-                onClick={event => {
-                  event.preventDefault();
-                  props.handleFade(props.history, '/sign-up');
-                }}>Create an Account</Link>
-            </Typography>
+                    </Button>
+                  </Box>
+                </form>
+              </Grid>
+              <Grid
+                item
+                md={4}
+                xs={12}>
+                <Box
+                  p={2}
+                  border={1}
+                  borderRadius={4}
+                  borderColor="grey.400"
+                  className={`${classes.backgroundColor} ${props.componentStatus}`}>
+                  <Typography
+                    variant="h6">
+                    Don&#39;t have an account?
+                  </Typography>
+                  <Typography>
+                    <Link
+                      href=""
+                      variant="body1"
+                      onClick={event => {
+                        event.preventDefault();
+                        props.handleFade(props.history, '/sign-up');
+                      }}>Create an Account</Link>
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
         </Container>
         {props.modalOpen
