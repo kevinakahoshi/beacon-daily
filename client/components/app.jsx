@@ -113,8 +113,8 @@ const App = () => {
         .catch(error => console.error(error));
     } else {
       setModalMessage({
-        heading: 'Invalid Sign Up Credentials',
-        messageBody: 'Passwords did not match'
+        heading: 'Whoops',
+        messageBody: 'Your passwords did not match.  Re-enter your passwords and try again.'
       });
       handleModalOpen();
     }
@@ -278,8 +278,8 @@ const App = () => {
 
   const handleDeleteClick = checklistItemId => {
     setModalMessage({
-      heading: 'Are you sure you want to delete this item?',
-      messageBody: 'Once you delete this checklist item, you cannot restore it!'
+      heading: 'Are you sure?',
+      messageBody: 'Once you delete this item, you cannot restore it!'
     });
     setDeleteId(checklistItemId);
     setDeleting(true);

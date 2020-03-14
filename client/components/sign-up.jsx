@@ -13,7 +13,7 @@ import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
 import Grid from '@material-ui/core/Grid';
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
-import Hidden from '@material-ui/core/Hidden';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
   mainSection: {
@@ -50,9 +50,12 @@ const useStyles = makeStyles(theme => ({
   outerFormBox: {
     [theme.breakpoints.up('sm')]: {
       margin: theme.spacing(8, 0)
+    },
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(6, 0)
     }
   },
-  requirementsBox: {
+  backgroundColor: {
     background: theme.palette.background.paper
   },
   textBoxes: {
@@ -188,6 +191,7 @@ const SignUp = props => {
                   md={8}
                   xs={12}>
                   <form
+                    autoComplete="new-password"
                     onSubmit={event => {
                       event.preventDefault();
                       if (!firstNameValidation && !lastNameValidation && !emailValidation && !firstPasswordValidation && !secondPasswordValidation) {
@@ -200,7 +204,7 @@ const SignUp = props => {
                         className={classes.formControlBox}>
                         <TextField
                           label="First Name"
-                          id="firstName"
+                          id="first-name"
                           name="firstName"
                           type="text"
                           autoComplete="off"
@@ -217,7 +221,7 @@ const SignUp = props => {
                           id="last-name"
                           name="lastName"
                           type="text"
-                          autoComplete="new-password"
+                          autoComplete="off"
                           variant="outlined"
                           value={lastName}
                           error={!props.nameCheck.test(lastName) && lastName.length > 0}
@@ -271,120 +275,129 @@ const SignUp = props => {
                         variant="contained"
                         color="primary"
                         type="submit"
-                        disabled={!firstName ||
-                          !lastName ||
-                          !email ||
-                          !firstPassword ||
-                          !secondPassword ||
-                          firstPasswordValidation ||
-                          secondPasswordValidation}
+                        disabled={!firstName || !lastName || !email || !firstPassword || !secondPassword || firstPasswordValidation || secondPasswordValidation}
                         className={classes.buttons}>
-                              Submit
+                          Submit
                       </Button>
                     </Box>
                   </form>
                 </Grid>
-                <Hidden
-                  smDown>
-                  <Grid
-                    item
-                    md={4}>
-                    <Box
-                      p={2}
-                      border={1}
-                      borderRadius={4}
-                      borderColor="grey.400"
-                      className={`${classes.requirementsBox} ${props.componentStatus}`}>
-                      <Box>
-                        <Typography
-                          variant="h6">
+                <Grid
+                  item
+                  md={4}
+                  xs={12}>
+                  <Box
+                    p={2}
+                    mb={2}
+                    border={1}
+                    borderRadius={4}
+                    borderColor="grey.400"
+                    className={`${classes.backgroundColor} ${props.componentStatus}`}>
+                    <Box>
+                      <Typography
+                        variant="h6">
                         Password Requirements:
-                        </Typography>
-                        <Box
-                          color={firstPassword.length >= 8
-                            ? 'inherit'
-                            : 'grey.400'}
-                          className={classes.textBoxes}>
-                          {firstPassword.length >= 8
-                            ? <CheckBoxOutlinedIcon
-                              className={classes.checkboxes} />
-                            : <CheckBoxOutlineBlankOutlinedIcon
-                              className={classes.checkboxes} />}
-                          <Typography>
+                      </Typography>
+                      <Box
+                        color={firstPassword.length >= 8
+                          ? 'inherit'
+                          : 'grey.400'}
+                        className={classes.textBoxes}>
+                        {firstPassword.length >= 8
+                          ? <CheckBoxOutlinedIcon
+                            className={classes.checkboxes} />
+                          : <CheckBoxOutlineBlankOutlinedIcon
+                            className={classes.checkboxes} />}
+                        <Typography>
                           8+ Characters
-                          </Typography>
-                        </Box>
-                        <Box
-                          color={containsLetters.test(firstPassword)
-                            ? 'inherit'
-                            : 'grey.400'}
-                          className={classes.textBoxes}>
-                          {containsLetters.test(firstPassword)
-                            ? <CheckBoxOutlinedIcon
-                              className={classes.checkboxes} />
-                            : <CheckBoxOutlineBlankOutlinedIcon
-                              className={classes.checkboxes} />}
-                          <Typography>
-                          1+ Letter
-                          </Typography>
-                        </Box>
-                        <Box
-                          color={containsNumbers.test(firstPassword)
-                            ? 'inherit'
-                            : 'grey.400'}
-                          className={classes.textBoxes}>
-                          {containsNumbers.test(firstPassword)
-                            ? <CheckBoxOutlinedIcon
-                              className={classes.checkboxes} />
-                            : <CheckBoxOutlineBlankOutlinedIcon
-                              className={classes.checkboxes} />}
-                          <Typography>
-                          1+ Number
-                          </Typography>
-                        </Box>
-                        <Box
-                          color={containsSpecial.test(firstPassword)
-                            ? 'inherit'
-                            : 'grey.400'}
-                          className={classes.textBoxes}>
-                          {containsSpecial.test(firstPassword)
-                            ? <CheckBoxOutlinedIcon
-                              className={classes.checkboxes} />
-                            : <CheckBoxOutlineBlankOutlinedIcon
-                              className={classes.checkboxes} />}
-                          <Typography>
-                          1+ Special Caracter
-                          </Typography>
-                        </Box>
+                        </Typography>
                       </Box>
                       <Box
-                        mt={2}>
-                        <Typography
-                          variant="h6">
-                        Password Match:
+                        color={containsLetters.test(firstPassword)
+                          ? 'inherit'
+                          : 'grey.400'}
+                        className={classes.textBoxes}>
+                        {containsLetters.test(firstPassword)
+                          ? <CheckBoxOutlinedIcon
+                            className={classes.checkboxes} />
+                          : <CheckBoxOutlineBlankOutlinedIcon
+                            className={classes.checkboxes} />}
+                        <Typography>
+                          1+ Letter
                         </Typography>
-                        <Box
-                          color={firstPassword === secondPassword &&
-                            firstPassword.length > 0 &&
-                            secondPassword.length > 0
-                            ? 'inherit'
-                            : 'grey.400'}
-                          className={classes.textBoxes}>
-                          {firstPassword === secondPassword &&
-                          firstPassword.length > 0 &&
-                          secondPassword.length > 0
-                            ? <CheckBoxOutlinedIcon
-                              className={classes.checkboxes} />
-                            : <CheckBoxOutlineBlankOutlinedIcon
-                              className={classes.checkboxes} />}
-                          <Typography>
-                          Passwords Match
-                          </Typography>
-                        </Box>
+                      </Box>
+                      <Box
+                        color={containsNumbers.test(firstPassword)
+                          ? 'inherit'
+                          : 'grey.400'}
+                        className={classes.textBoxes}>
+                        {containsNumbers.test(firstPassword)
+                          ? <CheckBoxOutlinedIcon
+                            className={classes.checkboxes} />
+                          : <CheckBoxOutlineBlankOutlinedIcon
+                            className={classes.checkboxes} />}
+                        <Typography>
+                          1+ Number
+                        </Typography>
+                      </Box>
+                      <Box
+                        color={containsSpecial.test(firstPassword)
+                          ? 'inherit'
+                          : 'grey.400'}
+                        className={classes.textBoxes}>
+                        {containsSpecial.test(firstPassword)
+                          ? <CheckBoxOutlinedIcon
+                            className={classes.checkboxes} />
+                          : <CheckBoxOutlineBlankOutlinedIcon
+                            className={classes.checkboxes} />}
+                        <Typography>
+                            1+ Special Caracter
+                        </Typography>
                       </Box>
                     </Box>
-                  </Grid>
-                </Hidden>
+                    <Box
+                      mt={2}>
+                      <Typography
+                        variant="h6">
+                            Password Match:
+                      </Typography>
+                      <Box
+                        color={firstPassword === secondPassword && firstPassword.length > 0 && secondPassword.length > 0
+                          ? 'inherit'
+                          : 'grey.400'}
+                        className={classes.textBoxes}>
+                        {firstPassword === secondPassword && firstPassword.length > 0 && secondPassword.length > 0
+                          ? <CheckBoxOutlinedIcon
+                            className={classes.checkboxes} />
+                          : <CheckBoxOutlineBlankOutlinedIcon
+                            className={classes.checkboxes} />}
+                        <Typography>
+                            Passwords Match
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box
+                    p={2}
+                    border={1}
+                    borderRadius={4}
+                    borderColor="grey.400"
+                    className={`${classes.backgroundColor} ${props.componentStatus}`}>
+                    <Typography
+                      variant="h6">
+                        Already have an account?
+                    </Typography>
+                    <Typography>
+                      <Link
+                        href=""
+                        variant="body1"
+                        onClick={event => {
+                          event.preventDefault();
+                          props.handleFade(props.history, '/login');
+                        }}>Log In Here</Link>
+                    </Typography>
+                  </Box>
+                </Grid>
               </Grid>
             </Box>
           </Box>
