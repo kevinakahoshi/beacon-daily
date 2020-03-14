@@ -22,6 +22,8 @@ function ChecklistItems(props) {
           id={checklistItem.checklistitemid}
           completed={props.view}
           classes={props.classes}
+          handleModalOpen={props.handleModalOpen}
+          setModalMessage={props.setModalMessage}
           updateChecklistItem={props.updateChecklistItem}
           toggleComplete={props.toggleComplete}
           deleteChecklistItem={props.deleteChecklistItem}

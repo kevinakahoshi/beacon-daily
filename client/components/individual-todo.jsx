@@ -70,6 +70,12 @@ const IndividualTodo = props => {
     if (descriptionValue.length) {
       props.updateChecklistItem(descriptionValue, props.checklistItem.checklistitemid);
       handleEditing();
+    } else {
+      props.setModalMessage({
+        heading: 'No Description',
+        messageBody: 'Please enter a description for the checklist item.'
+      });
+      props.handleModalOpen();
     }
   };
 
@@ -114,7 +120,7 @@ const IndividualTodo = props => {
                 className: classes.inputBox
               }}
               label={`Description${editing && descriptionValue.length >= 0
-              ? ' - ' + descriptionValue.length + '/50 Characters'
+              ? ` - ${descriptionValue.length}/50 Characters`
               : ''}`}
               value={descriptionValue}
               error={descriptionValue.length === 0}

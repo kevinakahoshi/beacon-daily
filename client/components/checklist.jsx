@@ -311,6 +311,8 @@ const Checklist = props => {
           : <ChecklistItems
             mounting={mounting}
             view={view}
+            handleModalOpen={props.handleModalOpen}
+            setModalMessage={props.setModalMessage}
             updateChecklistItem={props.updateChecklistItem}
             toggleComplete={props.toggleComplete}
             checklist={filteredList}
