@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   formBox: {
     margin: theme.spacing(2, 0)
   },
-  formInputs: {
+  backgroundColor: {
     background: theme.palette.background.paper
   },
   buttons: {
@@ -111,7 +112,7 @@ const Login = props => {
                     variant="outlined"
                     value={email}
                     error={!props.emailCheck.test(email) && email.length > 0}
-                    className={classes.formInputs}
+                    className={classes.backgroundColor}
                     onChange={event => handleChange(event)} />
                 </FormControl>
                 <FormControl>
@@ -123,7 +124,7 @@ const Login = props => {
                     autoComplete="off"
                     variant="outlined"
                     value={password}
-                    className={classes.formInputs}
+                    className={classes.backgroundColor}
                     onChange={event => handleChange(event)} />
                 </FormControl>
               </FormGroup>
@@ -139,6 +140,26 @@ const Login = props => {
                 </Button>
               </Box>
             </form>
+          </Box>
+          <Box
+            p={2}
+            border={1}
+            borderRadius={4}
+            borderColor="grey.400"
+            className={`${classes.backgroundColor} ${props.componentStatus}`}>
+            <Typography
+              variant="h6">
+              Don&#39;t have an account?
+            </Typography>
+            <Typography>
+              <Link
+                href=""
+                variant="body1"
+                onClick={event => {
+                  event.preventDefault();
+                  props.handleFade(props.history, '/sign-up');
+                }}>Create an Account</Link>
+            </Typography>
           </Box>
         </Container>
         {props.modalOpen
