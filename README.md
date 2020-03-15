@@ -9,12 +9,12 @@ Beacon Daily is a CRUD app that allows users to:
 
 ### Technologies Used
 
-- React
+- React (Hooks)
 - React Router
-- PostgresQL
+- PostgreSQL
 - Node.js
 - Express
-- Material Design
+- Material UI
 
 ### DB Schema
 
