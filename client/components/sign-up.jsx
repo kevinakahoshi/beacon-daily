@@ -351,7 +351,7 @@ const SignUp = props => {
                           : <CheckBoxOutlineBlankOutlinedIcon
                             className={classes.checkboxes} />}
                         <Typography>
-                            1+ Special Caracter
+                            1+ Special Character
                         </Typography>
                       </Box>
                     </Box>
