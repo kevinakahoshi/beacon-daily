@@ -17,22 +17,22 @@ body {
 
 .mounting {
   animation: mount 1s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 
 .unmounting {
   animation: unmount 1s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 
 .fade-in {
   animation: fade-in 1s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 
 .fade-out {
   animation: fade-out 1s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 
 .smooth-transition {
