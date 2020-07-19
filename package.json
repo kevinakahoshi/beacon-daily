@@ -1,5 +1,5 @@
 {
-  "name": "Beacon Daily",
+  "name": "full-stack-project",
   "version": "1.0.0",
   "description": "A Full Stack Node.js &amp; React app.",
   "main": "server/index.js",
